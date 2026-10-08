@@ -5,6 +5,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { MemoryRouter } from "react-router-dom";
 
 import { CalendarPage } from "../features/calendar/CalendarPage";
+import { CalendarWorkspace } from "../features/calendar/CalendarWorkspace";
 import { api } from "../services/api";
 import type { ActionIntention, CalendarProjection, Commitment, Plan, PlanProposal } from "../types/api";
 
@@ -210,6 +211,22 @@ describe("V0.2 Calendar and Planning Pool", () => {
 
     expect(await screen.findByText(/Could not open the requested commitment/)).toBeInTheDocument();
     expect(screen.queryByRole("heading", { name: "University" })).not.toBeInTheDocument();
+  });
+
+  it("preserves Calendar navigation on a linked-record refresh and opens a new requested record", async () => {
+    const linked = { ...commitmentFixture(), id: "linked", title: "Linked match" };
+    const props = { loading: false, error: false, onAddCommitment: vi.fn(), onAddIntention: vi.fn(),
+      requestedCommitmentId: linked.id, requestedCommitment: linked };
+    const view = render(<CalendarWorkspace {...props} />);
+    expect(await screen.findByRole("heading", { name: "Linked match" })).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "month" }));
+    view.rerender(<CalendarWorkspace {...props} requestedCommitment={{ ...linked, title: "Updated match", version: 2 }} />);
+    expect(screen.getByRole("button", { name: "month" })).toHaveAttribute("aria-pressed", "true");
+    expect(screen.queryByRole("heading", { name: "Updated match" })).not.toBeInTheDocument();
+    const next = { ...linked, id: "new-link", title: "Next linked match" };
+    view.rerender(<CalendarWorkspace {...props} requestedCommitmentId={next.id} requestedCommitment={next} />);
+    expect(await screen.findByRole("heading", { name: "Next linked match" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "day" })).toHaveAttribute("aria-pressed", "true");
   });
 
   it("shows the actual requested commitment when its date and kickoff are unconfirmed", async () => {

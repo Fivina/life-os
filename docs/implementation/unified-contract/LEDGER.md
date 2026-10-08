@@ -164,6 +164,9 @@ reconciles each user's rule. Hosted migrations0031–0033 remain unapplied.
 | T1-SETTINGS-COMPLETE | gpt-5.6-sol /medium | Normal feature refactor, canonical importer/state preservation and endpoint tests |
 | T1-REVIEW | Symphony gpt-6.1-sol /high (actual model/effort/read-only verified) | Independent bounded security review; no implementation or duplicate worker audit |
 | T2-SPORTS-PROVIDER | gpt-5.6-sol /medium | Bounded existing provider/service change; shared credential privilege architecture retained by primary |
+| T2-CALENDAR-LINK | gpt-5.6-sol /medium | Canonical frontend link/read and regression tests, existing endpoint |
+| T2-REVIEW | Symphony gpt-5.6-sol /medium | Bounded independent sports/security integration review,26 backend tests |
+| T2-SHARED-FETCH | standard_worker gpt-5.6-sol /medium | Bounded cache/service/migration implementation under primary architecture |
 
 Project defaults now use the standard tier; AGENTS.md and standard_worker.toml
 define three task-sensitive tiers. Keep two concurrent workers, disjoint scopes,
@@ -220,15 +223,42 @@ the new default/custom role still needs verification in Symphony's actual runtim
 
 ## Usage and resume policy
 
-Direct user instruction: manage tokens carefully; AFK; if an available account
-window falls below5% remaining, checkpoint and create a thread scheduled task for
-16:55 Europe/Berlin with prompt `keep going`. Threshold uses100-usedPercent and
-the lowest available relevant window. Check at work chunk boundaries, not every
-command. Initial09:59UTC check:96% five-hour/84% weekly; later check89%/83%.
-No threshold-triggered task created yet. Verify current time before scheduling;
-if16:55 has passed, use the next16:55 and record the date. An automation must read
-HANDOFF.md/this ledger, respect gates and check limits; it cannot create allowance.
+Latest direct instruction supersedes conditional16:55: work until account allowance
+is exhausted; one-time heartbeat `continue-life-os-development` for2026-10-08
+16:35 Europe/Berlin, exact prompt `keep doing`, created/verified. Save coherent
+checkpoints before interruption. On resume read HANDOFF/ledger and reconcile Git.
+Check usage at chunk boundaries; scheduling creates no allowance. Do not consume
+reset credits, switch accounts, duplicate audits or call paid product providers.
 
-Do not use reset credits, rotate accounts, spawn redundant audits or call costly
-product providers automatically. Primary updates progress after coherent chunks.
-Most recent limit check:6% remaining five-hour /70% weekly; trigger not met.
+## Sports review and local runtime checkpoint
+
+Independent Symphony review: issue4,0d1a12b vsf3ef64d, standard gpt-5.6-sol/medium,
+read-only.26 focused backend tests passed, no scoped backend defect. Two P2 findings:
+card cap could omit fixture and emitted wide size; same-record refresh could reset
+Calendar navigation. Primary corrected reserved compact card and once-per-ID initial
+positioning;21 focused frontend tests and typecheck passed, publication pending.
+These corrections have not received a second independent review.
+Runtime5174/8001 disposable SQLite: one30day future match shown, actual Calendar
+entry/day opens, missing entry unavailable without unrelated selection, TBD actual
+record shows date/time unconfirmed after reload. Authorized TBD GET200. Screenshots
+ignored under artifacts/unified-contract/baseline/sports-calendar-*.jpg. No live
+provider/hosted DB calls; hosted migrations0031–0033 and shared cache still open.
+
+### T2-SHARED-FETCH plan (2026-10-08, primary architecture)
+
+Source p54: installation API-Football credentials should fetch shared public data
+once. Extend existing standing_calendar service; no second sports runtime/scheduler.
+Standard worker sports_shared_fetch, gpt-5.6-sol/medium, owns only new cache model
+registration, migration0034, service fetch-cache integration and focused tests.
+Primary owns integration/review. Add one backend-only normalized public fixture
+snapshot cache keyed provider/team/base URL, expires after one daily interval.
+Only installation scope shares it; tenant mode stays isolated. Read selected Vault
+key before every sync (including cache hits); removal must fail closed. Scheduled
+worker reuses a fresh snapshot; manual sync forces a provider refresh and updates
+that snapshot. Cache successful empty results too. PostgreSQL transaction advisory
+lock serializes successful cache miss/refresh without committing inside services.
+Keep reconciliation in existing savepoint, do not cache secrets/raw payloads/errors.
+No hosted migrations/provider calls. Tests: two users share one scheduled fetch,
+manual refresh updates cache, tenant bypass, empty reuse, expiry, removal, rollback.
+Implementation/review pending; PostgreSQL concurrency and live Vault remain external
+verification gates. Do not mark parent sports VERIFIED until these gaps are closed.

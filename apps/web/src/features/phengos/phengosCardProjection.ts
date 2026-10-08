@@ -161,10 +161,15 @@ export function projectPhengosCards(sources: Sources, now = new Date()): Phengos
     cards.push({ id: `fixture:${fixture.id}`, kind: "fixture", priority: kickoff <= currentTime + 48 * 60 * 60_000 ? 75 : 52,
       title: `${home} vs ${away}`, eyebrow: "MATCH COMING UP", detail: [when, competition].filter(Boolean).join(" · "),
       href: fixture.commitment_id ? `/calendar?commitment=${encodeURIComponent(fixture.commitment_id)}` : "/calendar",
-      startsAt: fixture.kickoff_at ?? undefined, size: "wide",
+      startsAt: fixture.kickoff_at ?? undefined, size: "compact",
       fixture: { home, away, homeLogo: validLogo(details.home_team_logo_url), awayLogo: validLogo(details.away_team_logo_url) },
     });
   }
 
-  return cards.sort((a, b) => b.priority - a.priority || a.id.localeCompare(b.id)).slice(0, 8);
+  const sorted = cards.sort((a, b) => b.priority - a.priority || a.id.localeCompare(b.id));
+  const visible = sorted.slice(0, 8);
+  const matchCard = sorted.find(card => card.kind === "fixture");
+  // A busy day changes match priority, but must not hide the next fixture.
+  if (matchCard && !visible.includes(matchCard)) visible[visible.length - 1] = matchCard;
+  return visible;
 }

@@ -105,6 +105,7 @@ export function CalendarWorkspace({ projection, plan, horizon, proposals, reques
   const [view, setView] = useState<CalendarView>("week");
   const [date, setDate] = useState(() => startOfDay(new Date()));
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const openedCommitmentId = useRef<string | null>(null);
   const events = useMemo(() => {
     const projected = calendarEvents(projection, plan ?? projection?.current_plan);
     if (!requestedCommitment || !requestedCommitment.starts_at || !requestedCommitment.ends_at) return projected;
@@ -144,11 +145,14 @@ export function CalendarWorkspace({ projection, plan, horizon, proposals, reques
   const goDay = (day: Date) => { setDate(day); setView("day"); setSelectedId(null); };
 
   useEffect(() => {
+    openedCommitmentId.current = null;
     setSelectedId(null);
   }, [requestedCommitmentId]);
 
   useEffect(() => {
     if (!requestedCommitment || requestedCommitment.id !== requestedCommitmentId) return;
+    if (openedCommitmentId.current === requestedCommitmentId) return;
+    openedCommitmentId.current = requestedCommitmentId;
     setSelectedId(`commitment:${requestedCommitment.id}`);
     if (!requestedCommitment.starts_at) return;
     const startsAt = new Date(requestedCommitment.starts_at);

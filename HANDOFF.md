@@ -5,75 +5,56 @@ Checkpoint owner: primary Codex session, development orchestrator and final revi
 
 ## Where we stopped
 
-The user supplied the 88-page unified implementation contract and 25 reference
-images on 2026-10-08 and authorized AFK development orchestration with careful token
-usage. No Figma or other external design tool is required. Source files are preserved
-under `docs/implementation/unified-contract/source/`, with byte hashes verified.
-The requirement ledger is `docs/implementation/unified-contract/LEDGER.md`.
+The user authorized AFK development from the preserved 88-page unified contract,
+with task-sensitive workers, primary integration/final review, and durable checkpoints.
+Source and stable requirement tracking: `docs/implementation/unified-contract/LEDGER.md`.
 
-Current chunk: integration credential foundation (backend milestone 1), published
-as `f3ef64d` on `codex/unified-contract`. Primary
-read the full text, inspected the relevant implementation and captured baseline
-Calendar/Kitchen/Settings screenshots in `artifacts/unified-contract/baseline/`
-(local, ignored by Git). Deep worker `integration_vault` owns scoped backend Vault,
-integration routes/model/migration/tests; fast worker `checkpoint_setup_docs` owns
-the new Settings integration view/client/tests. Primary owns registration and
-integration. Backend worker reports31new+17legacy tests passed; standard frontend
-worker reports15focused tests and typecheck passed after primary corrections.
-Independent Symphony review finished on issue2 against `f3ef64d` in a separate
-read-only checkout with verified gpt-6.1-sol/high. It reran48 backend tests and found
-two P2 importer defects. Standard worker corrected automatic CSV type detection and
-added the Movies→Settings importer link;18 frontend tests passed. Isolated runtime checks use5174/8001
-with a disposable SQLite database; provider status responds200, Vault persistence
-fails closed, installation access is denied, and Letterboxd opens without Vault.
-Primary fixed Settings navigation identity for the new nested routes;48 navigation
-tests passed. Corrections, workflow compatibility and the next-match groundwork
-are included in the checkpoint titled `Correct imports and add next-match groundwork`.
-Use Git to verify its exact commit and publication state when resuming.
-Published implementation checkpoint: `55ddfc3`, private draft PR
-<https://github.com/Fivina/life-os/pull/3>. Working tree was clean after publication;
-this progress-only note is a later checkpoint. All scoped workers have finished.
-Hosted migration
-0031 has not been applied; current primary app database is PostgreSQL.
+Branch `codex/unified-contract`, published head `0d1a12b` (verify Git on resume),
+private draft PR <https://github.com/Fivina/life-os/pull/3>. Foundation `f3ef64d`
+and import corrections/next-match groundwork `55ddfc3` are published. Foundation
+review issue2 completed; its two importer findings were corrected and browser-tested.
 
-Isolated correction verification: automatic watchlist.csv preview displays Watchlist;
-confirmation adds one watchlist item while viewing history stays at its previous
-one synthetic diary entry. No user database or real export was used.
+Current sports chunk: Vault-only runtime lookup (installation default or tenant),
+fixed-provider backend getter/migration0033, bounded no-redirect transport, daily
+next=1 synchronization and authorized Calendar deep links including TBD records.
+Primary backend/integration; standard workers sports_provider/sports_calendar_link
+implemented their bounded service/frontend scopes.96 backend and37 frontend tests
+plus typecheck passed at0d1a12b; hosted migrations0031–0033 remain unapplied.
 
-Next action: independently review the next-match diff, connect its new Vault credential
-source safely, and implement the specific Calendar entry link. Hosted migrations
-0031/0032 remain unapplied. Follow the
-ledger for remaining work and explicit decision gates. No new bank production,
-paid media benchmark, unapproved backend ticket or open visual design is activated.
+Independent Symphony review issue4 completed against0d1a12b, gpt-5.6-sol/medium,
+read-only separate checkout.26 focused backend tests passed; no scoped backend
+finding. Two P2 frontend findings: crowded card cap hides match/not compact;
+same-record refresh resets Calendar navigation. Primary has local corrections and
+regressions (21 frontend tests and typecheck pass; publication must be
+verified against Git). These corrections are not yet independently re-reviewed.
 
-Active continuation2026-10-08: primary owns backend sports Vault lookup, narrowly
-scoped installation read function/migration0033, service integration/security tests.
-Standard worker `sports_calendar_link` (gpt-5.6-sol/medium) owns frontend fixture href,
-Calendar selected-record query/workspace and focused tests, plus minimal API client
-GET using the existing authorized commitment endpoint. Separate Symphony review
-will follow the integrated published diff. Neither task applies hosted migrations.
-User explicitly requested immediate one-time16:35 Berlin continuation: automation
-`continue-life-os-development` is ACTIVE, prompt `keep doing`, on2026-10-08. This
-supersedes the earlier conditional16:55 instruction. Work until allowance is exhausted,
-saving coherent checkpoints; do not auto-switch accounts or consume reset credits.
+Runtime evidence on disposable SQLite preview5174/8001: dashboard shows one match
+30days ahead; clicking opens that canonical Calendar record on its actual day;
+missing record shows explicit unavailable state; TBD entry shows date/time unconfirmed.
+Screenshots: ignored `artifacts/unified-contract/baseline/sports-calendar-*.jpg`.
+One initial TBD browser request failed; explicit reload succeeded, authenticated
+HTTP GET returned200. No real credentials, user database or live provider calls used.
 
-Continuation implementation checkpoint: primary added explicit Vault-only fixture
-runtime scope (installation default; tenant selectable), narrow fixed-provider
-backend SQL getter in0033, failure savepoint/redaction and bounded no-redirect
-provider response. Standard `sports_calendar_link` added canonical Calendar deep
-link/read/error/TBD states; primary fixed nullable CommitmentRead and tested owner
-isolation.96 backend and37 frontend targeted tests/typecheck passed. Worker finished.
-Next: bounded independent Symphony review (gpt-5.6-sol/medium, two-turn cap), local
-runtime check, corrections. Shared installation fetch-once remains unverified/
-unfinished; hosted migrations0031–0033 are unapplied. Full sports acceptance stays open.
+Active next task T2-SHARED-FETCH: standard worker sports_shared_fetch,
+gpt-5.6-sol/medium, owns backend normalized installation fixture cache/model,
+migration0034, service reuse and focused tests. Architecture persisted in ledger:
+scheduled daily shared cache, manual forced refresh, tenant bypass, Vault reread,
+transactional rollback and backend-only table access. Primary owns review/integration.
+No new scheduler or sports framework. Shared-fetch implementation/review and hosted
+PostgreSQL/Vault/concurrency verification remain open; full sports is not accepted.
 
-Related next-match task implemented: standard `sports_provider` updated only existing
-provider/service and test_next_fixture_sync.py;35 targeted tests pass. Primary added
-daily-cadence migration0032 (isolated SQLite roundtrip passed), safe typed next-pointer
-fields and missing-timeTBD validation, plus nearest future card/priority/competition/
-known-empty handling. Combined frontend71 tests across4 files and typecheck pass.
-No workers remain running. Vault hookup, Calendar entry deep link, independent review
-and live runtime verification remain open. No new scheduler or live provider calls.
+Next action: collect worker result, inspect the diff and run appropriate focused
+checks; publish coherent corrections/cache checkpoint after privacy/secret checks.
+Require bounded independent review of substantial cache changes. Then continue
+unmet approved requirements in dependency order; retain visual feedback/decision
+gates and preserve existing workflows. Do not activate real banks/paid benchmarks
+or the seven explicitly blocked backend tickets.
+
+User explicitly requested work until the usage limit and a one-time16:35 Berlin
+continuation today2026-10-08. Heartbeat `continue-life-os-development` is ACTIVE,
+exact prompt `keep doing`, verified through automation tool. This supersedes the
+previous conditional16:55 request. Resume by reading this file/ledger and reconciling
+Git; do not rotate accounts or use reset credits automatically.
 
 ## Resume checklist
 
@@ -95,9 +76,9 @@ and live runtime verification remain open. No new scheduler or live provider cal
 | Branch at checkpoint | `codex/unified-contract`; source intake and implementation work branch |
 | Independently reviewed foundation | `f3ef64d` — integration credential foundation and tiered worker routing; later correction/next-match checkpoint is identified above |
 | Last completed handoff rules chunk | `f857f15`, pushed to master; new source intake/progress is on `codex/unified-contract` |
-| Frontend | <http://localhost:5173>; HTTP 200 verified on 2026-10-08 |
-| Backend | <http://localhost:8000/readiness>; HTTP 200, ready, database reachable, auth configured on 2026-10-08 |
-| Symphony | Reviewer daemon idle; <http://localhost:8787/api/v1/state>. Issue2 report saved and ready label removed; actual model/effort/read-only verified. No implementation issue ready, so no duplicate work queued. |
+| Frontend | Original5173 process stopped at account switch; isolated5174 running. Check ports before restart. |
+| Backend | Original8000 process stopped at account switch; isolated8001 running disposable SQLite. Hosted DB unchanged. |
+| Symphony | Reviewer daemon8787; issue4 report saved, ready label removed. Standard model/read-only review completed. Verify live state before dispatch. |
 | Isolated verification app | <http://localhost:5174/settings/integrations> → SQLite backend8001; current source, no hosted migration or real credentials |
 | Source of setup details | `docs/SYMPHONY_SETUP.md` and `scripts/start-symphony.ps1` |
 
