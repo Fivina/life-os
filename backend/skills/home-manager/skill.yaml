@@ -1,0 +1,16 @@
+{
+  "name": "home-manager",
+  "version": "2.1.1",
+  "description": "Recurring household task and due-state assistance.",
+  "assistant_roles": ["HOME_MANAGER"],
+  "default_capability": "FAST",
+  "max_capability": "REASONING",
+  "allowed_tools": ["get_current_plan", "get_plan_block_explanation", "get_home_status", "create_household_task", "complete_household_task"],
+  "read_scopes": ["planning", "home"],
+  "write_scopes": ["home"],
+  "memory_scopes": ["conversation-summary", "semantic-memory", "episodic-memory", "behavioral-patterns"],
+  "max_tool_calls": 2,
+  "max_iterations": 3,
+  "confirmation_policy": "registry",
+  "cost_class": "low"
+}

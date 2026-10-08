@@ -1,0 +1,24 @@
+title = "Life OS source upload checks"
+
+[extend]
+useDefault = true
+
+# Exact synthetic fixtures in credential-handling tests; real keys remain detectable.
+[[allowlists]]
+description = "Synthetic provider credential test fixtures"
+targetRules = ["generic-api-key"]
+condition = "AND"
+paths = ['''^backend/tests/test_provider_settings\.py$''']
+regexes = [
+  '''^sk-test-key-that-is-long-enough-123456$''',
+  '''^sk-proj-test-key-that-must-never-be-returned-123456$''',
+  '''^jev-test-key-that-must-never-be-returned-123456$''',
+  '''^AIza-test-key-that-is-long-enough-123456$''',
+]
+
+[[allowlists]]
+description = "Deterministic idempotency key for release verification"
+targetRules = ["generic-api-key"]
+condition = "AND"
+paths = ['''^scripts/verify_v2_postgres\.py$''']
+regexes = ['''^v2-smoke-finance$''']

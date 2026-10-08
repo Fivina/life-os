@@ -1,0 +1,17 @@
+{
+  "name": "memory-curator",
+  "version": "1.0.0",
+  "description": "Background extraction of bounded, durable personal memory candidates.",
+  "assistant_roles": [],
+  "default_capability": "ECONOMY",
+  "max_capability": "ECONOMY",
+  "allowed_tools": [],
+  "read_scopes": ["conversation-message"],
+  "write_scopes": ["semantic-memory"],
+  "memory_scopes": [],
+  "max_tool_calls": 0,
+  "max_iterations": 1,
+  "confirmation_policy": "registry",
+  "cost_class": "low",
+  "output_contract": "memory_extraction_v1"
+}

@@ -1,0 +1,15 @@
+{
+  "MORNING_START": "tests/test_v19a_self_core.py::test_morning_briefing_uses_real_plan_filters_attention_and_is_idempotent",
+  "MISSED_STUDY_RECOVERY": "tests/test_v17a_strategic_proposals.py::test_accept_applies_through_planner_and_records_contextual_learning",
+  "COOK_AND_UPDATE_INVENTORY": "tests/test_v18d_chef_intent.py::test_selection_workspace_restart_actual_usage_idempotency_history_and_competency",
+  "WORKOUT_EXECUTION": "tests/test_v05_fitness_domain.py::test_workout_resume_log_complete_and_progression",
+  "FINANCE_QUICK_CAPTURE": "tests/test_v19b_capture_review_settings.py::test_finance_and_shopping_capture_apply_idempotently",
+  "UNCERTAIN_CAPTURE_REVIEW": "tests/test_v19b_capture_review_settings.py::test_unknown_finance_classification_goes_to_review_and_can_be_edited",
+  "IMPLEMENTATION_IDEA_PARKING": "tests/test_v19b_capture_review_settings.py::test_notebook_idea_never_enters_quick_capture",
+  "MOVIE_PROSPECTIVE_RESURFACE": "tests/test_v18b_leisure_movies.py::test_prospective_movie_stays_dormant_then_surfaces_feasible_showtime_once",
+  "SOCIAL_OPPORTUNITY_FILTER": "tests/test_v18c_social_opportunities.py::test_filters_run_before_ranking_and_unknown_cost_stays_unknown",
+  "PLAN_PROPOSAL_ACCEPT": "tests/test_v17b_response_realtime.py::test_accepted_plan_proposal_advances_revision_and_refetches_canonical_plan",
+  "RESTART_ACTIVE_WORKSPACE": "tests/test_v16b_workspace_attention.py::test_workspace_reconstructs_after_fresh_database_session",
+  "TWO_CLIENT_REALTIME": "tests/test_v17b_response_realtime.py::test_realtime_inventory_workspace_and_conversation_converge_from_committed_truth",
+  "AI_OUTAGE": "tests/test_v16d_provider_routing.py::test_primary_error_falls_back_and_double_failure_is_safe"
+}

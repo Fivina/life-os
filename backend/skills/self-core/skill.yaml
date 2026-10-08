@@ -1,0 +1,17 @@
+{
+  "name": "self-core",
+  "version": "2.1.1",
+  "description": "General Life OS orchestration and bounded cross-domain assistance.",
+  "assistant_roles": ["GENERAL_ASSISTANT"],
+  "allowed_agents": ["chef", "learning-coach", "fitness-coach", "home-manager", "finance"],
+  "default_capability": "FAST",
+  "max_capability": "REASONING",
+  "allowed_tools": ["get_today_summary", "get_current_state", "get_current_plan", "get_planner_overload", "get_horizon_allocations", "get_plan_block_explanation", "get_active_plan_proposals", "accept_plan_proposal", "modify_plan_proposal", "reject_plan_proposal", "get_commitments", "get_planning_pool_summary", "get_fitness_status", "get_learning_status", "get_exam_status", "get_home_status", "get_goals_status", "get_kitchen_status", "get_kitchen_recommendations", "get_shopping_needs", "get_personal_model_summary", "memory_search", "memory_explain", "memory_remember", "memory_correct", "memory_pin", "memory_unpin", "memory_forget", "report_state", "create_commitment", "add_intention", "request_replan", "start_workout", "record_workout_set", "complete_workout", "add_body_measurement", "log_study_session", "create_course", "create_exam", "update_exam", "create_household_task", "complete_household_task", "log_manual_meal", "complete_recipe_meal"],
+  "read_scopes": ["today", "state", "planning", "fitness", "learning", "home", "goals", "kitchen", "personal-model"],
+  "write_scopes": ["state", "commitments", "actions", "replan-request", "semantic-memory"],
+  "memory_scopes": ["conversation-summary", "semantic-memory", "episodic-memory", "behavioral-patterns"],
+  "max_tool_calls": 6,
+  "max_iterations": 6,
+  "confirmation_policy": "registry",
+  "cost_class": "medium"
+}

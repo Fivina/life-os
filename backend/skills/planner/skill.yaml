@@ -1,0 +1,17 @@
+{
+  "name": "planner",
+  "version": "1.3.0",
+  "description": "Reasoning and explanation interface for deterministic Planner V2.",
+  "enabled": true,
+  "assistant_roles": [],
+  "default_capability": "FAST",
+  "max_capability": "REASONING",
+  "allowed_tools": ["get_current_plan", "get_planner_overload", "get_horizon_allocations", "get_plan_block_explanation", "request_replan"],
+  "read_scopes": ["planning", "allocations", "constraints", "personal-model"],
+  "write_scopes": ["replan-request"],
+  "memory_scopes": ["semantic-memory", "behavioral-patterns"],
+  "max_tool_calls": 3,
+  "max_iterations": 2,
+  "confirmation_policy": "registry",
+  "cost_class": "low"
+}

@@ -1,0 +1,2 @@
+# Optional local typed-decision runtime; not installed by normal backend setup.
+laya>=0.3.20,<0.4

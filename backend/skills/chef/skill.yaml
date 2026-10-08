@@ -1,0 +1,16 @@
+{
+  "name": "chef",
+  "version": "2.1.1",
+  "description": "Kitchen inventory, recommendation, meal, and shopping assistance.",
+  "assistant_roles": ["CHEF"],
+  "default_capability": "ECONOMY",
+  "max_capability": "REASONING",
+  "allowed_tools": ["get_current_state", "get_current_plan", "get_kitchen_status", "get_kitchen_recommendations", "get_shopping_needs", "select_meal", "complete_meal_plan", "mark_shopping_purchased", "receipt_get_review", "receipt_confirm", "report_state", "log_manual_meal", "complete_recipe_meal"],
+  "read_scopes": ["state", "planning", "kitchen"],
+  "write_scopes": ["state", "kitchen", "receipt", "shopping"],
+  "memory_scopes": ["conversation-summary", "semantic-memory", "episodic-memory", "behavioral-patterns"],
+  "max_tool_calls": 4,
+  "max_iterations": 5,
+  "confirmation_policy": "registry",
+  "cost_class": "low"
+}

@@ -1,0 +1,5019 @@
+{
+  "path": "D:\\Life OS\\apps\\web\\public\\art\\system\\life-os-system-v28.glb",
+  "file_bytes": 24661444,
+  "nodes": 42,
+  "node_names": [
+    "Calendar_Batch_Art_Calendar_V2_Chrono_Obsidian",
+    "Calendar_Batch_Art_Calendar_V21_Chrono_Major_Ticks",
+    "Calendar_Batch_Art_Calendar_V21_Chrono_Minor_Ticks",
+    "Chrono_Now",
+    "Chrono_Precision_Ring",
+    "Calendar",
+    "Fitness_Batch_Art_Fitness_Fitness_Cyan_Light",
+    "Fitness_Batch_Art_Fitness_Machined_Ice_Edge",
+    "Fitness_Batch_Art_Fitness_V4_Fitness_Fasteners",
+    "Fitness_Batch_Art_Fitness_V4_Fitness_Recessed_Grooves",
+    "Fitness_Batch_Art_Fitness_V4_Fitness_Satin_Faces",
+    "Fitness_PlanetCore",
+    "Fitness_PrimaryOrbit",
+    "Fitness",
+    "Home_Batch_Art_Home_V2_Amber_Emitter",
+    "Home_Modular_Panels",
+    "Home_Recessed_Seam_Core",
+    "Home",
+    "Learning_Batch_Art_Learning_V2_Neural_Crystalline",
+    "Learning_Batch_Art_Learning_V12_Neural_Distant",
+    "Learning_Batch_Art_Learning_V12_Neural_Primary",
+    "Learning_Batch_Art_Learning_V12_Neural_Tips",
+    "Neural_Fine_Orbit",
+    "Neural_Growth_Heart",
+    "Learning",
+    "Life_Cloud_Shell",
+    "Life_Geographic_Globe",
+    "Life_Habitat_Moon",
+    "Life_Habitat_Track",
+    "Life",
+    "Scenery_Batch_Art_Scenery_V2_Foreground_Basalt",
+    "Scenery_Batch_Art_Scenery_V2_Quiet_System_Tracks",
+    "Scenery_Batch_Art_Scenery_V26_Source_Lit_Dust",
+    "Scenery",
+    "Self_Extended_Coronal_Field",
+    "Self_Granular_Star",
+    "Self_Source_Bound_Corona",
+    "SelfCore_Batch_Art_SelfCore_V8_Plasma_Field",
+    "SelfCore_Batch_Art_SelfCore_V8_Plasma_Fine",
+    "SelfCore_Batch_Art_SelfCore_V8_Plasma_Hot",
+    "SelfCore",
+    "System_Composition_Camera"
+  ],
+  "meshes": [
+    {
+      "name": "Sphere.104",
+      "vertices": 3642,
+      "triangles": 6768,
+      "primitives": 1
+    },
+    {
+      "name": "Chrono_Clock_Tick_0",
+      "vertices": 168,
+      "triangles": 144,
+      "primitives": 1
+    },
+    {
+      "name": "Chrono_Clock_Tick_1",
+      "vertices": 1176,
+      "triangles": 1008,
+      "primitives": 1
+    },
+    {
+      "name": "Sphere.099",
+      "vertices": 229,
+      "triangles": 360,
+      "primitives": 1
+    },
+    {
+      "name": "Chrono_Precision_Ring",
+      "vertices": 1351,
+      "triangles": 2304,
+      "primitives": 1
+    },
+    {
+      "name": "Cylinder.017",
+      "vertices": 4313,
+      "triangles": 7164,
+      "primitives": 1
+    },
+    {
+      "name": "Cylinder.018",
+      "vertices": 7170,
+      "triangles": 12276,
+      "primitives": 1
+    },
+    {
+      "name": "Sphere.120",
+      "vertices": 2136,
+      "triangles": 2880,
+      "primitives": 1
+    },
+    {
+      "name": "Fitness_Left_0_-1_Groove_0",
+      "vertices": 21672,
+      "triangles": 36864,
+      "primitives": 1
+    },
+    {
+      "name": "Cylinder.022",
+      "vertices": 3864,
+      "triangles": 6120,
+      "primitives": 1
+    },
+    {
+      "name": "Sphere.132",
+      "vertices": 6303,
+      "triangles": 12096,
+      "primitives": 1
+    },
+    {
+      "name": "PrimaryOrbit.001",
+      "vertices": 1737,
+      "triangles": 3072,
+      "primitives": 1
+    },
+    {
+      "name": "Sphere.106",
+      "vertices": 1653,
+      "triangles": 2752,
+      "primitives": 1
+    },
+    {
+      "name": "Home_Geodesic_Panel_Mesh.001",
+      "vertices": 15515,
+      "triangles": 5180,
+      "primitives": 5
+    },
+    {
+      "name": "Sphere.077",
+      "vertices": 1223,
+      "triangles": 2208,
+      "primitives": 1
+    },
+    {
+      "name": "Sphere.097",
+      "vertices": 3642,
+      "triangles": 6768,
+      "primitives": 1
+    },
+    {
+      "name": "Neural_Depth_Branch_0",
+      "vertices": 11487,
+      "triangles": 18600,
+      "primitives": 1
+    },
+    {
+      "name": "Neural_Depth_Branch_1",
+      "vertices": 12152,
+      "triangles": 19896,
+      "primitives": 1
+    },
+    {
+      "name": "Sphere.138",
+      "vertices": 2225,
+      "triangles": 3000,
+      "primitives": 1
+    },
+    {
+      "name": "Neural_Fine_Orbit",
+      "vertices": 1351,
+      "triangles": 2304,
+      "primitives": 1
+    },
+    {
+      "name": "Sphere.107",
+      "vertices": 151,
+      "triangles": 224,
+      "primitives": 1
+    },
+    {
+      "name": "Sphere.143",
+      "vertices": 2143,
+      "triangles": 3968,
+      "primitives": 1
+    },
+    {
+      "name": "Sphere.131",
+      "vertices": 3319,
+      "triangles": 6240,
+      "primitives": 1
+    },
+    {
+      "name": "Sphere.130",
+      "vertices": 323,
+      "triangles": 528,
+      "primitives": 1
+    },
+    {
+      "name": "Life_Habitat_Track",
+      "vertices": 1351,
+      "triangles": 2304,
+      "primitives": 1
+    },
+    {
+      "name": "Sphere.145",
+      "vertices": 16887,
+      "triangles": 27680,
+      "primitives": 1
+    },
+    {
+      "name": "System_Depth_Track_0_0",
+      "vertices": 3584,
+      "triangles": 6048,
+      "primitives": 1
+    },
+    {
+      "name": "Icosphere.163",
+      "vertices": 5400,
+      "triangles": 1800,
+      "primitives": 1
+    },
+    {
+      "name": "Self_Extended_Coronal_Field",
+      "vertices": 8722,
+      "triangles": 14568,
+      "primitives": 1
+    },
+    {
+      "name": "Sphere.136",
+      "vertices": 2143,
+      "triangles": 3968,
+      "primitives": 1
+    },
+    {
+      "name": "Plane.002",
+      "vertices": 4,
+      "triangles": 2,
+      "primitives": 1
+    },
+    {
+      "name": "Self_Magnetic_Bundle_11_1",
+      "vertices": 8645,
+      "triangles": 14592,
+      "primitives": 1
+    },
+    {
+      "name": "Self_Magnetic_Bundle_0_0",
+      "vertices": 21840,
+      "triangles": 36864,
+      "primitives": 1
+    },
+    {
+      "name": "Self_Magnetic_Bundle_0_1",
+      "vertices": 2275,
+      "triangles": 3840,
+      "primitives": 1
+    }
+  ],
+  "materials": [
+    {
+      "name": "Art_Calendar_V2_Chrono_Obsidian",
+      "textures": {
+        "normalTexture": {
+          "index": 0,
+          "texCoord": 2
+        },
+        "baseColorTexture": {
+          "index": 1,
+          "texCoord": 2
+        },
+        "metallicRoughnessTexture": {
+          "index": 2,
+          "texCoord": 2
+        }
+      },
+      "base_color": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "metallic": 0.11999999731779099,
+      "roughness": 1,
+      "alpha_mode": "OPAQUE",
+      "emissive_factor": [
+        0,
+        0,
+        0
+      ],
+      "extensions": {
+        "KHR_materials_specular": {
+          "specularFactor": 0.23999999463558197
+        }
+      },
+      "extras": {
+        "art_role": "terrain",
+        "art_rim_color": [
+          0.22,
+          0.12,
+          0.8
+        ],
+        "art_rim_strength": 3,
+        "lifeos_source_material": "V2_Chrono_Obsidian",
+        "lifeos_emissive_strength": 0,
+        "lifeos_runtime_emission": {
+          "color": {
+            "socket": "Emission Color",
+            "default": [
+              0.2199999988079071,
+              0.11999999731779099,
+              0.800000011920929,
+              1.0
+            ],
+            "nodes": []
+          },
+          "strength": {
+            "socket": "Emission Strength",
+            "default": 0.0,
+            "nodes": [
+              {
+                "name": "Math.001",
+                "type": "ShaderNodeMath",
+                "operation": "MULTIPLY",
+                "inputs": {
+                  "Value": 0.5
+                },
+                "links": [
+                  {
+                    "input": "Value",
+                    "node": "Math",
+                    "output": "Value"
+                  }
+                ]
+              },
+              {
+                "name": "Math",
+                "type": "ShaderNodeMath",
+                "operation": "POWER",
+                "inputs": {
+                  "Value": 0.5
+                },
+                "links": [
+                  {
+                    "input": "Value",
+                    "node": "Art_Atmosphere_Fresnel",
+                    "output": "Factor"
+                  }
+                ]
+              },
+              {
+                "name": "Art_Atmosphere_Fresnel",
+                "type": "ShaderNodeFresnel",
+                "operation": "",
+                "inputs": {
+                  "IOR": 1.149999976158142,
+                  "Normal": [
+                    0.0,
+                    0.0,
+                    0.0
+                  ]
+                },
+                "links": []
+              }
+            ]
+          },
+          "exported_strength": 0
+        }
+      }
+    },
+    {
+      "name": "Art_Calendar_V21_Chrono_Major_Ticks",
+      "textures": {},
+      "base_color": [
+        0.3499999940395355,
+        0.20000000298023224,
+        0.7200000286102295,
+        1
+      ],
+      "metallic": 0.10000000149011612,
+      "roughness": 0.44999998807907104,
+      "alpha_mode": "OPAQUE",
+      "emissive_factor": [
+        0.4861110835163693,
+        0.27777777087909233,
+        1
+      ],
+      "extensions": {
+        "KHR_materials_emissive_strength": {
+          "emissiveStrength": 1.440000057220459
+        }
+      },
+      "extras": {
+        "lifeos_source_material": "V21_Chrono_Major_Ticks",
+        "lifeos_emissive_strength": 2.0
+      }
+    },
+    {
+      "name": "Art_Calendar_V21_Chrono_Minor_Ticks",
+      "textures": {},
+      "base_color": [
+        0.12999999523162842,
+        0.07500000298023224,
+        0.2800000011920929,
+        1
+      ],
+      "metallic": 0.10000000149011612,
+      "roughness": 0.44999998807907104,
+      "alpha_mode": "OPAQUE",
+      "emissive_factor": [
+        0.08449999380111706,
+        0.04875000014901154,
+        0.18199999409914014
+      ],
+      "extensions": {},
+      "extras": {
+        "lifeos_source_material": "V21_Chrono_Minor_Ticks",
+        "lifeos_emissive_strength": 0.6499999761581421
+      }
+    },
+    {
+      "name": "Art_Calendar_V2_Cyan_Emitter",
+      "textures": {},
+      "base_color": [
+        0.03999999910593033,
+        0.550000011920929,
+        0.9200000166893005,
+        1
+      ],
+      "metallic": 0.10000000149011612,
+      "roughness": 0.44999998807907104,
+      "alpha_mode": "OPAQUE",
+      "emissive_factor": [
+        0.04347825910903108,
+        0.5978260890691627,
+        1
+      ],
+      "extensions": {
+        "KHR_materials_emissive_strength": {
+          "emissiveStrength": 2.3000000417232513
+        }
+      },
+      "extras": {
+        "lifeos_source_material": "V2_Cyan_Emitter",
+        "lifeos_emissive_strength": 2.5
+      }
+    },
+    {
+      "name": "Art_Calendar_V2_Violet_Emitter",
+      "textures": {},
+      "base_color": [
+        0.28999999165534973,
+        0.12999999523162842,
+        0.6499999761581421,
+        1
+      ],
+      "metallic": 0.10000000149011612,
+      "roughness": 0.44999998807907104,
+      "alpha_mode": "OPAQUE",
+      "emissive_factor": [
+        0.44615384968074834,
+        0.2,
+        1
+      ],
+      "extensions": {
+        "KHR_materials_emissive_strength": {
+          "emissiveStrength": 1.5600000047683693
+        }
+      },
+      "extras": {
+        "lifeos_source_material": "V2_Violet_Emitter",
+        "lifeos_emissive_strength": 2.4000000953674316
+      }
+    },
+    {
+      "name": "Art_Fitness_Fitness_Cyan_Light",
+      "textures": {},
+      "base_color": [
+        0.03500000014901161,
+        0.6200000047683716,
+        0.949999988079071,
+        1
+      ],
+      "metallic": 0.4000000059604645,
+      "roughness": 0.23999999463558197,
+      "alpha_mode": "OPAQUE",
+      "emissive_factor": [
+        0.036842105882319724,
+        0.6526315921561542,
+        1
+      ],
+      "extensions": {
+        "KHR_materials_emissive_strength": {
+          "emissiveStrength": 2.849999964237213
+        }
+      },
+      "extras": {
+        "lifeos_source_material": "Fitness_Cyan_Light",
+        "lifeos_emissive_strength": 3.0
+      }
+    },
+    {
+      "name": "Art_Fitness_Machined_Ice_Edge",
+      "textures": {},
+      "base_color": [
+        0.23999999463558197,
+        0.41999998688697815,
+        0.5,
+        1
+      ],
+      "metallic": 0.9200000166893005,
+      "roughness": 0.20000000298023224,
+      "alpha_mode": "OPAQUE",
+      "emissive_factor": [
+        0,
+        0,
+        0
+      ],
+      "extensions": {},
+      "extras": {
+        "lifeos_source_material": "Machined_Ice_Edge",
+        "lifeos_emissive_strength": 0.0
+      }
+    },
+    {
+      "name": "Art_Fitness_V4_Fitness_Fasteners",
+      "textures": {},
+      "base_color": [
+        0.2199999988079071,
+        0.28999999165534973,
+        0.3199999928474426,
+        1
+      ],
+      "metallic": 0.8500000238418579,
+      "roughness": 0.25999999046325684,
+      "alpha_mode": "OPAQUE",
+      "emissive_factor": [
+        0,
+        0,
+        0
+      ],
+      "extensions": {},
+      "extras": {
+        "lifeos_source_material": "V4_Fitness_Fasteners",
+        "lifeos_emissive_strength": 0.0
+      }
+    },
+    {
+      "name": "Art_Fitness_V4_Fitness_Recessed_Grooves",
+      "textures": {},
+      "base_color": [
+        0.00800000037997961,
+        0.017999999225139618,
+        0.02500000037252903,
+        1
+      ],
+      "metallic": 0.6000000238418579,
+      "roughness": 0.47999998927116394,
+      "alpha_mode": "OPAQUE",
+      "emissive_factor": [
+        0,
+        0,
+        0
+      ],
+      "extensions": {},
+      "extras": {
+        "lifeos_source_material": "V4_Fitness_Recessed_Grooves",
+        "lifeos_emissive_strength": 0.0
+      }
+    },
+    {
+      "name": "Art_Fitness_V4_Fitness_Satin_Faces",
+      "textures": {},
+      "base_color": [
+        0.11999999731779099,
+        0.1899999976158142,
+        0.23999999463558197,
+        1
+      ],
+      "metallic": 0.7200000286102295,
+      "roughness": 0.36000001430511475,
+      "alpha_mode": "OPAQUE",
+      "emissive_factor": [
+        0,
+        0,
+        0
+      ],
+      "extensions": {},
+      "extras": {
+        "lifeos_source_material": "V4_Fitness_Satin_Faces",
+        "lifeos_emissive_strength": 0.0
+      }
+    },
+    {
+      "name": "Art_Fitness_V11_Fitness_Lunar_Mineral",
+      "textures": {
+        "normalTexture": {
+          "index": 3,
+          "texCoord": 2
+        },
+        "baseColorTexture": {
+          "index": 4,
+          "texCoord": 2
+        },
+        "metallicRoughnessTexture": {
+          "index": 5,
+          "texCoord": 2
+        }
+      },
+      "base_color": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "metallic": 0.029999999329447746,
+      "roughness": 1,
+      "alpha_mode": "OPAQUE",
+      "emissive_factor": [
+        0,
+        0,
+        0
+      ],
+      "extensions": {
+        "KHR_materials_specular": {
+          "specularFactor": 0.30000001192092896
+        }
+      },
+      "extras": {
+        "art_role": "mineral_geology",
+        "art_source": "NASA Scientific Visualization Studio CGI Moon Kit; blue art-direction tint",
+        "art_rim_color": [
+          0.045,
+          0.45,
+          0.85
+        ],
+        "art_rim_strength": 3,
+        "lifeos_source_material": "V11_Fitness_Lunar_Mineral",
+        "lifeos_emissive_strength": 0,
+        "lifeos_runtime_emission": {
+          "color": {
+            "socket": "Emission Color",
+            "default": [
+              0.04500000178813934,
+              0.44999998807907104,
+              0.8500000238418579,
+              1.0
+            ],
+            "nodes": []
+          },
+          "strength": {
+            "socket": "Emission Strength",
+            "default": 0.0,
+            "nodes": [
+              {
+                "name": "Math.001",
+                "type": "ShaderNodeMath",
+                "operation": "MULTIPLY",
+                "inputs": {
+                  "Value": 0.5
+                },
+                "links": [
+                  {
+                    "input": "Value",
+                    "node": "Math",
+                    "output": "Value"
+                  }
+                ]
+              },
+              {
+                "name": "Math",
+                "type": "ShaderNodeMath",
+                "operation": "POWER",
+                "inputs": {
+                  "Value": 0.5
+                },
+                "links": [
+                  {
+                    "input": "Value",
+                    "node": "Art_Atmosphere_Fresnel",
+                    "output": "Factor"
+                  }
+                ]
+              },
+              {
+                "name": "Art_Atmosphere_Fresnel",
+                "type": "ShaderNodeFresnel",
+                "operation": "",
+                "inputs": {
+                  "IOR": 1.149999976158142,
+                  "Normal": [
+                    0.0,
+                    0.0,
+                    0.0
+                  ]
+                },
+                "links": []
+              }
+            ]
+          },
+          "exported_strength": 0
+        }
+      }
+    },
+    {
+      "name": "Art_Fitness_V3_Fitness_Quiet_Orbit",
+      "textures": {},
+      "base_color": [
+        0.02500000037252903,
+        0.20000000298023224,
+        0.3400000035762787,
+        1
+      ],
+      "metallic": 0.10000000149011612,
+      "roughness": 0.44999998807907104,
+      "alpha_mode": "OPAQUE",
+      "emissive_factor": [
+        0.02500000037252903,
+        0.20000000298023224,
+        0.3400000035762787
+      ],
+      "extensions": {},
+      "extras": {
+        "lifeos_source_material": "V3_Fitness_Quiet_Orbit",
+        "lifeos_emissive_strength": 1.0
+      }
+    },
+    {
+      "name": "Art_Home_V2_Amber_Emitter",
+      "textures": {},
+      "base_color": [
+        0.5699999928474426,
+        0.2800000011920929,
+        0.06800000369548798,
+        1
+      ],
+      "metallic": 0.10000000149011612,
+      "roughness": 0.44999998807907104,
+      "alpha_mode": "OPAQUE",
+      "emissive_factor": [
+        1,
+        0.4912280784309297,
+        0.11929825359434312
+      ],
+      "extensions": {
+        "KHR_materials_emissive_strength": {
+          "emissiveStrength": 1.025999959945679
+        }
+      },
+      "extras": {
+        "lifeos_source_material": "V2_Amber_Emitter",
+        "lifeos_emissive_strength": 1.7999999523162842
+      }
+    },
+    {
+      "name": "Art_Home_Home_Burnished_Bronze",
+      "textures": {
+        "normalTexture": {
+          "index": 6,
+          "texCoord": 2
+        },
+        "metallicRoughnessTexture": {
+          "index": 7,
+          "texCoord": 2
+        }
+      },
+      "base_color": [
+        0.25,
+        0.14000000059604645,
+        0.057999998331069946,
+        1
+      ],
+      "metallic": 0.75,
+      "roughness": 1,
+      "alpha_mode": "OPAQUE",
+      "emissive_factor": [
+        0,
+        0,
+        0
+      ],
+      "extensions": {},
+      "extras": {
+        "lifeos_source_material": "Home_Burnished_Bronze",
+        "lifeos_emissive_strength": 0.0
+      }
+    },
+    {
+      "name": "Art_Home_Home_Ceramic_Graphite",
+      "textures": {
+        "normalTexture": {
+          "index": 8,
+          "texCoord": 2
+        },
+        "metallicRoughnessTexture": {
+          "index": 9,
+          "texCoord": 2
+        }
+      },
+      "base_color": [
+        0.0949999988079071,
+        0.0729999989271164,
+        0.052000001072883606,
+        1
+      ],
+      "metallic": 0.18000000715255737,
+      "roughness": 1,
+      "alpha_mode": "OPAQUE",
+      "emissive_factor": [
+        0,
+        0,
+        0
+      ],
+      "extensions": {},
+      "extras": {
+        "lifeos_source_material": "Home_Ceramic_Graphite",
+        "lifeos_emissive_strength": 0.0
+      }
+    },
+    {
+      "name": "Art_Home_Home_Pale_Alloy",
+      "textures": {
+        "normalTexture": {
+          "index": 10,
+          "texCoord": 2
+        },
+        "metallicRoughnessTexture": {
+          "index": 11,
+          "texCoord": 2
+        }
+      },
+      "base_color": [
+        0.30000001192092896,
+        0.23999999463558197,
+        0.1599999964237213,
+        1
+      ],
+      "metallic": 0.6299999952316284,
+      "roughness": 1,
+      "alpha_mode": "OPAQUE",
+      "emissive_factor": [
+        0,
+        0,
+        0
+      ],
+      "extensions": {},
+      "extras": {
+        "lifeos_source_material": "Home_Pale_Alloy",
+        "lifeos_emissive_strength": 0.0
+      }
+    },
+    {
+      "name": "Art_Home_Home_Recessed_Graphite",
+      "textures": {
+        "normalTexture": {
+          "index": 12,
+          "texCoord": 2
+        },
+        "metallicRoughnessTexture": {
+          "index": 13,
+          "texCoord": 2
+        }
+      },
+      "base_color": [
+        0.01600000075995922,
+        0.010999999940395355,
+        0.00800000037997961,
+        1
+      ],
+      "metallic": 0.2199999988079071,
+      "roughness": 1,
+      "alpha_mode": "OPAQUE",
+      "emissive_factor": [
+        0,
+        0,
+        0
+      ],
+      "extensions": {},
+      "extras": {
+        "lifeos_source_material": "Home_Recessed_Graphite",
+        "lifeos_emissive_strength": 0.0
+      }
+    },
+    {
+      "name": "Art_Home_Home_Satin_Bronze",
+      "textures": {
+        "normalTexture": {
+          "index": 14,
+          "texCoord": 2
+        },
+        "metallicRoughnessTexture": {
+          "index": 15,
+          "texCoord": 2
+        }
+      },
+      "base_color": [
+        0.20000000298023224,
+        0.10499999672174454,
+        0.0430000014603138,
+        1
+      ],
+      "metallic": 0.5799999833106995,
+      "roughness": 1,
+      "alpha_mode": "OPAQUE",
+      "emissive_factor": [
+        0,
+        0,
+        0
+      ],
+      "extensions": {},
+      "extras": {
+        "lifeos_source_material": "Home_Satin_Bronze",
+        "lifeos_emissive_strength": 0.0
+      }
+    },
+    {
+      "name": "Art_Learning_V2_Neural_Crystalline",
+      "textures": {
+        "baseColorTexture": {
+          "index": 16,
+          "texCoord": 2
+        }
+      },
+      "base_color": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "metallic": 0,
+      "roughness": 0.23999999463558197,
+      "alpha_mode": "OPAQUE",
+      "emissive_factor": [
+        0,
+        0,
+        0
+      ],
+      "extensions": {
+        "KHR_materials_transmission": {
+          "transmissionFactor": 0.8600000143051147
+        },
+        "KHR_materials_specular": {
+          "specularFactor": 0.07000000029802322
+        },
+        "KHR_materials_ior": {
+          "ior": 1.0399999618530273
+        }
+      },
+      "extras": {
+        "art_role": "terrain",
+        "art_rim_color": [
+          0.32,
+          0.13,
+          0.8
+        ],
+        "art_rim_strength": 2.5,
+        "art_rim_direction": [
+          0.07942623645067215,
+          -0.8339754343032837,
+          0.5460553765296936
+        ],
+        "art_rim_floor": 0.025,
+        "lifeos_source_material": "V2_Neural_Crystalline",
+        "lifeos_emissive_strength": 0,
+        "lifeos_runtime_emission": {
+          "color": {
+            "socket": "Emission Color",
+            "default": [
+              0.3199999928474426,
+              0.12999999523162842,
+              0.800000011920929,
+              1.0
+            ],
+            "nodes": []
+          },
+          "strength": {
+            "socket": "Emission Strength",
+            "default": 0.0,
+            "nodes": [
+              {
+                "name": "Math.005",
+                "type": "ShaderNodeMath",
+                "operation": "MULTIPLY",
+                "inputs": {
+                  "Value": 0.5
+                },
+                "links": [
+                  {
+                    "input": "Value",
+                    "node": "Math.001",
+                    "output": "Value"
+                  },
+                  {
+                    "input": "Value",
+                    "node": "Math.004",
+                    "output": "Value"
+                  }
+                ]
+              },
+              {
+                "name": "Math.001",
+                "type": "ShaderNodeMath",
+                "operation": "MULTIPLY",
+                "inputs": {
+                  "Value": 0.5
+                },
+                "links": [
+                  {
+                    "input": "Value",
+                    "node": "Math",
+                    "output": "Value"
+                  }
+                ]
+              },
+              {
+                "name": "Math",
+                "type": "ShaderNodeMath",
+                "operation": "POWER",
+                "inputs": {
+                  "Value": 0.5
+                },
+                "links": [
+                  {
+                    "input": "Value",
+                    "node": "Art_Atmosphere_Fresnel",
+                    "output": "Factor"
+                  }
+                ]
+              },
+              {
+                "name": "Art_Atmosphere_Fresnel",
+                "type": "ShaderNodeFresnel",
+                "operation": "",
+                "inputs": {
+                  "IOR": 1.149999976158142,
+                  "Normal": [
+                    0.0,
+                    0.0,
+                    0.0
+                  ]
+                },
+                "links": []
+              },
+              {
+                "name": "Math.004",
+                "type": "ShaderNodeMath",
+                "operation": "MULTIPLY_ADD",
+                "inputs": {
+                  "Value": 0.02500000037252903
+                },
+                "links": [
+                  {
+                    "input": "Value",
+                    "node": "Math.003",
+                    "output": "Value"
+                  }
+                ]
+              },
+              {
+                "name": "Math.003",
+                "type": "ShaderNodeMath",
+                "operation": "POWER",
+                "inputs": {
+                  "Value": 0.5
+                },
+                "links": [
+                  {
+                    "input": "Value",
+                    "node": "Math.002",
+                    "output": "Value"
+                  }
+                ]
+              },
+              {
+                "name": "Math.002",
+                "type": "ShaderNodeMath",
+                "operation": "MAXIMUM",
+                "inputs": {
+                  "Value": 0.5
+                },
+                "links": [
+                  {
+                    "input": "Value",
+                    "node": "Vector Math",
+                    "output": "Value"
+                  }
+                ]
+              },
+              {
+                "name": "Vector Math",
+                "type": "ShaderNodeVectorMath",
+                "operation": "DOT_PRODUCT",
+                "inputs": {
+                  "Vector": [
+                    0.0,
+                    0.0,
+                    0.0
+                  ],
+                  "Scale": 1.0
+                },
+                "links": [
+                  {
+                    "input": "Vector",
+                    "node": "Geometry",
+                    "output": "Normal"
+                  }
+                ]
+              },
+              {
+                "name": "Geometry",
+                "type": "ShaderNodeNewGeometry",
+                "operation": "",
+                "inputs": {},
+                "links": []
+              }
+            ]
+          },
+          "exported_strength": 0
+        }
+      }
+    },
+    {
+      "name": "Art_Learning_V12_Neural_Distant",
+      "textures": {},
+      "base_color": [
+        0.10000000149011612,
+        0.017000000923871994,
+        0.2199999988079071,
+        1
+      ],
+      "metallic": 0,
+      "roughness": 0.44999998807907104,
+      "alpha_mode": "OPAQUE",
+      "emissive_factor": [
+        0.20000000298023224,
+        0.03400000184774399,
+        0.4399999976158142
+      ],
+      "extensions": {},
+      "extras": {
+        "lifeos_source_material": "V12_Neural_Distant",
+        "lifeos_emissive_strength": 2.0
+      }
+    },
+    {
+      "name": "Art_Learning_V12_Neural_Primary",
+      "textures": {},
+      "base_color": [
+        0.3199999928474426,
+        0.07000000029802322,
+        0.6000000238418579,
+        1
+      ],
+      "metallic": 0,
+      "roughness": 0.44999998807907104,
+      "alpha_mode": "OPAQUE",
+      "emissive_factor": [
+        0.5333333002196431,
+        0.11666666252745539,
+        1
+      ],
+      "extensions": {
+        "KHR_materials_emissive_strength": {
+          "emissiveStrength": 3.3000001311302185
+        }
+      },
+      "extras": {
+        "lifeos_source_material": "V12_Neural_Primary",
+        "lifeos_emissive_strength": 5.5
+      }
+    },
+    {
+      "name": "Art_Learning_V12_Neural_Tips",
+      "textures": {},
+      "base_color": [
+        0.5,
+        0.17000000178813934,
+        0.7400000095367432,
+        1
+      ],
+      "metallic": 0,
+      "roughness": 0.44999998807907104,
+      "alpha_mode": "OPAQUE",
+      "emissive_factor": [
+        0.6756756669679118,
+        0.22972972918549447,
+        1
+      ],
+      "extensions": {
+        "KHR_materials_emissive_strength": {
+          "emissiveStrength": 3.700000047683716
+        }
+      },
+      "extras": {
+        "lifeos_source_material": "V12_Neural_Tips",
+        "lifeos_emissive_strength": 5.0
+      }
+    },
+    {
+      "name": "Art_Learning_V2_Violet_Emitter",
+      "textures": {},
+      "base_color": [
+        0.28999999165534973,
+        0.12999999523162842,
+        0.6499999761581421,
+        1
+      ],
+      "metallic": 0.10000000149011612,
+      "roughness": 0.44999998807907104,
+      "alpha_mode": "OPAQUE",
+      "emissive_factor": [
+        0.44615384968074834,
+        0.2,
+        1
+      ],
+      "extensions": {
+        "KHR_materials_emissive_strength": {
+          "emissiveStrength": 1.5600000047683693
+        }
+      },
+      "extras": {
+        "lifeos_source_material": "V2_Violet_Emitter",
+        "lifeos_emissive_strength": 2.4000000953674316
+      }
+    },
+    {
+      "name": "Art_Learning_V19_Neural_Heart",
+      "textures": {},
+      "base_color": [
+        0.6200000047683716,
+        0.25999999046325684,
+        0.8600000143051147,
+        1
+      ],
+      "metallic": 0,
+      "roughness": 0.44999998807907104,
+      "alpha_mode": "OPAQUE",
+      "emissive_factor": [
+        0.7209302261109093,
+        0.30232556527727317,
+        1
+      ],
+      "extensions": {
+        "KHR_materials_emissive_strength": {
+          "emissiveStrength": 5.1600000858306885
+        }
+      },
+      "extras": {
+        "lifeos_source_material": "V19_Neural_Heart",
+        "lifeos_emissive_strength": 6.0
+      }
+    },
+    {
+      "name": "Art_Life_V6_Life_Cloud_Layer",
+      "textures": {
+        "baseColorTexture": {
+          "index": 17,
+          "texCoord": 2
+        }
+      },
+      "base_color": [
+        0.7200000286102295,
+        0.8199999928474426,
+        0.8799999952316284,
+        1
+      ],
+      "metallic": 0,
+      "roughness": 0.9399999976158142,
+      "alpha_mode": "BLEND",
+      "emissive_factor": [
+        0,
+        0,
+        0
+      ],
+      "extensions": {},
+      "extras": {
+        "art_role": "stylized_clouds",
+        "lifeos_source_material": "V6_Life_Cloud_Layer",
+        "lifeos_emissive_strength": 0.0
+      }
+    },
+    {
+      "name": "Art_Life_V2_Life_Blue_Marble",
+      "textures": {
+        "baseColorTexture": {
+          "index": 18,
+          "texCoord": 1
+        }
+      },
+      "base_color": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "metallic": 0.019999999552965164,
+      "roughness": 0.6800000071525574,
+      "alpha_mode": "OPAQUE",
+      "emissive_factor": [
+        0,
+        0,
+        0
+      ],
+      "extensions": {
+        "KHR_materials_specular": {
+          "specularFactor": 0.23999999463558197
+        }
+      },
+      "extras": {
+        "art_role": "geographic",
+        "art_rim_color": [
+          0.018,
+          0.28,
+          0.54
+        ],
+        "art_rim_strength": 3.5,
+        "lifeos_source_material": "V2_Life_Blue_Marble",
+        "lifeos_emissive_strength": 0,
+        "lifeos_runtime_emission": {
+          "color": {
+            "socket": "Emission Color",
+            "default": [
+              0.017999999225139618,
+              0.2800000011920929,
+              0.5400000214576721,
+              1.0
+            ],
+            "nodes": []
+          },
+          "strength": {
+            "socket": "Emission Strength",
+            "default": 0.0,
+            "nodes": [
+              {
+                "name": "Math.001",
+                "type": "ShaderNodeMath",
+                "operation": "MULTIPLY",
+                "inputs": {
+                  "Value": 0.5
+                },
+                "links": [
+                  {
+                    "input": "Value",
+                    "node": "Math",
+                    "output": "Value"
+                  }
+                ]
+              },
+              {
+                "name": "Math",
+                "type": "ShaderNodeMath",
+                "operation": "POWER",
+                "inputs": {
+                  "Value": 0.5
+                },
+                "links": [
+                  {
+                    "input": "Value",
+                    "node": "Art_Atmosphere_Fresnel",
+                    "output": "Factor"
+                  }
+                ]
+              },
+              {
+                "name": "Art_Atmosphere_Fresnel",
+                "type": "ShaderNodeFresnel",
+                "operation": "",
+                "inputs": {
+                  "IOR": 1.149999976158142,
+                  "Normal": [
+                    0.0,
+                    0.0,
+                    0.0
+                  ]
+                },
+                "links": []
+              }
+            ]
+          },
+          "exported_strength": 0
+        }
+      }
+    },
+    {
+      "name": "Art_Life_V2_Chrono_Obsidian",
+      "textures": {
+        "normalTexture": {
+          "index": 19,
+          "texCoord": 2
+        },
+        "baseColorTexture": {
+          "index": 20,
+          "texCoord": 2
+        },
+        "metallicRoughnessTexture": {
+          "index": 21,
+          "texCoord": 2
+        }
+      },
+      "base_color": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "metallic": 0.11999999731779099,
+      "roughness": 1,
+      "alpha_mode": "OPAQUE",
+      "emissive_factor": [
+        0,
+        0,
+        0
+      ],
+      "extensions": {
+        "KHR_materials_specular": {
+          "specularFactor": 0.23999999463558197
+        }
+      },
+      "extras": {
+        "art_role": "terrain",
+        "art_rim_color": [
+          0.22,
+          0.12,
+          0.8
+        ],
+        "art_rim_strength": 3,
+        "lifeos_source_material": "V2_Chrono_Obsidian",
+        "lifeos_emissive_strength": 0,
+        "lifeos_runtime_emission": {
+          "color": {
+            "socket": "Emission Color",
+            "default": [
+              0.2199999988079071,
+              0.11999999731779099,
+              0.800000011920929,
+              1.0
+            ],
+            "nodes": []
+          },
+          "strength": {
+            "socket": "Emission Strength",
+            "default": 0.0,
+            "nodes": [
+              {
+                "name": "Math.001",
+                "type": "ShaderNodeMath",
+                "operation": "MULTIPLY",
+                "inputs": {
+                  "Value": 0.5
+                },
+                "links": [
+                  {
+                    "input": "Value",
+                    "node": "Math",
+                    "output": "Value"
+                  }
+                ]
+              },
+              {
+                "name": "Math",
+                "type": "ShaderNodeMath",
+                "operation": "POWER",
+                "inputs": {
+                  "Value": 0.5
+                },
+                "links": [
+                  {
+                    "input": "Value",
+                    "node": "Art_Atmosphere_Fresnel",
+                    "output": "Factor"
+                  }
+                ]
+              },
+              {
+                "name": "Art_Atmosphere_Fresnel",
+                "type": "ShaderNodeFresnel",
+                "operation": "",
+                "inputs": {
+                  "IOR": 1.149999976158142,
+                  "Normal": [
+                    0.0,
+                    0.0,
+                    0.0
+                  ]
+                },
+                "links": []
+              }
+            ]
+          },
+          "exported_strength": 0
+        }
+      }
+    },
+    {
+      "name": "Art_Life_V2_Living_Emitter",
+      "textures": {},
+      "base_color": [
+        0.07999999821186066,
+        0.3199999928474426,
+        0.25999999046325684,
+        1
+      ],
+      "metallic": 0.10000000149011612,
+      "roughness": 0.44999998807907104,
+      "alpha_mode": "OPAQUE",
+      "emissive_factor": [
+        0.11999999731779099,
+        0.47999998927116394,
+        0.38999998569488525
+      ],
+      "extensions": {},
+      "extras": {
+        "lifeos_source_material": "V2_Living_Emitter",
+        "lifeos_emissive_strength": 1.5
+      }
+    },
+    {
+      "name": "Art_Scenery_V2_Foreground_Basalt",
+      "textures": {
+        "normalTexture": {
+          "index": 22,
+          "texCoord": 2
+        },
+        "baseColorTexture": {
+          "index": 23,
+          "texCoord": 2
+        }
+      },
+      "base_color": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "metallic": 0,
+      "roughness": 0.8500000238418579,
+      "alpha_mode": "OPAQUE",
+      "emissive_factor": [
+        0,
+        0,
+        0
+      ],
+      "extensions": {
+        "KHR_materials_specular": {
+          "specularFactor": 0.1599999964237213
+        }
+      },
+      "extras": {
+        "art_role": "terrain",
+        "lifeos_source_material": "V2_Foreground_Basalt",
+        "lifeos_emissive_strength": 0.0
+      }
+    },
+    {
+      "name": "Art_Scenery_V2_Quiet_System_Tracks",
+      "textures": {},
+      "base_color": [
+        0.017999999225139618,
+        0.04600000008940697,
+        0.07699999958276749,
+        1
+      ],
+      "metallic": 0.10000000149011612,
+      "roughness": 0.44999998807907104,
+      "alpha_mode": "OPAQUE",
+      "emissive_factor": [
+        0.010799999964237195,
+        0.027600001150369646,
+        0.04620000158548354
+      ],
+      "extensions": {},
+      "extras": {
+        "lifeos_source_material": "V2_Quiet_System_Tracks",
+        "lifeos_emissive_strength": 0.6000000238418579
+      }
+    },
+    {
+      "name": "Art_Scenery_V26_Source_Lit_Dust",
+      "textures": {},
+      "base_color": [
+        0.1599999964237213,
+        0.2199999988079071,
+        0.27000001072883606,
+        1
+      ],
+      "metallic": 0,
+      "roughness": 0.8500000238418579,
+      "alpha_mode": "OPAQUE",
+      "emissive_factor": [
+        0,
+        0,
+        0
+      ],
+      "extensions": {
+        "KHR_materials_specular": {
+          "specularFactor": 0.1599999964237213
+        }
+      },
+      "extras": {
+        "lifeos_source_material": "V26_Source_Lit_Dust",
+        "lifeos_emissive_strength": 0.0
+      }
+    },
+    {
+      "name": "Art_SelfCore_V24_Outer_Coronal_Field",
+      "textures": {},
+      "base_color": [
+        0.017999999225139618,
+        0.30000001192092896,
+        0.6499999761581421,
+        1
+      ],
+      "metallic": 0,
+      "roughness": 0.44999998807907104,
+      "alpha_mode": "OPAQUE",
+      "emissive_factor": [
+        0.026999998837709427,
+        0.45000001788139343,
+        0.9749999642372131
+      ],
+      "extensions": {},
+      "extras": {
+        "lifeos_source_material": "V24_Outer_Coronal_Field",
+        "lifeos_emissive_strength": 1.5
+      }
+    },
+    {
+      "name": "Art_SelfCore_V2_Stellar_Photosphere",
+      "textures": {
+        "emissiveTexture": {
+          "index": 24,
+          "texCoord": 2
+        }
+      },
+      "base_color": [
+        0.02500000037252903,
+        0.25,
+        0.550000011920929,
+        1
+      ],
+      "metallic": 0,
+      "roughness": 0.44999998807907104,
+      "alpha_mode": "OPAQUE",
+      "emissive_factor": [
+        1,
+        1,
+        1
+      ],
+      "extensions": {
+        "KHR_materials_emissive_strength": {
+          "emissiveStrength": 7.5
+        }
+      },
+      "extras": {
+        "art_role": "photosphere",
+        "art_rim_color": [
+          0.025,
+          0.38,
+          1.0
+        ],
+        "art_rim_strength": 8.0,
+        "lifeos_source_material": "V2_Stellar_Photosphere",
+        "lifeos_emissive_strength": 7.5,
+        "lifeos_runtime_atmosphere": {
+          "socket": "Surface",
+          "default": 0,
+          "nodes": [
+            {
+              "name": "Add Shader",
+              "type": "ShaderNodeAddShader",
+              "operation": "",
+              "inputs": {},
+              "links": [
+                {
+                  "input": "Shader",
+                  "node": "Principled BSDF",
+                  "output": "BSDF"
+                },
+                {
+                  "input": "Shader",
+                  "node": "Emission",
+                  "output": "Emission"
+                }
+              ]
+            },
+            {
+              "name": "Principled BSDF",
+              "type": "ShaderNodeBsdfPrincipled",
+              "operation": "",
+              "inputs": {
+                "Base Color": [
+                  0.02500000037252903,
+                  0.25,
+                  0.550000011920929,
+                  1.0
+                ],
+                "Metallic": 0.0,
+                "Roughness": 0.44999998807907104,
+                "IOR": 1.5,
+                "Alpha": 1.0,
+                "Thin Wall": false,
+                "Normal": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "Weight": 0.0,
+                "Diffuse Roughness": 0.0,
+                "Subsurface Weight": 0.0,
+                "Subsurface Radius": [
+                  1.0,
+                  0.20000000298023224,
+                  0.10000000149011612
+                ],
+                "Subsurface Scale": 0.004999999888241291,
+                "Subsurface IOR": 1.399999976158142,
+                "Subsurface Anisotropy": 0.0,
+                "Specular IOR Level": 0.5,
+                "Specular Tint": [
+                  1.0,
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "Anisotropic": 0.0,
+                "Anisotropic Rotation": 0.0,
+                "Tangent": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "Transmission Weight": 0.0,
+                "Coat Weight": 0.0,
+                "Coat Roughness": 0.029999999329447746,
+                "Coat IOR": 1.5,
+                "Coat Tint": [
+                  1.0,
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "Coat Normal": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "Sheen Weight": 0.0,
+                "Sheen Roughness": 0.5,
+                "Sheen Tint": [
+                  1.0,
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "Emission Strength": 7.5,
+                "Thin Film Thickness": 0.0,
+                "Thin Film IOR": 1.3300000429153442
+              },
+              "links": [
+                {
+                  "input": "Emission Color",
+                  "node": "Mix (Legacy)",
+                  "output": "Color"
+                }
+              ]
+            },
+            {
+              "name": "Mix (Legacy)",
+              "type": "ShaderNodeMixRGB",
+              "operation": "",
+              "inputs": {
+                "Factor": 1.0
+              },
+              "links": [
+                {
+                  "input": "Color1",
+                  "node": "Color Ramp",
+                  "output": "Color"
+                },
+                {
+                  "input": "Color2",
+                  "node": "Color Ramp.001",
+                  "output": "Color"
+                }
+              ]
+            },
+            {
+              "name": "Color Ramp",
+              "type": "ShaderNodeValToRGB",
+              "operation": "",
+              "inputs": {},
+              "links": [
+                {
+                  "input": "Factor",
+                  "node": "Noise Texture",
+                  "output": "Factor"
+                }
+              ]
+            },
+            {
+              "name": "Noise Texture",
+              "type": "ShaderNodeTexNoise",
+              "operation": "",
+              "inputs": {
+                "Vector": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "W": 0.0,
+                "Scale": 48.0,
+                "Detail": 3.0,
+                "Roughness": 0.5,
+                "Lacunarity": 2.0,
+                "Offset": 0.0,
+                "Gain": 1.0,
+                "Distortion": 0.0
+              },
+              "links": []
+            },
+            {
+              "name": "Color Ramp.001",
+              "type": "ShaderNodeValToRGB",
+              "operation": "",
+              "inputs": {},
+              "links": [
+                {
+                  "input": "Factor",
+                  "node": "Noise Texture.001",
+                  "output": "Factor"
+                }
+              ]
+            },
+            {
+              "name": "Noise Texture.001",
+              "type": "ShaderNodeTexNoise",
+              "operation": "",
+              "inputs": {
+                "Vector": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "W": 0.0,
+                "Scale": 4.199999809265137,
+                "Detail": 3.0,
+                "Roughness": 0.5,
+                "Lacunarity": 2.0,
+                "Offset": 0.0,
+                "Gain": 1.0,
+                "Distortion": 1.2999999523162842
+              },
+              "links": []
+            },
+            {
+              "name": "Emission",
+              "type": "ShaderNodeEmission",
+              "operation": "",
+              "inputs": {
+                "Color": [
+                  0.02500000037252903,
+                  0.3799999952316284,
+                  1.0,
+                  1.0
+                ],
+                "Weight": 0.0
+              },
+              "links": [
+                {
+                  "input": "Strength",
+                  "node": "Math.001",
+                  "output": "Value"
+                }
+              ]
+            },
+            {
+              "name": "Math.001",
+              "type": "ShaderNodeMath",
+              "operation": "MULTIPLY",
+              "inputs": {
+                "Value": 0.5
+              },
+              "links": [
+                {
+                  "input": "Value",
+                  "node": "Math",
+                  "output": "Value"
+                }
+              ]
+            },
+            {
+              "name": "Math",
+              "type": "ShaderNodeMath",
+              "operation": "POWER",
+              "inputs": {
+                "Value": 0.5
+              },
+              "links": [
+                {
+                  "input": "Value",
+                  "node": "Fresnel",
+                  "output": "Factor"
+                }
+              ]
+            },
+            {
+              "name": "Fresnel",
+              "type": "ShaderNodeFresnel",
+              "operation": "",
+              "inputs": {
+                "IOR": 1.149999976158142,
+                "Normal": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "links": []
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Art_SelfCore_V8_Stellar_Corona",
+      "textures": {
+        "baseColorTexture": {
+          "index": 25,
+          "texCoord": 2
+        }
+      },
+      "base_color": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "metallic": 0,
+      "roughness": 1,
+      "alpha_mode": "BLEND",
+      "emissive_factor": [
+        0.017500000279396768,
+        0.38749999720603234,
+        1
+      ],
+      "extensions": {
+        "KHR_materials_emissive_strength": {
+          "emissiveStrength": 2.560000076293946
+        },
+        "KHR_materials_specular": {
+          "specularFactor": 0
+        }
+      },
+      "extras": {
+        "art_role": "stellar_scattering",
+        "lifeos_source_material": "V8_Stellar_Corona",
+        "lifeos_emissive_strength": 3.200000047683716
+      }
+    },
+    {
+      "name": "Art_SelfCore_V8_Plasma_Field",
+      "textures": {},
+      "base_color": [
+        0.02500000037252903,
+        0.3199999928474426,
+        0.7200000286102295,
+        1
+      ],
+      "metallic": 0,
+      "roughness": 0.44999998807907104,
+      "alpha_mode": "OPAQUE",
+      "emissive_factor": [
+        0.03472222135988654,
+        0.4444444168497026,
+        1
+      ],
+      "extensions": {
+        "KHR_materials_emissive_strength": {
+          "emissiveStrength": 2.016000045776366
+        }
+      },
+      "extras": {
+        "lifeos_source_material": "V8_Plasma_Field",
+        "lifeos_emissive_strength": 2.799999952316284
+      }
+    },
+    {
+      "name": "Art_SelfCore_V8_Plasma_Fine",
+      "textures": {},
+      "base_color": [
+        0.008999999612569809,
+        0.09000000357627869,
+        0.25,
+        1
+      ],
+      "metallic": 0,
+      "roughness": 0.44999998807907104,
+      "alpha_mode": "OPAQUE",
+      "emissive_factor": [
+        0.008099999436736116,
+        0.08100000107288352,
+        0.22499999403953552
+      ],
+      "extensions": {},
+      "extras": {
+        "lifeos_source_material": "V8_Plasma_Fine",
+        "lifeos_emissive_strength": 0.8999999761581421
+      }
+    },
+    {
+      "name": "Art_SelfCore_V8_Plasma_Hot",
+      "textures": {},
+      "base_color": [
+        0.1599999964237213,
+        0.6700000166893005,
+        1,
+        1
+      ],
+      "metallic": 0,
+      "roughness": 0.44999998807907104,
+      "alpha_mode": "OPAQUE",
+      "emissive_factor": [
+        0.1599999964237213,
+        0.6700000166893005,
+        1
+      ],
+      "extensions": {
+        "KHR_materials_emissive_strength": {
+          "emissiveStrength": 6.5
+        }
+      },
+      "extras": {
+        "lifeos_source_material": "V8_Plasma_Hot",
+        "lifeos_emissive_strength": 6.5
+      }
+    }
+  ],
+  "images": [
+    {
+      "index": 0,
+      "name": "Art_Calendar_V2_Chrono_Obsidian_Normal",
+      "width": 1024,
+      "height": 1024,
+      "encoded_bytes": 1151997,
+      "rgba8_bytes": 4194304,
+      "sha256": "538a98fe3753873914d14fe469bb910b8a38b28d0ecc1d35a28998c36a689264"
+    },
+    {
+      "index": 1,
+      "name": "Art_Calendar_V2_Chrono_Obsidian_Base_Color",
+      "width": 1024,
+      "height": 1024,
+      "encoded_bytes": 749622,
+      "rgba8_bytes": 4194304,
+      "sha256": "e2fec1a3d3e6cc8d66fe15bc7dcbd5c1470f0e4d690b427e07e1aa9b54d8f353"
+    },
+    {
+      "index": 2,
+      "name": "Art_Calendar_V2_Chrono_Obsidian_Roughness",
+      "width": 1024,
+      "height": 1024,
+      "encoded_bytes": 382008,
+      "rgba8_bytes": 4194304,
+      "sha256": "3b463881633d39f17d1e1ae4f18a772bffbd9502481a067810a154fbec7594c6"
+    },
+    {
+      "index": 3,
+      "name": "Art_Fitness_V11_Fitness_Lunar_Mineral_Normal",
+      "width": 1024,
+      "height": 1024,
+      "encoded_bytes": 1629881,
+      "rgba8_bytes": 4194304,
+      "sha256": "7609012912d990ef55706e16fb62151231a0c84f240566269e4e0c279fc82d1f"
+    },
+    {
+      "index": 4,
+      "name": "Art_Fitness_V11_Fitness_Lunar_Mineral_Base_Color",
+      "width": 1024,
+      "height": 1024,
+      "encoded_bytes": 1348079,
+      "rgba8_bytes": 4194304,
+      "sha256": "7352b64dcbe6aca85f11593c092e68f364c2ae084b0d4c7451885b0b808810bf"
+    },
+    {
+      "index": 5,
+      "name": "Art_Fitness_V11_Fitness_Lunar_Mineral_Roughness",
+      "width": 1024,
+      "height": 1024,
+      "encoded_bytes": 495799,
+      "rgba8_bytes": 4194304,
+      "sha256": "b5ff67eaf42931bc59bc4010eeae9b0b19b39a226fe9697c602f2220e669345d"
+    },
+    {
+      "index": 6,
+      "name": "Art_Home_Home_Burnished_Bronze_Normal",
+      "width": 1024,
+      "height": 1024,
+      "encoded_bytes": 22178,
+      "rgba8_bytes": 4194304,
+      "sha256": "1c31e1a07d92b3a07a3a4a153a3c590ff9dda00efd77dcee2848b6d77b5942bd"
+    },
+    {
+      "index": 7,
+      "name": "Art_Home_Home_Burnished_Bronze_Roughness",
+      "width": 1024,
+      "height": 1024,
+      "encoded_bytes": 39054,
+      "rgba8_bytes": 4194304,
+      "sha256": "1b5f38f6f329710ea3af6174318ebcb9add9dff7915fff9845a51c9002e00708"
+    },
+    {
+      "index": 8,
+      "name": "Art_Home_Home_Ceramic_Graphite_Normal",
+      "width": 1024,
+      "height": 1024,
+      "encoded_bytes": 116916,
+      "rgba8_bytes": 4194304,
+      "sha256": "6acf3ca5d9439a279be552995487b40f3006d248bda8b13f502f50ad24ba1736"
+    },
+    {
+      "index": 9,
+      "name": "Art_Home_Home_Ceramic_Graphite_Roughness",
+      "width": 1024,
+      "height": 1024,
+      "encoded_bytes": 128195,
+      "rgba8_bytes": 4194304,
+      "sha256": "1dd140d72836b5dbb514921260984cf116ed26f1acd36db231b29b0db1c85419"
+    },
+    {
+      "index": 10,
+      "name": "Art_Home_Home_Pale_Alloy_Normal",
+      "width": 1024,
+      "height": 1024,
+      "encoded_bytes": 18988,
+      "rgba8_bytes": 4194304,
+      "sha256": "dc2bd2f3c5736e8ec196ff66426b218af2df3d94ac4fb095853099091bb09878"
+    },
+    {
+      "index": 11,
+      "name": "Art_Home_Home_Pale_Alloy_Roughness",
+      "width": 1024,
+      "height": 1024,
+      "encoded_bytes": 22410,
+      "rgba8_bytes": 4194304,
+      "sha256": "c98398e7516023117829a8197547ddf837a591f58e590096464e75ca46e25a85"
+    },
+    {
+      "index": 12,
+      "name": "Art_Home_Home_Recessed_Graphite_Normal",
+      "width": 1024,
+      "height": 1024,
+      "encoded_bytes": 352039,
+      "rgba8_bytes": 4194304,
+      "sha256": "218c6dad244400b6111f9f77d19e4380831b7e394c34666592db13af58ccdee5"
+    },
+    {
+      "index": 13,
+      "name": "Art_Home_Home_Recessed_Graphite_Roughness",
+      "width": 1024,
+      "height": 1024,
+      "encoded_bytes": 153965,
+      "rgba8_bytes": 4194304,
+      "sha256": "a2c333eb4424d45b007f82416db5bca41a1d1feb94a0cec5050e94f324212c96"
+    },
+    {
+      "index": 14,
+      "name": "Art_Home_Home_Satin_Bronze_Normal",
+      "width": 1024,
+      "height": 1024,
+      "encoded_bytes": 21243,
+      "rgba8_bytes": 4194304,
+      "sha256": "a45f80c2c5bdcea225cdeae339dab10e1b4be15fd8fd00ee17c860e2f4f27ef5"
+    },
+    {
+      "index": 15,
+      "name": "Art_Home_Home_Satin_Bronze_Roughness",
+      "width": 1024,
+      "height": 1024,
+      "encoded_bytes": 28802,
+      "rgba8_bytes": 4194304,
+      "sha256": "91d01278e26c3b2b0ffbe628a763d7355a93ca06a1989f5e51f4e4bf28502c07"
+    },
+    {
+      "index": 16,
+      "name": "Art_Learning_V2_Neural_Crystalline_Base_Color",
+      "width": 1024,
+      "height": 1024,
+      "encoded_bytes": 662884,
+      "rgba8_bytes": 4194304,
+      "sha256": "d51e82f8ea462d29660188d18d034cff732db5734bc36b9a4ef3650026620844"
+    },
+    {
+      "index": 17,
+      "name": "Art_Life_V6_Life_Cloud_Layer_Alpha",
+      "width": 1024,
+      "height": 1024,
+      "encoded_bytes": 203678,
+      "rgba8_bytes": 4194304,
+      "sha256": "d799a8961ee8b0c2736b7b29a39bf720e4e96da1bbe30166ccbdc4f121ea46d4"
+    },
+    {
+      "index": 18,
+      "name": "nasa-blue-marble-july_portable_2048",
+      "width": 2048,
+      "height": 1024,
+      "encoded_bytes": 1567039,
+      "rgba8_bytes": 8388608,
+      "sha256": "3b93510af4ac75242bdca378523ff0235d824cb8d761202d4a943ebeb7ed6293"
+    },
+    {
+      "index": 19,
+      "name": "Art_Life_V2_Chrono_Obsidian_Normal",
+      "width": 1024,
+      "height": 1024,
+      "encoded_bytes": 645498,
+      "rgba8_bytes": 4194304,
+      "sha256": "4686c2466afa0638a39ba19e8c820ee37554bc99128bca229d42b7cab9c3e5ba"
+    },
+    {
+      "index": 20,
+      "name": "Art_Life_V2_Chrono_Obsidian_Base_Color",
+      "width": 1024,
+      "height": 1024,
+      "encoded_bytes": 404205,
+      "rgba8_bytes": 4194304,
+      "sha256": "04aa94a199f5ace571849d61a6c6a7288cc90b5fc0c45316c096ae1c12904997"
+    },
+    {
+      "index": 21,
+      "name": "Art_Life_V2_Chrono_Obsidian_Roughness",
+      "width": 1024,
+      "height": 1024,
+      "encoded_bytes": 209416,
+      "rgba8_bytes": 4194304,
+      "sha256": "9e4fc0ab2975124b98c2a65925ae56f9d771f4c1b9d7a079beb73514a9198115"
+    },
+    {
+      "index": 22,
+      "name": "Art_Scenery_V2_Foreground_Basalt_Normal",
+      "width": 1024,
+      "height": 1024,
+      "encoded_bytes": 885988,
+      "rgba8_bytes": 4194304,
+      "sha256": "c874cfba5e414dc9bc0201919bf1aa35ce3ae216bbbe1bd6f8e82f284185eefd"
+    },
+    {
+      "index": 23,
+      "name": "Art_Scenery_V2_Foreground_Basalt_Base_Color",
+      "width": 1024,
+      "height": 1024,
+      "encoded_bytes": 641956,
+      "rgba8_bytes": 4194304,
+      "sha256": "135f20007a4c4099f970470ba95f948c47889e53765d84c0e352bc9ec2c5f264"
+    },
+    {
+      "index": 24,
+      "name": "Art_SelfCore_V2_Stellar_Photosphere_Emission_Color",
+      "width": 1024,
+      "height": 1024,
+      "encoded_bytes": 510395,
+      "rgba8_bytes": 4194304,
+      "sha256": "d46f2266a709eb16f06c9cd33085fe80f83575b5bc6c3dd869c26ab83c83a64b"
+    },
+    {
+      "index": 25,
+      "name": "Art_SelfCore_V8_Stellar_Corona_Alpha",
+      "width": 1024,
+      "height": 1024,
+      "encoded_bytes": 61938,
+      "rgba8_bytes": 4194304,
+      "sha256": "5dcf7db3f36af91d01db6bb1d3443477ad12ed15ea44caeb36cf3bb959dcb184"
+    }
+  ],
+  "vertices": 179796,
+  "triangles": 274390,
+  "draw_calls": 38,
+  "encoded_texture_bytes": 12454173,
+  "estimated_rgba8_bytes": 113246208,
+  "estimated_rgba8_with_mips_bytes": 150994944,
+  "extensions_used": [
+    "KHR_materials_transmission",
+    "KHR_materials_emissive_strength",
+    "KHR_materials_specular",
+    "KHR_materials_ior"
+  ],
+  "structural_validation": "passed",
+  "source_blend": "E:\\LifeOS-Art\\system\\system-art-v28.blend",
+  "source_sha256": "d194db7099c9d8651ef945ff67921665a27f4bbb886bfe7f252828909a1afaf4",
+  "source_unchanged": true,
+  "source_scene": "LifeOS_System_Composition_V2",
+  "source_collection": "Art_V2_Assets",
+  "blender_version": "5.2.2 LTS",
+  "bake_size": 1024,
+  "max_source_texture_size": 2048,
+  "source_texture_preparation": [
+    {
+      "original": "nasa-blue-marble-july.jpg",
+      "original_path": "E:\\LifeOS-Art\\system\\..\\textures\\nasa-blue-marble-july.jpg",
+      "original_dimensions": [
+        5400,
+        2700
+      ],
+      "portable_dimensions": [
+        2048,
+        1024
+      ],
+      "portable_path": "E:\\LifeOS-Art\\system\\baked\\nasa-blue-marble-july_portable_2048.png"
+    }
+  ],
+  "bake_samples": 1,
+  "material_preparation": [
+    {
+      "material": "Art_Calendar_V21_Chrono_Major_Ticks",
+      "source_material": "V21_Chrono_Major_Ticks",
+      "root": "Calendar",
+      "objects": [
+        "Chrono_Clock_Tick_0",
+        "Chrono_Clock_Tick_16",
+        "Chrono_Clock_Tick_24",
+        "Chrono_Clock_Tick_32",
+        "Chrono_Clock_Tick_40",
+        "Chrono_Clock_Tick_48",
+        "Chrono_Clock_Tick_56",
+        "Chrono_Clock_Tick_64",
+        "Chrono_Clock_Tick_72",
+        "Chrono_Clock_Tick_8",
+        "Chrono_Clock_Tick_80",
+        "Chrono_Clock_Tick_88"
+      ],
+      "baked": {},
+      "preserved_images": {},
+      "emissive_strength": 2.0,
+      "runtime_extras": {},
+      "physical_contract": {
+        "transmission": 0.0,
+        "ior": 1.5,
+        "specular": 1.0
+      },
+      "art_rim_contract": {}
+    },
+    {
+      "material": "Art_Calendar_V21_Chrono_Minor_Ticks",
+      "source_material": "V21_Chrono_Minor_Ticks",
+      "root": "Calendar",
+      "objects": [
+        "Chrono_Clock_Tick_1",
+        "Chrono_Clock_Tick_10",
+        "Chrono_Clock_Tick_11",
+        "Chrono_Clock_Tick_12",
+        "Chrono_Clock_Tick_13",
+        "Chrono_Clock_Tick_14",
+        "Chrono_Clock_Tick_15",
+        "Chrono_Clock_Tick_17",
+        "Chrono_Clock_Tick_18",
+        "Chrono_Clock_Tick_19",
+        "Chrono_Clock_Tick_2",
+        "Chrono_Clock_Tick_20",
+        "Chrono_Clock_Tick_21",
+        "Chrono_Clock_Tick_22",
+        "Chrono_Clock_Tick_23",
+        "Chrono_Clock_Tick_25",
+        "Chrono_Clock_Tick_26",
+        "Chrono_Clock_Tick_27",
+        "Chrono_Clock_Tick_28",
+        "Chrono_Clock_Tick_29",
+        "Chrono_Clock_Tick_3",
+        "Chrono_Clock_Tick_30",
+        "Chrono_Clock_Tick_31",
+        "Chrono_Clock_Tick_33",
+        "Chrono_Clock_Tick_34",
+        "Chrono_Clock_Tick_35",
+        "Chrono_Clock_Tick_36",
+        "Chrono_Clock_Tick_37",
+        "Chrono_Clock_Tick_38",
+        "Chrono_Clock_Tick_39",
+        "Chrono_Clock_Tick_4",
+        "Chrono_Clock_Tick_41",
+        "Chrono_Clock_Tick_42",
+        "Chrono_Clock_Tick_43",
+        "Chrono_Clock_Tick_44",
+        "Chrono_Clock_Tick_45",
+        "Chrono_Clock_Tick_46",
+        "Chrono_Clock_Tick_47",
+        "Chrono_Clock_Tick_49",
+        "Chrono_Clock_Tick_5",
+        "Chrono_Clock_Tick_50",
+        "Chrono_Clock_Tick_51",
+        "Chrono_Clock_Tick_52",
+        "Chrono_Clock_Tick_53",
+        "Chrono_Clock_Tick_54",
+        "Chrono_Clock_Tick_55",
+        "Chrono_Clock_Tick_57",
+        "Chrono_Clock_Tick_58",
+        "Chrono_Clock_Tick_59",
+        "Chrono_Clock_Tick_6",
+        "Chrono_Clock_Tick_60",
+        "Chrono_Clock_Tick_61",
+        "Chrono_Clock_Tick_62",
+        "Chrono_Clock_Tick_63",
+        "Chrono_Clock_Tick_65",
+        "Chrono_Clock_Tick_66",
+        "Chrono_Clock_Tick_67",
+        "Chrono_Clock_Tick_68",
+        "Chrono_Clock_Tick_69",
+        "Chrono_Clock_Tick_7",
+        "Chrono_Clock_Tick_70",
+        "Chrono_Clock_Tick_71",
+        "Chrono_Clock_Tick_73",
+        "Chrono_Clock_Tick_74",
+        "Chrono_Clock_Tick_75",
+        "Chrono_Clock_Tick_76",
+        "Chrono_Clock_Tick_77",
+        "Chrono_Clock_Tick_78",
+        "Chrono_Clock_Tick_79",
+        "Chrono_Clock_Tick_81",
+        "Chrono_Clock_Tick_82",
+        "Chrono_Clock_Tick_83",
+        "Chrono_Clock_Tick_84",
+        "Chrono_Clock_Tick_85",
+        "Chrono_Clock_Tick_86",
+        "Chrono_Clock_Tick_87",
+        "Chrono_Clock_Tick_89",
+        "Chrono_Clock_Tick_9",
+        "Chrono_Clock_Tick_90",
+        "Chrono_Clock_Tick_91",
+        "Chrono_Clock_Tick_92",
+        "Chrono_Clock_Tick_93",
+        "Chrono_Clock_Tick_94",
+        "Chrono_Clock_Tick_95"
+      ],
+      "baked": {},
+      "preserved_images": {},
+      "emissive_strength": 0.6499999761581421,
+      "runtime_extras": {},
+      "physical_contract": {
+        "transmission": 0.0,
+        "ior": 1.5,
+        "specular": 1.0
+      },
+      "art_rim_contract": {}
+    },
+    {
+      "material": "Art_Calendar_V2_Chrono_Obsidian",
+      "source_material": "V2_Chrono_Obsidian",
+      "root": "Calendar",
+      "objects": [
+        "Chrono_Mineral_Body",
+        "Chrono_Moon"
+      ],
+      "baked": {
+        "Base Color": "E:\\LifeOS-Art\\system\\baked\\Art_Calendar_V2_Chrono_Obsidian_Base_Color.png",
+        "Roughness": "E:\\LifeOS-Art\\system\\baked\\Art_Calendar_V2_Chrono_Obsidian_Roughness.png",
+        "Normal": "E:\\LifeOS-Art\\system\\baked\\Art_Calendar_V2_Chrono_Obsidian_Normal.png"
+      },
+      "preserved_images": {},
+      "emissive_strength": 0,
+      "runtime_extras": {
+        "lifeos_runtime_emission": {
+          "color": {
+            "socket": "Emission Color",
+            "default": [
+              0.2199999988079071,
+              0.11999999731779099,
+              0.800000011920929,
+              1.0
+            ],
+            "nodes": []
+          },
+          "strength": {
+            "socket": "Emission Strength",
+            "default": 0.0,
+            "nodes": [
+              {
+                "name": "Math.001",
+                "type": "ShaderNodeMath",
+                "operation": "MULTIPLY",
+                "inputs": {
+                  "Value": 0.5
+                },
+                "links": [
+                  {
+                    "input": "Value",
+                    "node": "Math",
+                    "output": "Value"
+                  }
+                ]
+              },
+              {
+                "name": "Math",
+                "type": "ShaderNodeMath",
+                "operation": "POWER",
+                "inputs": {
+                  "Value": 0.5
+                },
+                "links": [
+                  {
+                    "input": "Value",
+                    "node": "Art_Atmosphere_Fresnel",
+                    "output": "Factor"
+                  }
+                ]
+              },
+              {
+                "name": "Art_Atmosphere_Fresnel",
+                "type": "ShaderNodeFresnel",
+                "operation": "",
+                "inputs": {
+                  "IOR": 1.149999976158142,
+                  "Normal": [
+                    0.0,
+                    0.0,
+                    0.0
+                  ]
+                },
+                "links": []
+              }
+            ]
+          },
+          "exported_strength": 0
+        }
+      },
+      "physical_contract": {
+        "transmission": 0.0,
+        "ior": 1.5,
+        "specular": 0.23999999463558197
+      },
+      "art_rim_contract": {
+        "art_rim_color": [
+          0.22,
+          0.12,
+          0.8
+        ],
+        "art_rim_strength": 3
+      }
+    },
+    {
+      "material": "Art_Calendar_V2_Cyan_Emitter",
+      "source_material": "V2_Cyan_Emitter",
+      "root": "Calendar",
+      "objects": [
+        "Chrono_Now"
+      ],
+      "baked": {},
+      "preserved_images": {},
+      "emissive_strength": 2.5,
+      "runtime_extras": {},
+      "physical_contract": {
+        "transmission": 0.0,
+        "ior": 1.5,
+        "specular": 1.0
+      },
+      "art_rim_contract": {}
+    },
+    {
+      "material": "Art_Calendar_V2_Violet_Emitter",
+      "source_material": "V2_Violet_Emitter",
+      "root": "Calendar",
+      "objects": [
+        "Chrono_Precision_Ring"
+      ],
+      "baked": {},
+      "preserved_images": {},
+      "emissive_strength": 2.4000000953674316,
+      "runtime_extras": {},
+      "physical_contract": {
+        "transmission": 0.0,
+        "ior": 1.5,
+        "specular": 1.0
+      },
+      "art_rim_contract": {}
+    },
+    {
+      "material": "Art_Fitness_Fitness_Cyan_Light",
+      "source_material": "Fitness_Cyan_Light",
+      "root": "Fitness",
+      "objects": [
+        "Fitness_AxisLightTrace",
+        "Fitness_LeftPlateLight0",
+        "Fitness_LeftPlateLight2",
+        "Fitness_RightPlateLight0",
+        "Fitness_RightPlateLight2"
+      ],
+      "baked": {},
+      "preserved_images": {},
+      "emissive_strength": 3.0,
+      "runtime_extras": {},
+      "physical_contract": {
+        "transmission": 0.0,
+        "ior": 1.5,
+        "specular": 1.0
+      },
+      "art_rim_contract": {}
+    },
+    {
+      "material": "Art_Fitness_Machined_Ice_Edge",
+      "source_material": "Machined_Ice_Edge",
+      "root": "Fitness",
+      "objects": [
+        "Fitness_CentralAxis",
+        "Fitness_LeftCollar",
+        "Fitness_LeftPlateRim0",
+        "Fitness_LeftPlateRim1",
+        "Fitness_LeftPlateRim2",
+        "Fitness_RightCollar",
+        "Fitness_RightPlateRim0",
+        "Fitness_RightPlateRim1",
+        "Fitness_RightPlateRim2"
+      ],
+      "baked": {},
+      "preserved_images": {},
+      "emissive_strength": 0.0,
+      "runtime_extras": {},
+      "physical_contract": {
+        "transmission": 0.0,
+        "ior": 1.5,
+        "specular": 1.0
+      },
+      "art_rim_contract": {}
+    },
+    {
+      "material": "Art_Fitness_V11_Fitness_Lunar_Mineral",
+      "source_material": "V11_Fitness_Lunar_Mineral",
+      "root": "Fitness",
+      "objects": [
+        "Fitness_PlanetCore"
+      ],
+      "baked": {
+        "Base Color": "E:\\LifeOS-Art\\system\\baked\\Art_Fitness_V11_Fitness_Lunar_Mineral_Base_Color.png",
+        "Roughness": "E:\\LifeOS-Art\\system\\baked\\Art_Fitness_V11_Fitness_Lunar_Mineral_Roughness.png",
+        "Normal": "E:\\LifeOS-Art\\system\\baked\\Art_Fitness_V11_Fitness_Lunar_Mineral_Normal.png"
+      },
+      "preserved_images": {},
+      "emissive_strength": 0,
+      "runtime_extras": {
+        "lifeos_runtime_emission": {
+          "color": {
+            "socket": "Emission Color",
+            "default": [
+              0.04500000178813934,
+              0.44999998807907104,
+              0.8500000238418579,
+              1.0
+            ],
+            "nodes": []
+          },
+          "strength": {
+            "socket": "Emission Strength",
+            "default": 0.0,
+            "nodes": [
+              {
+                "name": "Math.001",
+                "type": "ShaderNodeMath",
+                "operation": "MULTIPLY",
+                "inputs": {
+                  "Value": 0.5
+                },
+                "links": [
+                  {
+                    "input": "Value",
+                    "node": "Math",
+                    "output": "Value"
+                  }
+                ]
+              },
+              {
+                "name": "Math",
+                "type": "ShaderNodeMath",
+                "operation": "POWER",
+                "inputs": {
+                  "Value": 0.5
+                },
+                "links": [
+                  {
+                    "input": "Value",
+                    "node": "Art_Atmosphere_Fresnel",
+                    "output": "Factor"
+                  }
+                ]
+              },
+              {
+                "name": "Art_Atmosphere_Fresnel",
+                "type": "ShaderNodeFresnel",
+                "operation": "",
+                "inputs": {
+                  "IOR": 1.149999976158142,
+                  "Normal": [
+                    0.0,
+                    0.0,
+                    0.0
+                  ]
+                },
+                "links": []
+              }
+            ]
+          },
+          "exported_strength": 0
+        }
+      },
+      "physical_contract": {
+        "transmission": 0.0,
+        "ior": 1.5,
+        "specular": 0.30000001192092896
+      },
+      "art_rim_contract": {
+        "art_rim_color": [
+          0.045,
+          0.45,
+          0.85
+        ],
+        "art_rim_strength": 3
+      }
+    },
+    {
+      "material": "Art_Fitness_V3_Fitness_Quiet_Orbit",
+      "source_material": "V3_Fitness_Quiet_Orbit",
+      "root": "Fitness",
+      "objects": [
+        "Fitness_PrimaryOrbit"
+      ],
+      "baked": {},
+      "preserved_images": {},
+      "emissive_strength": 1.0,
+      "runtime_extras": {},
+      "physical_contract": {
+        "transmission": 0.0,
+        "ior": 1.5,
+        "specular": 1.0
+      },
+      "art_rim_contract": {}
+    },
+    {
+      "material": "Art_Fitness_V4_Fitness_Fasteners",
+      "source_material": "V4_Fitness_Fasteners",
+      "root": "Fitness",
+      "objects": [
+        "Fitness_Left_-1_Fastener_0",
+        "Fitness_Left_-1_Fastener_1",
+        "Fitness_Left_-1_Fastener_2",
+        "Fitness_Left_-1_Fastener_3",
+        "Fitness_Left_-1_Fastener_4",
+        "Fitness_Left_-1_Fastener_5",
+        "Fitness_Left_1_Fastener_0",
+        "Fitness_Left_1_Fastener_1",
+        "Fitness_Left_1_Fastener_2",
+        "Fitness_Left_1_Fastener_3",
+        "Fitness_Left_1_Fastener_4",
+        "Fitness_Left_1_Fastener_5",
+        "Fitness_Right_-1_Fastener_0",
+        "Fitness_Right_-1_Fastener_1",
+        "Fitness_Right_-1_Fastener_2",
+        "Fitness_Right_-1_Fastener_3",
+        "Fitness_Right_-1_Fastener_4",
+        "Fitness_Right_-1_Fastener_5",
+        "Fitness_Right_1_Fastener_0",
+        "Fitness_Right_1_Fastener_1",
+        "Fitness_Right_1_Fastener_2",
+        "Fitness_Right_1_Fastener_3",
+        "Fitness_Right_1_Fastener_4",
+        "Fitness_Right_1_Fastener_5"
+      ],
+      "baked": {},
+      "preserved_images": {},
+      "emissive_strength": 0.0,
+      "runtime_extras": {},
+      "physical_contract": {
+        "transmission": 0.0,
+        "ior": 1.5,
+        "specular": 1.0
+      },
+      "art_rim_contract": {}
+    },
+    {
+      "material": "Art_Fitness_V4_Fitness_Recessed_Grooves",
+      "source_material": "V4_Fitness_Recessed_Grooves",
+      "root": "Fitness",
+      "objects": [
+        "Fitness_Left_0_-1_Groove_0",
+        "Fitness_Left_0_-1_Groove_1",
+        "Fitness_Left_0_1_Groove_0",
+        "Fitness_Left_0_1_Groove_1",
+        "Fitness_Left_1_-1_Groove_0",
+        "Fitness_Left_1_-1_Groove_1",
+        "Fitness_Left_1_1_Groove_0",
+        "Fitness_Left_1_1_Groove_1",
+        "Fitness_Left_2_-1_Groove_0",
+        "Fitness_Left_2_-1_Groove_1",
+        "Fitness_Left_2_1_Groove_0",
+        "Fitness_Left_2_1_Groove_1",
+        "Fitness_Right_0_-1_Groove_0",
+        "Fitness_Right_0_-1_Groove_1",
+        "Fitness_Right_0_1_Groove_0",
+        "Fitness_Right_0_1_Groove_1",
+        "Fitness_Right_1_-1_Groove_0",
+        "Fitness_Right_1_-1_Groove_1",
+        "Fitness_Right_1_1_Groove_0",
+        "Fitness_Right_1_1_Groove_1",
+        "Fitness_Right_2_-1_Groove_0",
+        "Fitness_Right_2_-1_Groove_1",
+        "Fitness_Right_2_1_Groove_0",
+        "Fitness_Right_2_1_Groove_1"
+      ],
+      "baked": {},
+      "preserved_images": {},
+      "emissive_strength": 0.0,
+      "runtime_extras": {},
+      "physical_contract": {
+        "transmission": 0.0,
+        "ior": 1.5,
+        "specular": 1.0
+      },
+      "art_rim_contract": {}
+    },
+    {
+      "material": "Art_Fitness_V4_Fitness_Satin_Faces",
+      "source_material": "V4_Fitness_Satin_Faces",
+      "root": "Fitness",
+      "objects": [
+        "Fitness_LeftPlate0",
+        "Fitness_LeftPlate1",
+        "Fitness_LeftPlate2",
+        "Fitness_RightPlate0",
+        "Fitness_RightPlate1",
+        "Fitness_RightPlate2"
+      ],
+      "baked": {},
+      "preserved_images": {},
+      "emissive_strength": 0.0,
+      "runtime_extras": {},
+      "physical_contract": {
+        "transmission": 0.0,
+        "ior": 1.5,
+        "specular": 1.0
+      },
+      "art_rim_contract": {}
+    },
+    {
+      "material": "Art_Home_Home_Burnished_Bronze",
+      "source_material": "Home_Burnished_Bronze",
+      "root": "Home",
+      "objects": [
+        "Home_Modular_Panels"
+      ],
+      "baked": {
+        "Roughness": "E:\\LifeOS-Art\\system\\baked\\Art_Home_Home_Burnished_Bronze_Roughness.png",
+        "Normal": "E:\\LifeOS-Art\\system\\baked\\Art_Home_Home_Burnished_Bronze_Normal.png"
+      },
+      "preserved_images": {},
+      "emissive_strength": 0.0,
+      "runtime_extras": {},
+      "physical_contract": {
+        "transmission": 0.0,
+        "ior": 1.5,
+        "specular": 1.0
+      },
+      "art_rim_contract": {}
+    },
+    {
+      "material": "Art_Home_Home_Ceramic_Graphite",
+      "source_material": "Home_Ceramic_Graphite",
+      "root": "Home",
+      "objects": [
+        "Home_Modular_Panels"
+      ],
+      "baked": {
+        "Roughness": "E:\\LifeOS-Art\\system\\baked\\Art_Home_Home_Ceramic_Graphite_Roughness.png",
+        "Normal": "E:\\LifeOS-Art\\system\\baked\\Art_Home_Home_Ceramic_Graphite_Normal.png"
+      },
+      "preserved_images": {},
+      "emissive_strength": 0.0,
+      "runtime_extras": {},
+      "physical_contract": {
+        "transmission": 0.0,
+        "ior": 1.5,
+        "specular": 1.0
+      },
+      "art_rim_contract": {}
+    },
+    {
+      "material": "Art_Home_Home_Pale_Alloy",
+      "source_material": "Home_Pale_Alloy",
+      "root": "Home",
+      "objects": [
+        "Home_Modular_Panels"
+      ],
+      "baked": {
+        "Roughness": "E:\\LifeOS-Art\\system\\baked\\Art_Home_Home_Pale_Alloy_Roughness.png",
+        "Normal": "E:\\LifeOS-Art\\system\\baked\\Art_Home_Home_Pale_Alloy_Normal.png"
+      },
+      "preserved_images": {},
+      "emissive_strength": 0.0,
+      "runtime_extras": {},
+      "physical_contract": {
+        "transmission": 0.0,
+        "ior": 1.5,
+        "specular": 1.0
+      },
+      "art_rim_contract": {}
+    },
+    {
+      "material": "Art_Home_Home_Recessed_Graphite",
+      "source_material": "Home_Recessed_Graphite",
+      "root": "Home",
+      "objects": [
+        "Home_Modular_Panels",
+        "Home_Recessed_Seam_Core"
+      ],
+      "baked": {
+        "Roughness": "E:\\LifeOS-Art\\system\\baked\\Art_Home_Home_Recessed_Graphite_Roughness.png",
+        "Normal": "E:\\LifeOS-Art\\system\\baked\\Art_Home_Home_Recessed_Graphite_Normal.png"
+      },
+      "preserved_images": {},
+      "emissive_strength": 0.0,
+      "runtime_extras": {},
+      "physical_contract": {
+        "transmission": 0.0,
+        "ior": 1.5,
+        "specular": 1.0
+      },
+      "art_rim_contract": {}
+    },
+    {
+      "material": "Art_Home_Home_Satin_Bronze",
+      "source_material": "Home_Satin_Bronze",
+      "root": "Home",
+      "objects": [
+        "Home_Modular_Panels"
+      ],
+      "baked": {
+        "Roughness": "E:\\LifeOS-Art\\system\\baked\\Art_Home_Home_Satin_Bronze_Roughness.png",
+        "Normal": "E:\\LifeOS-Art\\system\\baked\\Art_Home_Home_Satin_Bronze_Normal.png"
+      },
+      "preserved_images": {},
+      "emissive_strength": 0.0,
+      "runtime_extras": {},
+      "physical_contract": {
+        "transmission": 0.0,
+        "ior": 1.5,
+        "specular": 1.0
+      },
+      "art_rim_contract": {}
+    },
+    {
+      "material": "Art_Home_V2_Amber_Emitter",
+      "source_material": "V2_Amber_Emitter",
+      "root": "Home",
+      "objects": [
+        "Home_Resource_Node_0",
+        "Home_Resource_Node_1",
+        "Home_Resource_Ring"
+      ],
+      "baked": {},
+      "preserved_images": {},
+      "emissive_strength": 1.7999999523162842,
+      "runtime_extras": {},
+      "physical_contract": {
+        "transmission": 0.0,
+        "ior": 1.5,
+        "specular": 1.0
+      },
+      "art_rim_contract": {}
+    },
+    {
+      "material": "Art_Learning_V12_Neural_Distant",
+      "source_material": "V12_Neural_Distant",
+      "root": "Learning",
+      "objects": [
+        "Neural_Depth_Branch_0",
+        "Neural_Depth_Branch_3",
+        "Neural_Depth_Branch_4",
+        "Neural_Depth_Branch_6",
+        "Neural_Depth_Twig_0_0",
+        "Neural_Depth_Twig_0_1",
+        "Neural_Depth_Twig_0_2",
+        "Neural_Depth_Twig_0_3",
+        "Neural_Depth_Twig_0_4",
+        "Neural_Depth_Twig_0_5",
+        "Neural_Depth_Twig_0_6",
+        "Neural_Depth_Twig_3_0",
+        "Neural_Depth_Twig_3_1",
+        "Neural_Depth_Twig_3_2",
+        "Neural_Depth_Twig_3_3",
+        "Neural_Depth_Twig_3_4",
+        "Neural_Depth_Twig_3_5",
+        "Neural_Depth_Twig_3_6",
+        "Neural_Depth_Twig_4_0",
+        "Neural_Depth_Twig_4_1",
+        "Neural_Depth_Twig_4_2",
+        "Neural_Depth_Twig_4_3",
+        "Neural_Depth_Twig_4_4",
+        "Neural_Depth_Twig_4_5",
+        "Neural_Depth_Twig_4_6",
+        "Neural_Depth_Twig_6_0",
+        "Neural_Depth_Twig_6_1",
+        "Neural_Depth_Twig_6_2",
+        "Neural_Depth_Twig_6_3",
+        "Neural_Depth_Twig_6_4",
+        "Neural_Depth_Twig_6_5",
+        "Neural_Depth_Twig_6_6",
+        "Neural_Embedded_Node_0_6",
+        "Neural_Embedded_Node_3_4",
+        "Neural_Embedded_Node_3_6",
+        "Neural_Embedded_Node_4_4",
+        "Neural_Embedded_Node_4_6",
+        "Neural_Embedded_Node_6_4",
+        "Neural_Embedded_Node_6_6",
+        "Neural_Fine_0_2_0",
+        "Neural_Fine_0_2_1",
+        "Neural_Fine_0_3_0",
+        "Neural_Fine_0_3_1",
+        "Neural_Fine_0_4_0",
+        "Neural_Fine_0_4_1",
+        "Neural_Fine_0_5_0",
+        "Neural_Fine_0_5_1",
+        "Neural_Fine_0_6_0",
+        "Neural_Fine_0_6_1",
+        "Neural_Fine_3_2_0",
+        "Neural_Fine_3_2_1",
+        "Neural_Fine_3_3_0",
+        "Neural_Fine_3_3_1",
+        "Neural_Fine_3_4_0",
+        "Neural_Fine_3_4_1",
+        "Neural_Fine_3_5_0",
+        "Neural_Fine_3_5_1",
+        "Neural_Fine_3_6_0",
+        "Neural_Fine_3_6_1",
+        "Neural_Fine_4_2_0",
+        "Neural_Fine_4_2_1",
+        "Neural_Fine_4_3_0",
+        "Neural_Fine_4_3_1",
+        "Neural_Fine_4_4_0",
+        "Neural_Fine_4_4_1",
+        "Neural_Fine_4_5_0",
+        "Neural_Fine_4_5_1",
+        "Neural_Fine_4_6_0",
+        "Neural_Fine_4_6_1",
+        "Neural_Fine_6_2_0",
+        "Neural_Fine_6_2_1",
+        "Neural_Fine_6_3_0",
+        "Neural_Fine_6_3_1",
+        "Neural_Fine_6_4_0",
+        "Neural_Fine_6_4_1",
+        "Neural_Fine_6_5_0",
+        "Neural_Fine_6_5_1",
+        "Neural_Fine_6_6_0",
+        "Neural_Fine_6_6_1"
+      ],
+      "baked": {},
+      "preserved_images": {},
+      "emissive_strength": 2.0,
+      "runtime_extras": {},
+      "physical_contract": {
+        "transmission": 0.0,
+        "ior": 1.5,
+        "specular": 1.0
+      },
+      "art_rim_contract": {}
+    },
+    {
+      "material": "Art_Learning_V12_Neural_Primary",
+      "source_material": "V12_Neural_Primary",
+      "root": "Learning",
+      "objects": [
+        "Neural_Depth_Branch_1",
+        "Neural_Depth_Branch_2",
+        "Neural_Depth_Branch_5",
+        "Neural_Depth_Branch_7",
+        "Neural_Depth_Twig_1_0",
+        "Neural_Depth_Twig_1_1",
+        "Neural_Depth_Twig_1_2",
+        "Neural_Depth_Twig_1_3",
+        "Neural_Depth_Twig_1_4",
+        "Neural_Depth_Twig_1_5",
+        "Neural_Depth_Twig_1_6",
+        "Neural_Depth_Twig_2_0",
+        "Neural_Depth_Twig_2_1",
+        "Neural_Depth_Twig_2_2",
+        "Neural_Depth_Twig_2_3",
+        "Neural_Depth_Twig_2_4",
+        "Neural_Depth_Twig_2_5",
+        "Neural_Depth_Twig_2_6",
+        "Neural_Depth_Twig_5_0",
+        "Neural_Depth_Twig_5_1",
+        "Neural_Depth_Twig_5_2",
+        "Neural_Depth_Twig_5_3",
+        "Neural_Depth_Twig_5_4",
+        "Neural_Depth_Twig_5_5",
+        "Neural_Depth_Twig_5_6",
+        "Neural_Depth_Twig_7_0",
+        "Neural_Depth_Twig_7_1",
+        "Neural_Depth_Twig_7_2",
+        "Neural_Depth_Twig_7_3",
+        "Neural_Depth_Twig_7_4",
+        "Neural_Depth_Twig_7_5",
+        "Neural_Depth_Twig_7_6",
+        "Neural_Fine_1_2_0",
+        "Neural_Fine_1_2_1",
+        "Neural_Fine_1_3_0",
+        "Neural_Fine_1_3_1",
+        "Neural_Fine_1_4_0",
+        "Neural_Fine_1_4_1",
+        "Neural_Fine_1_5_0",
+        "Neural_Fine_1_5_1",
+        "Neural_Fine_1_6_0",
+        "Neural_Fine_1_6_1",
+        "Neural_Fine_2_2_0",
+        "Neural_Fine_2_2_1",
+        "Neural_Fine_2_3_0",
+        "Neural_Fine_2_3_1",
+        "Neural_Fine_2_4_0",
+        "Neural_Fine_2_4_1",
+        "Neural_Fine_2_5_0",
+        "Neural_Fine_2_5_1",
+        "Neural_Fine_2_6_0",
+        "Neural_Fine_2_6_1",
+        "Neural_Fine_5_2_0",
+        "Neural_Fine_5_2_1",
+        "Neural_Fine_5_3_0",
+        "Neural_Fine_5_3_1",
+        "Neural_Fine_5_4_0",
+        "Neural_Fine_5_4_1",
+        "Neural_Fine_5_5_0",
+        "Neural_Fine_5_5_1",
+        "Neural_Fine_5_6_0",
+        "Neural_Fine_5_6_1",
+        "Neural_Fine_7_2_0",
+        "Neural_Fine_7_2_1",
+        "Neural_Fine_7_3_0",
+        "Neural_Fine_7_3_1",
+        "Neural_Fine_7_4_0",
+        "Neural_Fine_7_4_1",
+        "Neural_Fine_7_5_0",
+        "Neural_Fine_7_5_1",
+        "Neural_Fine_7_6_0",
+        "Neural_Fine_7_6_1",
+        "Neural_Root_0",
+        "Neural_Root_1",
+        "Neural_Root_2",
+        "Neural_Root_3",
+        "Neural_Root_4",
+        "Neural_Volumetric_Trunk"
+      ],
+      "baked": {},
+      "preserved_images": {},
+      "emissive_strength": 5.5,
+      "runtime_extras": {},
+      "physical_contract": {
+        "transmission": 0.0,
+        "ior": 1.5,
+        "specular": 1.0
+      },
+      "art_rim_contract": {}
+    },
+    {
+      "material": "Art_Learning_V12_Neural_Tips",
+      "source_material": "V12_Neural_Tips",
+      "root": "Learning",
+      "objects": [
+        "Neural_Embedded_Node_0_0",
+        "Neural_Embedded_Node_0_2",
+        "Neural_Embedded_Node_0_4",
+        "Neural_Embedded_Node_1_0",
+        "Neural_Embedded_Node_1_2",
+        "Neural_Embedded_Node_1_4",
+        "Neural_Embedded_Node_1_6",
+        "Neural_Embedded_Node_2_0",
+        "Neural_Embedded_Node_2_2",
+        "Neural_Embedded_Node_2_4",
+        "Neural_Embedded_Node_2_6",
+        "Neural_Embedded_Node_3_0",
+        "Neural_Embedded_Node_3_2",
+        "Neural_Embedded_Node_4_0",
+        "Neural_Embedded_Node_4_2",
+        "Neural_Embedded_Node_5_0",
+        "Neural_Embedded_Node_5_2",
+        "Neural_Embedded_Node_5_4",
+        "Neural_Embedded_Node_5_6",
+        "Neural_Embedded_Node_6_0",
+        "Neural_Embedded_Node_6_2",
+        "Neural_Embedded_Node_7_0",
+        "Neural_Embedded_Node_7_2",
+        "Neural_Embedded_Node_7_4",
+        "Neural_Embedded_Node_7_6"
+      ],
+      "baked": {},
+      "preserved_images": {},
+      "emissive_strength": 5.0,
+      "runtime_extras": {},
+      "physical_contract": {
+        "transmission": 0.0,
+        "ior": 1.5,
+        "specular": 1.0
+      },
+      "art_rim_contract": {}
+    },
+    {
+      "material": "Art_Learning_V19_Neural_Heart",
+      "source_material": "V19_Neural_Heart",
+      "root": "Learning",
+      "objects": [
+        "Neural_Growth_Heart"
+      ],
+      "baked": {},
+      "preserved_images": {},
+      "emissive_strength": 6.0,
+      "runtime_extras": {},
+      "physical_contract": {
+        "transmission": 0.0,
+        "ior": 1.5,
+        "specular": 1.0
+      },
+      "art_rim_contract": {}
+    },
+    {
+      "material": "Art_Learning_V2_Neural_Crystalline",
+      "source_material": "V2_Neural_Crystalline",
+      "root": "Learning",
+      "objects": [
+        "Neural_Satellite",
+        "Neural_Violet_Shell"
+      ],
+      "baked": {
+        "Base Color": "E:\\LifeOS-Art\\system\\baked\\Art_Learning_V2_Neural_Crystalline_Base_Color.png"
+      },
+      "preserved_images": {},
+      "emissive_strength": 0,
+      "runtime_extras": {
+        "lifeos_runtime_emission": {
+          "color": {
+            "socket": "Emission Color",
+            "default": [
+              0.3199999928474426,
+              0.12999999523162842,
+              0.800000011920929,
+              1.0
+            ],
+            "nodes": []
+          },
+          "strength": {
+            "socket": "Emission Strength",
+            "default": 0.0,
+            "nodes": [
+              {
+                "name": "Math.005",
+                "type": "ShaderNodeMath",
+                "operation": "MULTIPLY",
+                "inputs": {
+                  "Value": 0.5
+                },
+                "links": [
+                  {
+                    "input": "Value",
+                    "node": "Math.001",
+                    "output": "Value"
+                  },
+                  {
+                    "input": "Value",
+                    "node": "Math.004",
+                    "output": "Value"
+                  }
+                ]
+              },
+              {
+                "name": "Math.001",
+                "type": "ShaderNodeMath",
+                "operation": "MULTIPLY",
+                "inputs": {
+                  "Value": 0.5
+                },
+                "links": [
+                  {
+                    "input": "Value",
+                    "node": "Math",
+                    "output": "Value"
+                  }
+                ]
+              },
+              {
+                "name": "Math",
+                "type": "ShaderNodeMath",
+                "operation": "POWER",
+                "inputs": {
+                  "Value": 0.5
+                },
+                "links": [
+                  {
+                    "input": "Value",
+                    "node": "Art_Atmosphere_Fresnel",
+                    "output": "Factor"
+                  }
+                ]
+              },
+              {
+                "name": "Art_Atmosphere_Fresnel",
+                "type": "ShaderNodeFresnel",
+                "operation": "",
+                "inputs": {
+                  "IOR": 1.149999976158142,
+                  "Normal": [
+                    0.0,
+                    0.0,
+                    0.0
+                  ]
+                },
+                "links": []
+              },
+              {
+                "name": "Math.004",
+                "type": "ShaderNodeMath",
+                "operation": "MULTIPLY_ADD",
+                "inputs": {
+                  "Value": 0.02500000037252903
+                },
+                "links": [
+                  {
+                    "input": "Value",
+                    "node": "Math.003",
+                    "output": "Value"
+                  }
+                ]
+              },
+              {
+                "name": "Math.003",
+                "type": "ShaderNodeMath",
+                "operation": "POWER",
+                "inputs": {
+                  "Value": 0.5
+                },
+                "links": [
+                  {
+                    "input": "Value",
+                    "node": "Math.002",
+                    "output": "Value"
+                  }
+                ]
+              },
+              {
+                "name": "Math.002",
+                "type": "ShaderNodeMath",
+                "operation": "MAXIMUM",
+                "inputs": {
+                  "Value": 0.5
+                },
+                "links": [
+                  {
+                    "input": "Value",
+                    "node": "Vector Math",
+                    "output": "Value"
+                  }
+                ]
+              },
+              {
+                "name": "Vector Math",
+                "type": "ShaderNodeVectorMath",
+                "operation": "DOT_PRODUCT",
+                "inputs": {
+                  "Vector": [
+                    0.0,
+                    0.0,
+                    0.0
+                  ],
+                  "Scale": 1.0
+                },
+                "links": [
+                  {
+                    "input": "Vector",
+                    "node": "Geometry",
+                    "output": "Normal"
+                  }
+                ]
+              },
+              {
+                "name": "Geometry",
+                "type": "ShaderNodeNewGeometry",
+                "operation": "",
+                "inputs": {},
+                "links": []
+              }
+            ]
+          },
+          "exported_strength": 0
+        }
+      },
+      "physical_contract": {
+        "transmission": 0.8600000143051147,
+        "ior": 1.0399999618530273,
+        "specular": 0.07000000029802322
+      },
+      "art_rim_contract": {
+        "art_rim_color": [
+          0.32,
+          0.13,
+          0.8
+        ],
+        "art_rim_strength": 2.5,
+        "art_rim_direction": [
+          0.07942623645067215,
+          -0.8339754343032837,
+          0.5460553765296936
+        ],
+        "art_rim_floor": 0.025
+      }
+    },
+    {
+      "material": "Art_Learning_V2_Violet_Emitter",
+      "source_material": "V2_Violet_Emitter",
+      "root": "Learning",
+      "objects": [
+        "Neural_Fine_Orbit"
+      ],
+      "baked": {},
+      "preserved_images": {},
+      "emissive_strength": 2.4000000953674316,
+      "runtime_extras": {},
+      "physical_contract": {
+        "transmission": 0.0,
+        "ior": 1.5,
+        "specular": 1.0
+      },
+      "art_rim_contract": {}
+    },
+    {
+      "material": "Art_Life_V2_Chrono_Obsidian",
+      "source_material": "V2_Chrono_Obsidian",
+      "root": "Life",
+      "objects": [
+        "Life_Habitat_Moon"
+      ],
+      "baked": {
+        "Base Color": "E:\\LifeOS-Art\\system\\baked\\Art_Life_V2_Chrono_Obsidian_Base_Color.png",
+        "Roughness": "E:\\LifeOS-Art\\system\\baked\\Art_Life_V2_Chrono_Obsidian_Roughness.png",
+        "Normal": "E:\\LifeOS-Art\\system\\baked\\Art_Life_V2_Chrono_Obsidian_Normal.png"
+      },
+      "preserved_images": {},
+      "emissive_strength": 0,
+      "runtime_extras": {
+        "lifeos_runtime_emission": {
+          "color": {
+            "socket": "Emission Color",
+            "default": [
+              0.2199999988079071,
+              0.11999999731779099,
+              0.800000011920929,
+              1.0
+            ],
+            "nodes": []
+          },
+          "strength": {
+            "socket": "Emission Strength",
+            "default": 0.0,
+            "nodes": [
+              {
+                "name": "Math.001",
+                "type": "ShaderNodeMath",
+                "operation": "MULTIPLY",
+                "inputs": {
+                  "Value": 0.5
+                },
+                "links": [
+                  {
+                    "input": "Value",
+                    "node": "Math",
+                    "output": "Value"
+                  }
+                ]
+              },
+              {
+                "name": "Math",
+                "type": "ShaderNodeMath",
+                "operation": "POWER",
+                "inputs": {
+                  "Value": 0.5
+                },
+                "links": [
+                  {
+                    "input": "Value",
+                    "node": "Art_Atmosphere_Fresnel",
+                    "output": "Factor"
+                  }
+                ]
+              },
+              {
+                "name": "Art_Atmosphere_Fresnel",
+                "type": "ShaderNodeFresnel",
+                "operation": "",
+                "inputs": {
+                  "IOR": 1.149999976158142,
+                  "Normal": [
+                    0.0,
+                    0.0,
+                    0.0
+                  ]
+                },
+                "links": []
+              }
+            ]
+          },
+          "exported_strength": 0
+        }
+      },
+      "physical_contract": {
+        "transmission": 0.0,
+        "ior": 1.5,
+        "specular": 0.23999999463558197
+      },
+      "art_rim_contract": {
+        "art_rim_color": [
+          0.22,
+          0.12,
+          0.8
+        ],
+        "art_rim_strength": 3
+      }
+    },
+    {
+      "material": "Art_Life_V2_Life_Blue_Marble",
+      "source_material": "V2_Life_Blue_Marble",
+      "root": "Life",
+      "objects": [
+        "Life_Geographic_Globe"
+      ],
+      "baked": {},
+      "preserved_images": {
+        "Base Color": {
+          "name": "Portable_nasa-blue-marble-july.jpg",
+          "filepath": "E:\\LifeOS-Art\\system\\baked\\nasa-blue-marble-july_portable_2048.png",
+          "original_filepath": "E:\\LifeOS-Art\\system\\..\\textures\\nasa-blue-marble-july.jpg"
+        }
+      },
+      "emissive_strength": 0,
+      "runtime_extras": {
+        "lifeos_runtime_emission": {
+          "color": {
+            "socket": "Emission Color",
+            "default": [
+              0.017999999225139618,
+              0.2800000011920929,
+              0.5400000214576721,
+              1.0
+            ],
+            "nodes": []
+          },
+          "strength": {
+            "socket": "Emission Strength",
+            "default": 0.0,
+            "nodes": [
+              {
+                "name": "Math.001",
+                "type": "ShaderNodeMath",
+                "operation": "MULTIPLY",
+                "inputs": {
+                  "Value": 0.5
+                },
+                "links": [
+                  {
+                    "input": "Value",
+                    "node": "Math",
+                    "output": "Value"
+                  }
+                ]
+              },
+              {
+                "name": "Math",
+                "type": "ShaderNodeMath",
+                "operation": "POWER",
+                "inputs": {
+                  "Value": 0.5
+                },
+                "links": [
+                  {
+                    "input": "Value",
+                    "node": "Art_Atmosphere_Fresnel",
+                    "output": "Factor"
+                  }
+                ]
+              },
+              {
+                "name": "Art_Atmosphere_Fresnel",
+                "type": "ShaderNodeFresnel",
+                "operation": "",
+                "inputs": {
+                  "IOR": 1.149999976158142,
+                  "Normal": [
+                    0.0,
+                    0.0,
+                    0.0
+                  ]
+                },
+                "links": []
+              }
+            ]
+          },
+          "exported_strength": 0
+        }
+      },
+      "physical_contract": {
+        "transmission": 0.0,
+        "ior": 1.5,
+        "specular": 0.23999999463558197
+      },
+      "art_rim_contract": {
+        "art_rim_color": [
+          0.018,
+          0.28,
+          0.54
+        ],
+        "art_rim_strength": 3.5
+      }
+    },
+    {
+      "material": "Art_Life_V2_Living_Emitter",
+      "source_material": "V2_Living_Emitter",
+      "root": "Life",
+      "objects": [
+        "Life_Habitat_Track"
+      ],
+      "baked": {},
+      "preserved_images": {},
+      "emissive_strength": 1.5,
+      "runtime_extras": {},
+      "physical_contract": {
+        "transmission": 0.0,
+        "ior": 1.5,
+        "specular": 1.0
+      },
+      "art_rim_contract": {}
+    },
+    {
+      "material": "Art_Life_V6_Life_Cloud_Layer",
+      "source_material": "V6_Life_Cloud_Layer",
+      "root": "Life",
+      "objects": [
+        "Life_Cloud_Shell"
+      ],
+      "baked": {
+        "Alpha": "E:\\LifeOS-Art\\system\\baked\\Art_Life_V6_Life_Cloud_Layer_Alpha.png"
+      },
+      "preserved_images": {},
+      "emissive_strength": 0.0,
+      "runtime_extras": {},
+      "physical_contract": {
+        "transmission": 0.0,
+        "ior": 1.5,
+        "specular": 1.0
+      },
+      "art_rim_contract": {}
+    },
+    {
+      "material": "Art_Scenery_V26_Source_Lit_Dust",
+      "source_material": "V26_Source_Lit_Dust",
+      "root": "Scenery",
+      "objects": [
+        "Source_Lit_Dust_00",
+        "Source_Lit_Dust_01",
+        "Source_Lit_Dust_02",
+        "Source_Lit_Dust_03",
+        "Source_Lit_Dust_04",
+        "Source_Lit_Dust_05",
+        "Source_Lit_Dust_06",
+        "Source_Lit_Dust_07",
+        "Source_Lit_Dust_08",
+        "Source_Lit_Dust_09",
+        "Source_Lit_Dust_10",
+        "Source_Lit_Dust_11",
+        "Source_Lit_Dust_12",
+        "Source_Lit_Dust_13",
+        "Source_Lit_Dust_14",
+        "Source_Lit_Dust_15",
+        "Source_Lit_Dust_16",
+        "Source_Lit_Dust_17",
+        "Source_Lit_Dust_18",
+        "Source_Lit_Dust_19",
+        "Source_Lit_Dust_20",
+        "Source_Lit_Dust_21",
+        "Source_Lit_Dust_22",
+        "Source_Lit_Dust_23",
+        "Source_Lit_Dust_24",
+        "Source_Lit_Dust_25",
+        "Source_Lit_Dust_26",
+        "Source_Lit_Dust_27",
+        "Source_Lit_Dust_28",
+        "Source_Lit_Dust_29",
+        "Source_Lit_Dust_30",
+        "Source_Lit_Dust_31",
+        "Source_Lit_Dust_32",
+        "Source_Lit_Dust_33",
+        "Source_Lit_Dust_34",
+        "Source_Lit_Dust_35",
+        "Source_Lit_Dust_36",
+        "Source_Lit_Dust_37",
+        "Source_Lit_Dust_38",
+        "Source_Lit_Dust_39",
+        "Source_Lit_Dust_40",
+        "Source_Lit_Dust_41",
+        "Source_Lit_Dust_42",
+        "Source_Lit_Dust_43",
+        "Source_Lit_Dust_44",
+        "Source_Lit_Dust_45",
+        "Source_Lit_Dust_46",
+        "Source_Lit_Dust_47",
+        "Source_Lit_Dust_48",
+        "Source_Lit_Dust_49",
+        "Source_Lit_Dust_50",
+        "Source_Lit_Dust_51",
+        "Source_Lit_Dust_52",
+        "Source_Lit_Dust_53",
+        "Source_Lit_Dust_54",
+        "Source_Lit_Dust_55",
+        "Source_Lit_Dust_56",
+        "Source_Lit_Dust_57",
+        "Source_Lit_Dust_58",
+        "Source_Lit_Dust_59",
+        "Source_Lit_Dust_60",
+        "Source_Lit_Dust_61",
+        "Source_Lit_Dust_62",
+        "Source_Lit_Dust_63",
+        "Source_Lit_Dust_64",
+        "Source_Lit_Dust_65",
+        "Source_Lit_Dust_66",
+        "Source_Lit_Dust_67",
+        "Source_Lit_Dust_68",
+        "Source_Lit_Dust_69",
+        "Source_Lit_Dust_70",
+        "Source_Lit_Dust_71",
+        "Source_Lit_Dust_72",
+        "Source_Lit_Dust_73",
+        "Source_Lit_Dust_74",
+        "Source_Lit_Dust_75",
+        "Source_Lit_Dust_76",
+        "Source_Lit_Dust_77",
+        "Source_Lit_Dust_78",
+        "Source_Lit_Dust_79",
+        "Source_Lit_Dust_80",
+        "Source_Lit_Dust_81",
+        "Source_Lit_Dust_82",
+        "Source_Lit_Dust_83",
+        "Source_Lit_Dust_84",
+        "Source_Lit_Dust_85",
+        "Source_Lit_Dust_86",
+        "Source_Lit_Dust_87",
+        "Source_Lit_Dust_88",
+        "Source_Lit_Dust_89"
+      ],
+      "baked": {},
+      "preserved_images": {},
+      "emissive_strength": 0.0,
+      "runtime_extras": {},
+      "physical_contract": {
+        "transmission": 0.0,
+        "ior": 1.5,
+        "specular": 0.1599999964237213
+      },
+      "art_rim_contract": {}
+    },
+    {
+      "material": "Art_Scenery_V2_Foreground_Basalt",
+      "source_material": "V2_Foreground_Basalt",
+      "root": "Scenery",
+      "objects": [
+        "Foreground_Quiet_Crescent",
+        "Near_Frame_Debris_00",
+        "Near_Frame_Debris_01",
+        "Near_Frame_Debris_02",
+        "Near_Frame_Debris_03",
+        "Near_Frame_Debris_04",
+        "Near_Frame_Debris_05",
+        "Near_Frame_Debris_06",
+        "Near_Frame_Debris_07",
+        "Near_Frame_Debris_08",
+        "Near_Frame_Debris_09",
+        "Near_Frame_Debris_10",
+        "Near_Frame_Debris_11",
+        "Near_Frame_Debris_12",
+        "Near_Frame_Debris_13",
+        "Near_Frame_Debris_14",
+        "Near_Frame_Debris_15",
+        "Near_Frame_Debris_16",
+        "Near_Frame_Debris_17",
+        "Receding_Belt_Debris_00",
+        "Receding_Belt_Debris_01",
+        "Receding_Belt_Debris_02",
+        "Receding_Belt_Debris_03",
+        "Receding_Belt_Debris_04",
+        "Receding_Belt_Debris_05",
+        "Receding_Belt_Debris_06",
+        "Receding_Belt_Debris_07",
+        "Receding_Belt_Debris_08",
+        "Receding_Belt_Debris_09",
+        "Receding_Belt_Debris_10",
+        "Receding_Belt_Debris_11",
+        "Receding_Belt_Debris_12",
+        "Receding_Belt_Debris_13",
+        "Receding_Belt_Debris_14",
+        "Receding_Belt_Debris_15",
+        "Receding_Belt_Debris_16",
+        "Receding_Belt_Debris_17",
+        "Receding_Belt_Debris_18",
+        "Receding_Belt_Debris_19",
+        "Receding_Belt_Debris_20",
+        "Receding_Belt_Debris_21",
+        "Receding_Belt_Debris_22",
+        "Receding_Belt_Debris_23",
+        "Receding_Belt_Debris_24",
+        "Receding_Belt_Debris_25",
+        "Receding_Belt_Debris_26",
+        "Receding_Belt_Debris_27",
+        "Receding_Belt_Debris_28",
+        "Receding_Belt_Debris_29",
+        "Receding_Belt_Debris_30",
+        "Receding_Belt_Debris_31",
+        "Receding_Belt_Debris_32",
+        "Receding_Belt_Debris_33",
+        "Receding_Belt_Debris_34",
+        "Receding_Belt_Debris_35",
+        "Receding_Belt_Debris_36",
+        "Receding_Belt_Debris_37",
+        "Receding_Belt_Debris_38",
+        "Receding_Belt_Debris_39",
+        "Receding_Belt_Debris_40",
+        "Receding_Belt_Debris_41",
+        "Receding_Belt_Debris_42",
+        "Receding_Belt_Debris_43",
+        "Receding_Belt_Debris_44",
+        "Receding_Belt_Debris_45",
+        "Receding_Belt_Debris_46",
+        "Receding_Belt_Debris_47",
+        "Receding_Belt_Debris_48",
+        "Receding_Belt_Debris_49",
+        "Receding_Belt_Debris_50",
+        "Receding_Belt_Debris_51",
+        "Receding_Belt_Debris_52",
+        "Receding_Belt_Debris_53",
+        "Receding_Belt_Debris_54",
+        "Receding_Belt_Debris_55",
+        "Receding_Belt_Debris_56",
+        "Receding_Belt_Debris_57"
+      ],
+      "baked": {
+        "Base Color": "E:\\LifeOS-Art\\system\\baked\\Art_Scenery_V2_Foreground_Basalt_Base_Color.png",
+        "Normal": "E:\\LifeOS-Art\\system\\baked\\Art_Scenery_V2_Foreground_Basalt_Normal.png"
+      },
+      "preserved_images": {},
+      "emissive_strength": 0.0,
+      "runtime_extras": {},
+      "physical_contract": {
+        "transmission": 0.0,
+        "ior": 1.5,
+        "specular": 0.1599999964237213
+      },
+      "art_rim_contract": {}
+    },
+    {
+      "material": "Art_Scenery_V2_Quiet_System_Tracks",
+      "source_material": "V2_Quiet_System_Tracks",
+      "root": "Scenery",
+      "objects": [
+        "System_Depth_Track_0_0",
+        "System_Depth_Track_0_1",
+        "System_Depth_Track_0_2",
+        "System_Depth_Track_0_3",
+        "System_Depth_Track_1_0",
+        "System_Depth_Track_1_1",
+        "System_Depth_Track_1_2",
+        "System_Depth_Track_1_3"
+      ],
+      "baked": {},
+      "preserved_images": {},
+      "emissive_strength": 0.6000000238418579,
+      "runtime_extras": {},
+      "physical_contract": {
+        "transmission": 0.0,
+        "ior": 1.5,
+        "specular": 1.0
+      },
+      "art_rim_contract": {}
+    },
+    {
+      "material": "Art_SelfCore_V24_Outer_Coronal_Field",
+      "source_material": "V24_Outer_Coronal_Field",
+      "root": "SelfCore",
+      "objects": [
+        "Self_Extended_Coronal_Field"
+      ],
+      "baked": {},
+      "preserved_images": {},
+      "emissive_strength": 1.5,
+      "runtime_extras": {},
+      "physical_contract": {
+        "transmission": 0.0,
+        "ior": 1.5,
+        "specular": 1.0
+      },
+      "art_rim_contract": {}
+    },
+    {
+      "material": "Art_SelfCore_V2_Stellar_Photosphere",
+      "source_material": "V2_Stellar_Photosphere",
+      "root": "SelfCore",
+      "objects": [
+        "Self_Granular_Star"
+      ],
+      "baked": {
+        "Emission Color": "E:\\LifeOS-Art\\system\\baked\\Art_SelfCore_V2_Stellar_Photosphere_Emission_Color.png"
+      },
+      "preserved_images": {},
+      "emissive_strength": 7.5,
+      "runtime_extras": {
+        "lifeos_runtime_atmosphere": {
+          "socket": "Surface",
+          "default": 0,
+          "nodes": [
+            {
+              "name": "Add Shader",
+              "type": "ShaderNodeAddShader",
+              "operation": "",
+              "inputs": {},
+              "links": [
+                {
+                  "input": "Shader",
+                  "node": "Principled BSDF",
+                  "output": "BSDF"
+                },
+                {
+                  "input": "Shader",
+                  "node": "Emission",
+                  "output": "Emission"
+                }
+              ]
+            },
+            {
+              "name": "Principled BSDF",
+              "type": "ShaderNodeBsdfPrincipled",
+              "operation": "",
+              "inputs": {
+                "Base Color": [
+                  0.02500000037252903,
+                  0.25,
+                  0.550000011920929,
+                  1.0
+                ],
+                "Metallic": 0.0,
+                "Roughness": 0.44999998807907104,
+                "IOR": 1.5,
+                "Alpha": 1.0,
+                "Thin Wall": false,
+                "Normal": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "Weight": 0.0,
+                "Diffuse Roughness": 0.0,
+                "Subsurface Weight": 0.0,
+                "Subsurface Radius": [
+                  1.0,
+                  0.20000000298023224,
+                  0.10000000149011612
+                ],
+                "Subsurface Scale": 0.004999999888241291,
+                "Subsurface IOR": 1.399999976158142,
+                "Subsurface Anisotropy": 0.0,
+                "Specular IOR Level": 0.5,
+                "Specular Tint": [
+                  1.0,
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "Anisotropic": 0.0,
+                "Anisotropic Rotation": 0.0,
+                "Tangent": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "Transmission Weight": 0.0,
+                "Coat Weight": 0.0,
+                "Coat Roughness": 0.029999999329447746,
+                "Coat IOR": 1.5,
+                "Coat Tint": [
+                  1.0,
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "Coat Normal": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "Sheen Weight": 0.0,
+                "Sheen Roughness": 0.5,
+                "Sheen Tint": [
+                  1.0,
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "Emission Strength": 7.5,
+                "Thin Film Thickness": 0.0,
+                "Thin Film IOR": 1.3300000429153442
+              },
+              "links": [
+                {
+                  "input": "Emission Color",
+                  "node": "Mix (Legacy)",
+                  "output": "Color"
+                }
+              ]
+            },
+            {
+              "name": "Mix (Legacy)",
+              "type": "ShaderNodeMixRGB",
+              "operation": "",
+              "inputs": {
+                "Factor": 1.0
+              },
+              "links": [
+                {
+                  "input": "Color1",
+                  "node": "Color Ramp",
+                  "output": "Color"
+                },
+                {
+                  "input": "Color2",
+                  "node": "Color Ramp.001",
+                  "output": "Color"
+                }
+              ]
+            },
+            {
+              "name": "Color Ramp",
+              "type": "ShaderNodeValToRGB",
+              "operation": "",
+              "inputs": {},
+              "links": [
+                {
+                  "input": "Factor",
+                  "node": "Noise Texture",
+                  "output": "Factor"
+                }
+              ]
+            },
+            {
+              "name": "Noise Texture",
+              "type": "ShaderNodeTexNoise",
+              "operation": "",
+              "inputs": {
+                "Vector": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "W": 0.0,
+                "Scale": 48.0,
+                "Detail": 3.0,
+                "Roughness": 0.5,
+                "Lacunarity": 2.0,
+                "Offset": 0.0,
+                "Gain": 1.0,
+                "Distortion": 0.0
+              },
+              "links": []
+            },
+            {
+              "name": "Color Ramp.001",
+              "type": "ShaderNodeValToRGB",
+              "operation": "",
+              "inputs": {},
+              "links": [
+                {
+                  "input": "Factor",
+                  "node": "Noise Texture.001",
+                  "output": "Factor"
+                }
+              ]
+            },
+            {
+              "name": "Noise Texture.001",
+              "type": "ShaderNodeTexNoise",
+              "operation": "",
+              "inputs": {
+                "Vector": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "W": 0.0,
+                "Scale": 4.199999809265137,
+                "Detail": 3.0,
+                "Roughness": 0.5,
+                "Lacunarity": 2.0,
+                "Offset": 0.0,
+                "Gain": 1.0,
+                "Distortion": 1.2999999523162842
+              },
+              "links": []
+            },
+            {
+              "name": "Emission",
+              "type": "ShaderNodeEmission",
+              "operation": "",
+              "inputs": {
+                "Color": [
+                  0.02500000037252903,
+                  0.3799999952316284,
+                  1.0,
+                  1.0
+                ],
+                "Weight": 0.0
+              },
+              "links": [
+                {
+                  "input": "Strength",
+                  "node": "Math.001",
+                  "output": "Value"
+                }
+              ]
+            },
+            {
+              "name": "Math.001",
+              "type": "ShaderNodeMath",
+              "operation": "MULTIPLY",
+              "inputs": {
+                "Value": 0.5
+              },
+              "links": [
+                {
+                  "input": "Value",
+                  "node": "Math",
+                  "output": "Value"
+                }
+              ]
+            },
+            {
+              "name": "Math",
+              "type": "ShaderNodeMath",
+              "operation": "POWER",
+              "inputs": {
+                "Value": 0.5
+              },
+              "links": [
+                {
+                  "input": "Value",
+                  "node": "Fresnel",
+                  "output": "Factor"
+                }
+              ]
+            },
+            {
+              "name": "Fresnel",
+              "type": "ShaderNodeFresnel",
+              "operation": "",
+              "inputs": {
+                "IOR": 1.149999976158142,
+                "Normal": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "links": []
+            }
+          ]
+        }
+      },
+      "physical_contract": {
+        "transmission": 0.0,
+        "ior": 1.5,
+        "specular": 1.0
+      },
+      "art_rim_contract": {
+        "art_rim_color": [
+          0.025,
+          0.38,
+          1.0
+        ],
+        "art_rim_strength": 8.0
+      }
+    },
+    {
+      "material": "Art_SelfCore_V8_Plasma_Field",
+      "source_material": "V8_Plasma_Field",
+      "root": "SelfCore",
+      "objects": [
+        "Self_Magnetic_Bundle_11_1",
+        "Self_Magnetic_Bundle_12_1",
+        "Self_Magnetic_Bundle_13_1",
+        "Self_Magnetic_Bundle_14_1",
+        "Self_Magnetic_Bundle_16_1",
+        "Self_Magnetic_Bundle_17_1",
+        "Self_Magnetic_Bundle_18_1",
+        "Self_Magnetic_Bundle_19_1",
+        "Self_Magnetic_Bundle_1_1",
+        "Self_Magnetic_Bundle_21_1",
+        "Self_Magnetic_Bundle_22_1",
+        "Self_Magnetic_Bundle_23_1",
+        "Self_Magnetic_Bundle_2_1",
+        "Self_Magnetic_Bundle_3_1",
+        "Self_Magnetic_Bundle_4_1",
+        "Self_Magnetic_Bundle_6_1",
+        "Self_Magnetic_Bundle_7_1",
+        "Self_Magnetic_Bundle_8_1",
+        "Self_Magnetic_Bundle_9_1"
+      ],
+      "baked": {},
+      "preserved_images": {},
+      "emissive_strength": 2.799999952316284,
+      "runtime_extras": {},
+      "physical_contract": {
+        "transmission": 0.0,
+        "ior": 1.5,
+        "specular": 1.0
+      },
+      "art_rim_contract": {}
+    },
+    {
+      "material": "Art_SelfCore_V8_Plasma_Fine",
+      "source_material": "V8_Plasma_Fine",
+      "root": "SelfCore",
+      "objects": [
+        "Self_Magnetic_Bundle_0_0",
+        "Self_Magnetic_Bundle_0_2",
+        "Self_Magnetic_Bundle_10_0",
+        "Self_Magnetic_Bundle_10_2",
+        "Self_Magnetic_Bundle_11_0",
+        "Self_Magnetic_Bundle_11_2",
+        "Self_Magnetic_Bundle_12_0",
+        "Self_Magnetic_Bundle_12_2",
+        "Self_Magnetic_Bundle_13_0",
+        "Self_Magnetic_Bundle_13_2",
+        "Self_Magnetic_Bundle_14_0",
+        "Self_Magnetic_Bundle_14_2",
+        "Self_Magnetic_Bundle_15_0",
+        "Self_Magnetic_Bundle_15_2",
+        "Self_Magnetic_Bundle_16_0",
+        "Self_Magnetic_Bundle_16_2",
+        "Self_Magnetic_Bundle_17_0",
+        "Self_Magnetic_Bundle_17_2",
+        "Self_Magnetic_Bundle_18_0",
+        "Self_Magnetic_Bundle_18_2",
+        "Self_Magnetic_Bundle_19_0",
+        "Self_Magnetic_Bundle_19_2",
+        "Self_Magnetic_Bundle_1_0",
+        "Self_Magnetic_Bundle_1_2",
+        "Self_Magnetic_Bundle_20_0",
+        "Self_Magnetic_Bundle_20_2",
+        "Self_Magnetic_Bundle_21_0",
+        "Self_Magnetic_Bundle_21_2",
+        "Self_Magnetic_Bundle_22_0",
+        "Self_Magnetic_Bundle_22_2",
+        "Self_Magnetic_Bundle_23_0",
+        "Self_Magnetic_Bundle_23_2",
+        "Self_Magnetic_Bundle_2_0",
+        "Self_Magnetic_Bundle_2_2",
+        "Self_Magnetic_Bundle_3_0",
+        "Self_Magnetic_Bundle_3_2",
+        "Self_Magnetic_Bundle_4_0",
+        "Self_Magnetic_Bundle_4_2",
+        "Self_Magnetic_Bundle_5_0",
+        "Self_Magnetic_Bundle_5_2",
+        "Self_Magnetic_Bundle_6_0",
+        "Self_Magnetic_Bundle_6_2",
+        "Self_Magnetic_Bundle_7_0",
+        "Self_Magnetic_Bundle_7_2",
+        "Self_Magnetic_Bundle_8_0",
+        "Self_Magnetic_Bundle_8_2",
+        "Self_Magnetic_Bundle_9_0",
+        "Self_Magnetic_Bundle_9_2"
+      ],
+      "baked": {},
+      "preserved_images": {},
+      "emissive_strength": 0.8999999761581421,
+      "runtime_extras": {},
+      "physical_contract": {
+        "transmission": 0.0,
+        "ior": 1.5,
+        "specular": 1.0
+      },
+      "art_rim_contract": {}
+    },
+    {
+      "material": "Art_SelfCore_V8_Plasma_Hot",
+      "source_material": "V8_Plasma_Hot",
+      "root": "SelfCore",
+      "objects": [
+        "Self_Magnetic_Bundle_0_1",
+        "Self_Magnetic_Bundle_10_1",
+        "Self_Magnetic_Bundle_15_1",
+        "Self_Magnetic_Bundle_20_1",
+        "Self_Magnetic_Bundle_5_1"
+      ],
+      "baked": {},
+      "preserved_images": {},
+      "emissive_strength": 6.5,
+      "runtime_extras": {},
+      "physical_contract": {
+        "transmission": 0.0,
+        "ior": 1.5,
+        "specular": 1.0
+      },
+      "art_rim_contract": {}
+    },
+    {
+      "material": "Art_SelfCore_V8_Stellar_Corona",
+      "source_material": "V8_Stellar_Corona",
+      "root": "SelfCore",
+      "objects": [
+        "Self_Source_Bound_Corona"
+      ],
+      "baked": {
+        "Alpha": "E:\\LifeOS-Art\\system\\baked\\Art_SelfCore_V8_Stellar_Corona_Alpha.png"
+      },
+      "preserved_images": {},
+      "emissive_strength": 3.200000047683716,
+      "runtime_extras": {},
+      "physical_contract": {
+        "transmission": 0.0,
+        "ior": 1.5,
+        "specular": 0.0
+      },
+      "art_rim_contract": {}
+    }
+  ],
+  "consolidation": [
+    {
+      "object": "SelfCore_Batch_Art_SelfCore_V8_Plasma_Fine",
+      "source_objects": [
+        "Self_Magnetic_Bundle_0_0",
+        "Self_Magnetic_Bundle_0_2",
+        "Self_Magnetic_Bundle_10_0",
+        "Self_Magnetic_Bundle_10_2",
+        "Self_Magnetic_Bundle_11_0",
+        "Self_Magnetic_Bundle_11_2",
+        "Self_Magnetic_Bundle_12_0",
+        "Self_Magnetic_Bundle_12_2",
+        "Self_Magnetic_Bundle_13_0",
+        "Self_Magnetic_Bundle_13_2",
+        "Self_Magnetic_Bundle_14_0",
+        "Self_Magnetic_Bundle_14_2",
+        "Self_Magnetic_Bundle_15_0",
+        "Self_Magnetic_Bundle_15_2",
+        "Self_Magnetic_Bundle_16_0",
+        "Self_Magnetic_Bundle_16_2",
+        "Self_Magnetic_Bundle_17_0",
+        "Self_Magnetic_Bundle_17_2",
+        "Self_Magnetic_Bundle_18_0",
+        "Self_Magnetic_Bundle_18_2",
+        "Self_Magnetic_Bundle_19_0",
+        "Self_Magnetic_Bundle_19_2",
+        "Self_Magnetic_Bundle_1_0",
+        "Self_Magnetic_Bundle_1_2",
+        "Self_Magnetic_Bundle_20_0",
+        "Self_Magnetic_Bundle_20_2",
+        "Self_Magnetic_Bundle_21_0",
+        "Self_Magnetic_Bundle_21_2",
+        "Self_Magnetic_Bundle_22_0",
+        "Self_Magnetic_Bundle_22_2",
+        "Self_Magnetic_Bundle_23_0",
+        "Self_Magnetic_Bundle_23_2",
+        "Self_Magnetic_Bundle_2_0",
+        "Self_Magnetic_Bundle_2_2",
+        "Self_Magnetic_Bundle_3_0",
+        "Self_Magnetic_Bundle_3_2",
+        "Self_Magnetic_Bundle_4_0",
+        "Self_Magnetic_Bundle_4_2",
+        "Self_Magnetic_Bundle_5_0",
+        "Self_Magnetic_Bundle_5_2",
+        "Self_Magnetic_Bundle_6_0",
+        "Self_Magnetic_Bundle_6_2",
+        "Self_Magnetic_Bundle_7_0",
+        "Self_Magnetic_Bundle_7_2",
+        "Self_Magnetic_Bundle_8_0",
+        "Self_Magnetic_Bundle_8_2",
+        "Self_Magnetic_Bundle_9_0",
+        "Self_Magnetic_Bundle_9_2"
+      ]
+    },
+    {
+      "object": "Learning_Batch_Art_Learning_V12_Neural_Primary",
+      "source_objects": [
+        "Neural_Depth_Branch_1",
+        "Neural_Depth_Branch_2",
+        "Neural_Depth_Branch_5",
+        "Neural_Depth_Branch_7",
+        "Neural_Depth_Twig_1_0",
+        "Neural_Depth_Twig_1_1",
+        "Neural_Depth_Twig_1_2",
+        "Neural_Depth_Twig_1_3",
+        "Neural_Depth_Twig_1_4",
+        "Neural_Depth_Twig_1_5",
+        "Neural_Depth_Twig_1_6",
+        "Neural_Depth_Twig_2_0",
+        "Neural_Depth_Twig_2_1",
+        "Neural_Depth_Twig_2_2",
+        "Neural_Depth_Twig_2_3",
+        "Neural_Depth_Twig_2_4",
+        "Neural_Depth_Twig_2_5",
+        "Neural_Depth_Twig_2_6",
+        "Neural_Depth_Twig_5_0",
+        "Neural_Depth_Twig_5_1",
+        "Neural_Depth_Twig_5_2",
+        "Neural_Depth_Twig_5_3",
+        "Neural_Depth_Twig_5_4",
+        "Neural_Depth_Twig_5_5",
+        "Neural_Depth_Twig_5_6",
+        "Neural_Depth_Twig_7_0",
+        "Neural_Depth_Twig_7_1",
+        "Neural_Depth_Twig_7_2",
+        "Neural_Depth_Twig_7_3",
+        "Neural_Depth_Twig_7_4",
+        "Neural_Depth_Twig_7_5",
+        "Neural_Depth_Twig_7_6",
+        "Neural_Fine_1_2_0",
+        "Neural_Fine_1_2_1",
+        "Neural_Fine_1_3_0",
+        "Neural_Fine_1_3_1",
+        "Neural_Fine_1_4_0",
+        "Neural_Fine_1_4_1",
+        "Neural_Fine_1_5_0",
+        "Neural_Fine_1_5_1",
+        "Neural_Fine_1_6_0",
+        "Neural_Fine_1_6_1",
+        "Neural_Fine_2_2_0",
+        "Neural_Fine_2_2_1",
+        "Neural_Fine_2_3_0",
+        "Neural_Fine_2_3_1",
+        "Neural_Fine_2_4_0",
+        "Neural_Fine_2_4_1",
+        "Neural_Fine_2_5_0",
+        "Neural_Fine_2_5_1",
+        "Neural_Fine_2_6_0",
+        "Neural_Fine_2_6_1",
+        "Neural_Fine_5_2_0",
+        "Neural_Fine_5_2_1",
+        "Neural_Fine_5_3_0",
+        "Neural_Fine_5_3_1",
+        "Neural_Fine_5_4_0",
+        "Neural_Fine_5_4_1",
+        "Neural_Fine_5_5_0",
+        "Neural_Fine_5_5_1",
+        "Neural_Fine_5_6_0",
+        "Neural_Fine_5_6_1",
+        "Neural_Fine_7_2_0",
+        "Neural_Fine_7_2_1",
+        "Neural_Fine_7_3_0",
+        "Neural_Fine_7_3_1",
+        "Neural_Fine_7_4_0",
+        "Neural_Fine_7_4_1",
+        "Neural_Fine_7_5_0",
+        "Neural_Fine_7_5_1",
+        "Neural_Fine_7_6_0",
+        "Neural_Fine_7_6_1",
+        "Neural_Root_0",
+        "Neural_Root_1",
+        "Neural_Root_2",
+        "Neural_Root_3",
+        "Neural_Root_4",
+        "Neural_Volumetric_Trunk"
+      ]
+    },
+    {
+      "object": "Calendar_Batch_Art_Calendar_V21_Chrono_Minor_Ticks",
+      "source_objects": [
+        "Chrono_Clock_Tick_1",
+        "Chrono_Clock_Tick_10",
+        "Chrono_Clock_Tick_11",
+        "Chrono_Clock_Tick_12",
+        "Chrono_Clock_Tick_13",
+        "Chrono_Clock_Tick_14",
+        "Chrono_Clock_Tick_15",
+        "Chrono_Clock_Tick_17",
+        "Chrono_Clock_Tick_18",
+        "Chrono_Clock_Tick_19",
+        "Chrono_Clock_Tick_2",
+        "Chrono_Clock_Tick_20",
+        "Chrono_Clock_Tick_21",
+        "Chrono_Clock_Tick_22",
+        "Chrono_Clock_Tick_23",
+        "Chrono_Clock_Tick_25",
+        "Chrono_Clock_Tick_26",
+        "Chrono_Clock_Tick_27",
+        "Chrono_Clock_Tick_28",
+        "Chrono_Clock_Tick_29",
+        "Chrono_Clock_Tick_3",
+        "Chrono_Clock_Tick_30",
+        "Chrono_Clock_Tick_31",
+        "Chrono_Clock_Tick_33",
+        "Chrono_Clock_Tick_34",
+        "Chrono_Clock_Tick_35",
+        "Chrono_Clock_Tick_36",
+        "Chrono_Clock_Tick_37",
+        "Chrono_Clock_Tick_38",
+        "Chrono_Clock_Tick_39",
+        "Chrono_Clock_Tick_4",
+        "Chrono_Clock_Tick_41",
+        "Chrono_Clock_Tick_42",
+        "Chrono_Clock_Tick_43",
+        "Chrono_Clock_Tick_44",
+        "Chrono_Clock_Tick_45",
+        "Chrono_Clock_Tick_46",
+        "Chrono_Clock_Tick_47",
+        "Chrono_Clock_Tick_49",
+        "Chrono_Clock_Tick_5",
+        "Chrono_Clock_Tick_50",
+        "Chrono_Clock_Tick_51",
+        "Chrono_Clock_Tick_52",
+        "Chrono_Clock_Tick_53",
+        "Chrono_Clock_Tick_54",
+        "Chrono_Clock_Tick_55",
+        "Chrono_Clock_Tick_57",
+        "Chrono_Clock_Tick_58",
+        "Chrono_Clock_Tick_59",
+        "Chrono_Clock_Tick_6",
+        "Chrono_Clock_Tick_60",
+        "Chrono_Clock_Tick_61",
+        "Chrono_Clock_Tick_62",
+        "Chrono_Clock_Tick_63",
+        "Chrono_Clock_Tick_65",
+        "Chrono_Clock_Tick_66",
+        "Chrono_Clock_Tick_67",
+        "Chrono_Clock_Tick_68",
+        "Chrono_Clock_Tick_69",
+        "Chrono_Clock_Tick_7",
+        "Chrono_Clock_Tick_70",
+        "Chrono_Clock_Tick_71",
+        "Chrono_Clock_Tick_73",
+        "Chrono_Clock_Tick_74",
+        "Chrono_Clock_Tick_75",
+        "Chrono_Clock_Tick_76",
+        "Chrono_Clock_Tick_77",
+        "Chrono_Clock_Tick_78",
+        "Chrono_Clock_Tick_79",
+        "Chrono_Clock_Tick_81",
+        "Chrono_Clock_Tick_82",
+        "Chrono_Clock_Tick_83",
+        "Chrono_Clock_Tick_84",
+        "Chrono_Clock_Tick_85",
+        "Chrono_Clock_Tick_86",
+        "Chrono_Clock_Tick_87",
+        "Chrono_Clock_Tick_89",
+        "Chrono_Clock_Tick_9",
+        "Chrono_Clock_Tick_90",
+        "Chrono_Clock_Tick_91",
+        "Chrono_Clock_Tick_92",
+        "Chrono_Clock_Tick_93",
+        "Chrono_Clock_Tick_94",
+        "Chrono_Clock_Tick_95"
+      ]
+    },
+    {
+      "object": "Learning_Batch_Art_Learning_V12_Neural_Distant",
+      "source_objects": [
+        "Neural_Depth_Branch_0",
+        "Neural_Depth_Branch_3",
+        "Neural_Depth_Branch_4",
+        "Neural_Depth_Branch_6",
+        "Neural_Depth_Twig_0_0",
+        "Neural_Depth_Twig_0_1",
+        "Neural_Depth_Twig_0_2",
+        "Neural_Depth_Twig_0_3",
+        "Neural_Depth_Twig_0_4",
+        "Neural_Depth_Twig_0_5",
+        "Neural_Depth_Twig_0_6",
+        "Neural_Depth_Twig_3_0",
+        "Neural_Depth_Twig_3_1",
+        "Neural_Depth_Twig_3_2",
+        "Neural_Depth_Twig_3_3",
+        "Neural_Depth_Twig_3_4",
+        "Neural_Depth_Twig_3_5",
+        "Neural_Depth_Twig_3_6",
+        "Neural_Depth_Twig_4_0",
+        "Neural_Depth_Twig_4_1",
+        "Neural_Depth_Twig_4_2",
+        "Neural_Depth_Twig_4_3",
+        "Neural_Depth_Twig_4_4",
+        "Neural_Depth_Twig_4_5",
+        "Neural_Depth_Twig_4_6",
+        "Neural_Depth_Twig_6_0",
+        "Neural_Depth_Twig_6_1",
+        "Neural_Depth_Twig_6_2",
+        "Neural_Depth_Twig_6_3",
+        "Neural_Depth_Twig_6_4",
+        "Neural_Depth_Twig_6_5",
+        "Neural_Depth_Twig_6_6",
+        "Neural_Embedded_Node_0_6",
+        "Neural_Embedded_Node_3_4",
+        "Neural_Embedded_Node_3_6",
+        "Neural_Embedded_Node_4_4",
+        "Neural_Embedded_Node_4_6",
+        "Neural_Embedded_Node_6_4",
+        "Neural_Embedded_Node_6_6",
+        "Neural_Fine_0_2_0",
+        "Neural_Fine_0_2_1",
+        "Neural_Fine_0_3_0",
+        "Neural_Fine_0_3_1",
+        "Neural_Fine_0_4_0",
+        "Neural_Fine_0_4_1",
+        "Neural_Fine_0_5_0",
+        "Neural_Fine_0_5_1",
+        "Neural_Fine_0_6_0",
+        "Neural_Fine_0_6_1",
+        "Neural_Fine_3_2_0",
+        "Neural_Fine_3_2_1",
+        "Neural_Fine_3_3_0",
+        "Neural_Fine_3_3_1",
+        "Neural_Fine_3_4_0",
+        "Neural_Fine_3_4_1",
+        "Neural_Fine_3_5_0",
+        "Neural_Fine_3_5_1",
+        "Neural_Fine_3_6_0",
+        "Neural_Fine_3_6_1",
+        "Neural_Fine_4_2_0",
+        "Neural_Fine_4_2_1",
+        "Neural_Fine_4_3_0",
+        "Neural_Fine_4_3_1",
+        "Neural_Fine_4_4_0",
+        "Neural_Fine_4_4_1",
+        "Neural_Fine_4_5_0",
+        "Neural_Fine_4_5_1",
+        "Neural_Fine_4_6_0",
+        "Neural_Fine_4_6_1",
+        "Neural_Fine_6_2_0",
+        "Neural_Fine_6_2_1",
+        "Neural_Fine_6_3_0",
+        "Neural_Fine_6_3_1",
+        "Neural_Fine_6_4_0",
+        "Neural_Fine_6_4_1",
+        "Neural_Fine_6_5_0",
+        "Neural_Fine_6_5_1",
+        "Neural_Fine_6_6_0",
+        "Neural_Fine_6_6_1"
+      ]
+    },
+    {
+      "object": "Scenery_Batch_Art_Scenery_V26_Source_Lit_Dust",
+      "source_objects": [
+        "Source_Lit_Dust_00",
+        "Source_Lit_Dust_01",
+        "Source_Lit_Dust_02",
+        "Source_Lit_Dust_03",
+        "Source_Lit_Dust_04",
+        "Source_Lit_Dust_05",
+        "Source_Lit_Dust_06",
+        "Source_Lit_Dust_07",
+        "Source_Lit_Dust_08",
+        "Source_Lit_Dust_09",
+        "Source_Lit_Dust_10",
+        "Source_Lit_Dust_11",
+        "Source_Lit_Dust_12",
+        "Source_Lit_Dust_13",
+        "Source_Lit_Dust_14",
+        "Source_Lit_Dust_15",
+        "Source_Lit_Dust_16",
+        "Source_Lit_Dust_17",
+        "Source_Lit_Dust_18",
+        "Source_Lit_Dust_19",
+        "Source_Lit_Dust_20",
+        "Source_Lit_Dust_21",
+        "Source_Lit_Dust_22",
+        "Source_Lit_Dust_23",
+        "Source_Lit_Dust_24",
+        "Source_Lit_Dust_25",
+        "Source_Lit_Dust_26",
+        "Source_Lit_Dust_27",
+        "Source_Lit_Dust_28",
+        "Source_Lit_Dust_29",
+        "Source_Lit_Dust_30",
+        "Source_Lit_Dust_31",
+        "Source_Lit_Dust_32",
+        "Source_Lit_Dust_33",
+        "Source_Lit_Dust_34",
+        "Source_Lit_Dust_35",
+        "Source_Lit_Dust_36",
+        "Source_Lit_Dust_37",
+        "Source_Lit_Dust_38",
+        "Source_Lit_Dust_39",
+        "Source_Lit_Dust_40",
+        "Source_Lit_Dust_41",
+        "Source_Lit_Dust_42",
+        "Source_Lit_Dust_43",
+        "Source_Lit_Dust_44",
+        "Source_Lit_Dust_45",
+        "Source_Lit_Dust_46",
+        "Source_Lit_Dust_47",
+        "Source_Lit_Dust_48",
+        "Source_Lit_Dust_49",
+        "Source_Lit_Dust_50",
+        "Source_Lit_Dust_51",
+        "Source_Lit_Dust_52",
+        "Source_Lit_Dust_53",
+        "Source_Lit_Dust_54",
+        "Source_Lit_Dust_55",
+        "Source_Lit_Dust_56",
+        "Source_Lit_Dust_57",
+        "Source_Lit_Dust_58",
+        "Source_Lit_Dust_59",
+        "Source_Lit_Dust_60",
+        "Source_Lit_Dust_61",
+        "Source_Lit_Dust_62",
+        "Source_Lit_Dust_63",
+        "Source_Lit_Dust_64",
+        "Source_Lit_Dust_65",
+        "Source_Lit_Dust_66",
+        "Source_Lit_Dust_67",
+        "Source_Lit_Dust_68",
+        "Source_Lit_Dust_69",
+        "Source_Lit_Dust_70",
+        "Source_Lit_Dust_71",
+        "Source_Lit_Dust_72",
+        "Source_Lit_Dust_73",
+        "Source_Lit_Dust_74",
+        "Source_Lit_Dust_75",
+        "Source_Lit_Dust_76",
+        "Source_Lit_Dust_77",
+        "Source_Lit_Dust_78",
+        "Source_Lit_Dust_79",
+        "Source_Lit_Dust_80",
+        "Source_Lit_Dust_81",
+        "Source_Lit_Dust_82",
+        "Source_Lit_Dust_83",
+        "Source_Lit_Dust_84",
+        "Source_Lit_Dust_85",
+        "Source_Lit_Dust_86",
+        "Source_Lit_Dust_87",
+        "Source_Lit_Dust_88",
+        "Source_Lit_Dust_89"
+      ]
+    },
+    {
+      "object": "Scenery_Batch_Art_Scenery_V2_Foreground_Basalt",
+      "source_objects": [
+        "Foreground_Quiet_Crescent",
+        "Near_Frame_Debris_00",
+        "Near_Frame_Debris_01",
+        "Near_Frame_Debris_02",
+        "Near_Frame_Debris_03",
+        "Near_Frame_Debris_04",
+        "Near_Frame_Debris_05",
+        "Near_Frame_Debris_06",
+        "Near_Frame_Debris_07",
+        "Near_Frame_Debris_08",
+        "Near_Frame_Debris_09",
+        "Near_Frame_Debris_10",
+        "Near_Frame_Debris_11",
+        "Near_Frame_Debris_12",
+        "Near_Frame_Debris_13",
+        "Near_Frame_Debris_14",
+        "Near_Frame_Debris_15",
+        "Near_Frame_Debris_16",
+        "Near_Frame_Debris_17",
+        "Receding_Belt_Debris_00",
+        "Receding_Belt_Debris_01",
+        "Receding_Belt_Debris_02",
+        "Receding_Belt_Debris_03",
+        "Receding_Belt_Debris_04",
+        "Receding_Belt_Debris_05",
+        "Receding_Belt_Debris_06",
+        "Receding_Belt_Debris_07",
+        "Receding_Belt_Debris_08",
+        "Receding_Belt_Debris_09",
+        "Receding_Belt_Debris_10",
+        "Receding_Belt_Debris_11",
+        "Receding_Belt_Debris_12",
+        "Receding_Belt_Debris_13",
+        "Receding_Belt_Debris_14",
+        "Receding_Belt_Debris_15",
+        "Receding_Belt_Debris_16",
+        "Receding_Belt_Debris_17",
+        "Receding_Belt_Debris_18",
+        "Receding_Belt_Debris_19",
+        "Receding_Belt_Debris_20",
+        "Receding_Belt_Debris_21",
+        "Receding_Belt_Debris_22",
+        "Receding_Belt_Debris_23",
+        "Receding_Belt_Debris_24",
+        "Receding_Belt_Debris_25",
+        "Receding_Belt_Debris_26",
+        "Receding_Belt_Debris_27",
+        "Receding_Belt_Debris_28",
+        "Receding_Belt_Debris_29",
+        "Receding_Belt_Debris_30",
+        "Receding_Belt_Debris_31",
+        "Receding_Belt_Debris_32",
+        "Receding_Belt_Debris_33",
+        "Receding_Belt_Debris_34",
+        "Receding_Belt_Debris_35",
+        "Receding_Belt_Debris_36",
+        "Receding_Belt_Debris_37",
+        "Receding_Belt_Debris_38",
+        "Receding_Belt_Debris_39",
+        "Receding_Belt_Debris_40",
+        "Receding_Belt_Debris_41",
+        "Receding_Belt_Debris_42",
+        "Receding_Belt_Debris_43",
+        "Receding_Belt_Debris_44",
+        "Receding_Belt_Debris_45",
+        "Receding_Belt_Debris_46",
+        "Receding_Belt_Debris_47",
+        "Receding_Belt_Debris_48",
+        "Receding_Belt_Debris_49",
+        "Receding_Belt_Debris_50",
+        "Receding_Belt_Debris_51",
+        "Receding_Belt_Debris_52",
+        "Receding_Belt_Debris_53",
+        "Receding_Belt_Debris_54",
+        "Receding_Belt_Debris_55",
+        "Receding_Belt_Debris_56",
+        "Receding_Belt_Debris_57"
+      ]
+    },
+    {
+      "object": "Fitness_Batch_Art_Fitness_V4_Fitness_Recessed_Grooves",
+      "source_objects": [
+        "Fitness_Left_0_-1_Groove_0",
+        "Fitness_Left_0_-1_Groove_1",
+        "Fitness_Left_0_1_Groove_0",
+        "Fitness_Left_0_1_Groove_1",
+        "Fitness_Left_1_-1_Groove_0",
+        "Fitness_Left_1_-1_Groove_1",
+        "Fitness_Left_1_1_Groove_0",
+        "Fitness_Left_1_1_Groove_1",
+        "Fitness_Left_2_-1_Groove_0",
+        "Fitness_Left_2_-1_Groove_1",
+        "Fitness_Left_2_1_Groove_0",
+        "Fitness_Left_2_1_Groove_1",
+        "Fitness_Right_0_-1_Groove_0",
+        "Fitness_Right_0_-1_Groove_1",
+        "Fitness_Right_0_1_Groove_0",
+        "Fitness_Right_0_1_Groove_1",
+        "Fitness_Right_1_-1_Groove_0",
+        "Fitness_Right_1_-1_Groove_1",
+        "Fitness_Right_1_1_Groove_0",
+        "Fitness_Right_1_1_Groove_1",
+        "Fitness_Right_2_-1_Groove_0",
+        "Fitness_Right_2_-1_Groove_1",
+        "Fitness_Right_2_1_Groove_0",
+        "Fitness_Right_2_1_Groove_1"
+      ]
+    },
+    {
+      "object": "SelfCore_Batch_Art_SelfCore_V8_Plasma_Field",
+      "source_objects": [
+        "Self_Magnetic_Bundle_11_1",
+        "Self_Magnetic_Bundle_12_1",
+        "Self_Magnetic_Bundle_13_1",
+        "Self_Magnetic_Bundle_14_1",
+        "Self_Magnetic_Bundle_16_1",
+        "Self_Magnetic_Bundle_17_1",
+        "Self_Magnetic_Bundle_18_1",
+        "Self_Magnetic_Bundle_19_1",
+        "Self_Magnetic_Bundle_1_1",
+        "Self_Magnetic_Bundle_21_1",
+        "Self_Magnetic_Bundle_22_1",
+        "Self_Magnetic_Bundle_23_1",
+        "Self_Magnetic_Bundle_2_1",
+        "Self_Magnetic_Bundle_3_1",
+        "Self_Magnetic_Bundle_4_1",
+        "Self_Magnetic_Bundle_6_1",
+        "Self_Magnetic_Bundle_7_1",
+        "Self_Magnetic_Bundle_8_1",
+        "Self_Magnetic_Bundle_9_1"
+      ]
+    },
+    {
+      "object": "Learning_Batch_Art_Learning_V12_Neural_Tips",
+      "source_objects": [
+        "Neural_Embedded_Node_0_0",
+        "Neural_Embedded_Node_0_2",
+        "Neural_Embedded_Node_0_4",
+        "Neural_Embedded_Node_1_0",
+        "Neural_Embedded_Node_1_2",
+        "Neural_Embedded_Node_1_4",
+        "Neural_Embedded_Node_1_6",
+        "Neural_Embedded_Node_2_0",
+        "Neural_Embedded_Node_2_2",
+        "Neural_Embedded_Node_2_4",
+        "Neural_Embedded_Node_2_6",
+        "Neural_Embedded_Node_3_0",
+        "Neural_Embedded_Node_3_2",
+        "Neural_Embedded_Node_4_0",
+        "Neural_Embedded_Node_4_2",
+        "Neural_Embedded_Node_5_0",
+        "Neural_Embedded_Node_5_2",
+        "Neural_Embedded_Node_5_4",
+        "Neural_Embedded_Node_5_6",
+        "Neural_Embedded_Node_6_0",
+        "Neural_Embedded_Node_6_2",
+        "Neural_Embedded_Node_7_0",
+        "Neural_Embedded_Node_7_2",
+        "Neural_Embedded_Node_7_4",
+        "Neural_Embedded_Node_7_6"
+      ]
+    },
+    {
+      "object": "Scenery_Batch_Art_Scenery_V2_Quiet_System_Tracks",
+      "source_objects": [
+        "System_Depth_Track_0_0",
+        "System_Depth_Track_0_1",
+        "System_Depth_Track_0_2",
+        "System_Depth_Track_0_3",
+        "System_Depth_Track_1_0",
+        "System_Depth_Track_1_1",
+        "System_Depth_Track_1_2",
+        "System_Depth_Track_1_3"
+      ]
+    },
+    {
+      "object": "Fitness_Batch_Art_Fitness_Machined_Ice_Edge",
+      "source_objects": [
+        "Fitness_CentralAxis",
+        "Fitness_LeftCollar",
+        "Fitness_LeftPlateRim0",
+        "Fitness_LeftPlateRim1",
+        "Fitness_LeftPlateRim2",
+        "Fitness_RightCollar",
+        "Fitness_RightPlateRim0",
+        "Fitness_RightPlateRim1",
+        "Fitness_RightPlateRim2"
+      ]
+    },
+    {
+      "object": "Fitness_Batch_Art_Fitness_V4_Fitness_Fasteners",
+      "source_objects": [
+        "Fitness_Left_-1_Fastener_0",
+        "Fitness_Left_-1_Fastener_1",
+        "Fitness_Left_-1_Fastener_2",
+        "Fitness_Left_-1_Fastener_3",
+        "Fitness_Left_-1_Fastener_4",
+        "Fitness_Left_-1_Fastener_5",
+        "Fitness_Left_1_Fastener_0",
+        "Fitness_Left_1_Fastener_1",
+        "Fitness_Left_1_Fastener_2",
+        "Fitness_Left_1_Fastener_3",
+        "Fitness_Left_1_Fastener_4",
+        "Fitness_Left_1_Fastener_5",
+        "Fitness_Right_-1_Fastener_0",
+        "Fitness_Right_-1_Fastener_1",
+        "Fitness_Right_-1_Fastener_2",
+        "Fitness_Right_-1_Fastener_3",
+        "Fitness_Right_-1_Fastener_4",
+        "Fitness_Right_-1_Fastener_5",
+        "Fitness_Right_1_Fastener_0",
+        "Fitness_Right_1_Fastener_1",
+        "Fitness_Right_1_Fastener_2",
+        "Fitness_Right_1_Fastener_3",
+        "Fitness_Right_1_Fastener_4",
+        "Fitness_Right_1_Fastener_5"
+      ]
+    },
+    {
+      "object": "Calendar_Batch_Art_Calendar_V21_Chrono_Major_Ticks",
+      "source_objects": [
+        "Chrono_Clock_Tick_0",
+        "Chrono_Clock_Tick_16",
+        "Chrono_Clock_Tick_24",
+        "Chrono_Clock_Tick_32",
+        "Chrono_Clock_Tick_40",
+        "Chrono_Clock_Tick_48",
+        "Chrono_Clock_Tick_56",
+        "Chrono_Clock_Tick_64",
+        "Chrono_Clock_Tick_72",
+        "Chrono_Clock_Tick_8",
+        "Chrono_Clock_Tick_80",
+        "Chrono_Clock_Tick_88"
+      ]
+    },
+    {
+      "object": "Fitness_Batch_Art_Fitness_Fitness_Cyan_Light",
+      "source_objects": [
+        "Fitness_AxisLightTrace",
+        "Fitness_LeftPlateLight0",
+        "Fitness_LeftPlateLight2",
+        "Fitness_RightPlateLight0",
+        "Fitness_RightPlateLight2"
+      ]
+    },
+    {
+      "object": "Fitness_Batch_Art_Fitness_V4_Fitness_Satin_Faces",
+      "source_objects": [
+        "Fitness_LeftPlate0",
+        "Fitness_LeftPlate1",
+        "Fitness_LeftPlate2",
+        "Fitness_RightPlate0",
+        "Fitness_RightPlate1",
+        "Fitness_RightPlate2"
+      ]
+    },
+    {
+      "object": "SelfCore_Batch_Art_SelfCore_V8_Plasma_Hot",
+      "source_objects": [
+        "Self_Magnetic_Bundle_0_1",
+        "Self_Magnetic_Bundle_10_1",
+        "Self_Magnetic_Bundle_15_1",
+        "Self_Magnetic_Bundle_20_1",
+        "Self_Magnetic_Bundle_5_1"
+      ]
+    },
+    {
+      "object": "Learning_Batch_Art_Learning_V2_Neural_Crystalline",
+      "source_objects": [
+        "Neural_Satellite",
+        "Neural_Violet_Shell"
+      ]
+    },
+    {
+      "object": "Home_Batch_Art_Home_V2_Amber_Emitter",
+      "source_objects": [
+        "Home_Resource_Node_0",
+        "Home_Resource_Node_1",
+        "Home_Resource_Ring"
+      ]
+    },
+    {
+      "object": "Calendar_Batch_Art_Calendar_V2_Chrono_Obsidian",
+      "source_objects": [
+        "Chrono_Mineral_Body",
+        "Chrono_Moon"
+      ]
+    }
+  ],
+  "excluded_objects": [],
+  "elapsed_seconds": 143.61,
+  "external_background": "/art/system/deep-space-v1.png",
+  "visual_fidelity": "not evaluated"
+}

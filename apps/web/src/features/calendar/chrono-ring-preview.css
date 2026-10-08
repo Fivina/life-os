@@ -1,0 +1,248 @@
+:root {
+  color-scheme: dark;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  background: #050814;
+  color: #eef1ff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#chrono-ring-root {
+  width: 100%;
+  min-width: 320px;
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at 52% 42%, rgba(31, 39, 87, 0.22), transparent 48%),
+    #050814;
+}
+
+.chrono-preview {
+  width: min(1440px, 100%);
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: clamp(26px, 4.6vw, 64px) clamp(20px, 5vw, 76px) 26px;
+  display: flex;
+  flex-direction: column;
+}
+
+.chrono-preview__header,
+.chrono-preview__card-heading,
+.chrono-preview__spec,
+.chrono-preview__footer {
+  display: flex;
+  align-items: center;
+}
+
+.chrono-preview__header {
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: clamp(24px, 4vh, 48px);
+}
+
+.chrono-preview__eyebrow,
+.chrono-preview__footer,
+.chrono-preview__spec,
+.chrono-preview__card-heading > span {
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.chrono-preview__eyebrow {
+  margin: 0 0 10px;
+  color: #929bc2;
+}
+
+.chrono-preview__header h1 {
+  margin: 0;
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 1;
+}
+
+.chrono-preview__subtitle {
+  margin: 12px 0 0;
+  color: #858dac;
+  font-size: 13px;
+  letter-spacing: 0.025em;
+}
+
+.chrono-preview__spec {
+  gap: 11px;
+  color: #aab1d0;
+  white-space: nowrap;
+  letter-spacing: 0.1em;
+}
+
+.chrono-preview__status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #8c8eff;
+  box-shadow: 0 0 11px rgba(140, 142, 255, 0.9);
+}
+
+.chrono-preview__spec-divider {
+  width: 1px;
+  height: 14px;
+  margin: 0 5px;
+  background: rgba(153, 164, 215, 0.26);
+}
+
+.chrono-preview__stages {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(300px, 1fr);
+  align-items: start;
+  gap: clamp(14px, 2vw, 28px);
+  flex: 1;
+}
+
+.chrono-preview__card {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid rgba(139, 153, 216, 0.14);
+  border-radius: 9px;
+  background: linear-gradient(145deg, rgba(18, 24, 51, 0.84), rgba(7, 10, 25, 0.74));
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.22), inset 0 1px rgba(255, 255, 255, 0.025);
+}
+
+.chrono-preview__card--mini {
+  margin-top: clamp(40px, 10vh, 108px);
+}
+
+.chrono-preview__card-heading {
+  justify-content: space-between;
+  gap: 14px;
+  min-height: 84px;
+  padding: 17px 22px 13px;
+  border-bottom: 1px solid rgba(139, 153, 216, 0.11);
+}
+
+.chrono-preview__card-heading .chrono-preview__eyebrow {
+  margin-bottom: 5px;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+}
+
+.chrono-preview__card-heading h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+}
+
+.chrono-preview__card-heading > span {
+  color: #737eaa;
+  font-size: 9px;
+  letter-spacing: 0.11em;
+  white-space: nowrap;
+}
+
+.chrono-preview__canvas {
+  width: 100%;
+  background: #050814;
+}
+
+.chrono-preview__canvas--hero {
+  height: clamp(390px, 57vh, 680px);
+}
+
+.chrono-preview__canvas--mini {
+  height: clamp(220px, 31vh, 360px);
+}
+
+.chrono-preview__canvas canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  touch-action: none;
+}
+
+.chrono-preview__canvas canvas:active {
+  cursor: grabbing;
+}
+
+.chrono-preview__caption {
+  min-height: 54px;
+  margin: 0;
+  padding: 15px 20px;
+  border-top: 1px solid rgba(139, 153, 216, 0.1);
+  color: #8992b1;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.chrono-preview__footer {
+  gap: 14px;
+  min-height: 56px;
+  padding-top: 15px;
+  color: #929bc2;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+}
+
+.chrono-preview__footer-line {
+  width: clamp(18px, 4vw, 60px);
+  height: 1px;
+  background: rgba(137, 149, 203, 0.32);
+}
+
+@media (max-width: 780px) {
+  .chrono-preview__header {
+    align-items: flex-start;
+  }
+
+  .chrono-preview__spec {
+    display: none;
+  }
+
+  .chrono-preview__stages {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .chrono-preview__card--mini {
+    margin-top: 0;
+  }
+
+  .chrono-preview__canvas--hero {
+    height: min(66vh, 560px);
+    min-height: 360px;
+  }
+
+  .chrono-preview__canvas--mini {
+    height: min(46vh, 340px);
+    min-height: 250px;
+  }
+}
+
+@media (max-width: 420px) {
+  .chrono-preview__card-heading {
+    padding-right: 14px;
+    padding-left: 14px;
+  }
+
+  .chrono-preview__card-heading > span {
+    display: none;
+  }
+
+  .chrono-preview__footer {
+    gap: 8px;
+    font-size: 8px;
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "finance",
+  "version": "2.1.1",
+  "description": "Bounded personal finance summaries, imports, budgets, recurring expenses, and spending explanations.",
+  "assistant_roles": ["FINANCE_ADVISOR"],
+  "default_capability": "ECONOMY",
+  "max_capability": "REASONING",
+  "allowed_tools": ["get_current_state", "finance_get_overview", "finance_get_safe_to_spend", "finance_import_status", "finance_save_budget", "finance_categorize_import_row"],
+  "read_scopes": ["finance"],
+  "write_scopes": ["finance-budget", "finance-import-review"],
+  "memory_scopes": ["conversation-summary"],
+  "max_tool_calls": 3,
+  "max_iterations": 4,
+  "confirmation_policy": "registry",
+  "cost_class": "low"
+}

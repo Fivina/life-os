@@ -1,0 +1,125 @@
+.system-art-preview {
+  position: fixed;
+  inset: 0;
+  isolation: isolate;
+  overflow: hidden;
+  background: #030407;
+  color: #e6e9ef;
+  font-family: inherit;
+  letter-spacing: 0;
+}
+
+.system-art-preview *,
+.system-art-preview button,
+.system-art-preview a { box-sizing: border-box; letter-spacing: 0; }
+
+.system-art-background,
+.system-art-stage { position: absolute; inset: 0; width: 100%; height: 100%; }
+.system-art-background { object-fit: cover; pointer-events: none; opacity: 0.65; }
+.system-art-background[hidden] { display: none; }
+.system-art-background { transition: opacity 500ms ease; }
+.system-art-preview[data-depth="core"] .system-art-background { opacity: 0.26; }
+.system-art-stage { filter: blur(calc(var(--travel, 0) * 0.6px)); }
+.system-art-stage { z-index: 1; }
+.system-art-stage canvas { display: block; }
+
+.system-art-header {
+  position: absolute;
+  z-index: 3;
+  top: max(16px, env(safe-area-inset-top));
+  left: max(16px, env(safe-area-inset-left));
+  right: max(16px, env(safe-area-inset-right));
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.system-art-header h1 { margin: 0; font-size: 14px; font-weight: 500; line-height: 1.4; }
+.system-art-header nav { display: flex; gap: 4px; pointer-events: auto; }
+.system-art-header nav:last-child { justify-content: flex-end; }
+
+.system-art-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid #a3abb326;
+  border-radius: 6px;
+  background: #080b10d9;
+  color: #cdd2db;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.system-art-icon:hover { background: #181d25; color: #fff; }
+.system-art-icon:disabled { opacity: 0.35; cursor: default; }
+.system-art-icon:focus-visible,
+.system-art-label:focus-visible,
+.system-art-fallback-links a:focus-visible { outline: 2px solid #d8ebdf; outline-offset: 3px; }
+
+.system-art-labels { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+.system-art-labels[hidden] { display: none; }
+.system-art-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 108px;
+  height: 44px;
+  visibility: hidden;
+  pointer-events: auto;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: transparent;
+  text-shadow: 0 1px 6px #000;
+  color: #e6e9ef;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: nowrap;
+  text-decoration: none;
+}
+.system-art-label:hover { color: #fff; background: #080b1070; }
+.system-art-label[data-projected="true"] { visibility: visible; }
+.system-art-label { cursor: pointer; font-family: inherit; padding: 0 4px; white-space: normal; text-align: center; overflow-wrap: anywhere; }
+.system-art-label[aria-disabled="true"] { cursor: default; color: #adb1b9; flex-direction: column; }
+.system-art-planned { font-size: 10px; color: #888f99; }
+.system-art-preview[data-moving="true"] .system-art-label { visibility: hidden; pointer-events: none; }
+.system-art-icon:focus-visible { outline: 2px solid #d8ebdf; outline-offset: 3px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .system-art-background { transition: none; }
+  .system-art-stage { filter: none; }
+}
+
+.system-art-footer {
+  position: absolute;
+  z-index: 3;
+  left: max(16px, env(safe-area-inset-left));
+  right: max(16px, env(safe-area-inset-right));
+  bottom: max(16px, env(safe-area-inset-bottom));
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  font-size: 12px;
+}
+.system-art-status { display: flex; align-items: center; gap: 12px; max-width: 100%; padding: 6px 10px; background: #080b10e6; border-radius: 4px; }
+.system-art-status span { overflow-wrap: anywhere; }
+.system-art-fallback-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 12px; }
+.system-art-fallback-links a { display: inline-flex; align-items: center; min-height: 44px; color: #e6e9ef; padding: 8px 4px; text-underline-offset: 4px; }
+.system-art-fallback-links span { align-self: center; color: #888f99; }
+.system-art-depth { color: #a3a9b3; }
+.system-art-render-fallback { position: absolute; inset: 0; display: grid; place-items: center; padding: 32px; font-size: 14px; }
+
+@media (max-width: 380px) {
+  .system-art-header { left: 12px; right: 12px; gap: 4px; }
+  .system-art-header nav { gap: 2px; }
+  .system-art-header h1 { font-size: 13px; }
+}

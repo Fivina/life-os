@@ -1,0 +1,1 @@
+"""Universal quick capture proposals."""

@@ -1,0 +1,17 @@
+[agents]
+enabled = true
+max_concurrent_threads_per_session = 2
+
+[mcp_servers.blender]
+command = 'E:\LifeOS-Tools\blender-mcp-venv\Scripts\mcp-for-blender.exe'
+args = ["--host", "127.0.0.1", "--port", "9876"]
+startup_timeout_sec = 30
+tool_timeout_sec = 180
+enabled_tools = ["get_scene_info", "get_object_info", "get_viewport_screenshot", "execute_blender_code", "describe_node_type", "bpy_api_lookup", "get_addon_status", "disable_telemetry"]
+
+[mcp_servers.blender.env]
+PYTHONUTF8 = "1"
+BLENDER_MCP_SAFE_MODE = "1"
+BLENDER_MCP_DISABLE_TELEMETRY = "1"
+DISABLE_TELEMETRY = "1"
+BLENDERMCP_NO_UPDATE_CHECK = "1"

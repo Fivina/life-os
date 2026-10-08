@@ -1,0 +1,47 @@
+.os-shell.hub-mode { background: #000208; }
+.hub-mode::before, .hub-mode::after { display: none; }
+.hub-mode .os-header { position: absolute; inset: 0 0 auto; width: 100%; max-width: none; padding: 22px 32px; pointer-events: none; }
+.hub-mode .os-header a, .hub-mode .os-header button { pointer-events: auto; }
+.hub-mode .os-brand h1 { font-size: 22px; font-weight: 500; letter-spacing: 0; }
+.spatial-hub { position: relative; width: 100%; height: 100svh; min-height: 540px; overflow: hidden; background: #000208; }
+.spatial-stage { position: absolute; inset: 0; }
+.spatial-label-layer { position: absolute; inset: 0; pointer-events: none; }
+.spatial-target { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 164px; height: 180px; padding: 120px 2px 4px; background: none; border: 0; border-radius: 4px; color: var(--object-color, #d7edff); pointer-events: auto; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 3px; font-size: 14px; cursor: pointer; transition: color 180ms, opacity 250ms; }
+.spatial-target:hover { background: none; color: #fff; }
+.spatial-target:focus-visible { outline: 1px solid var(--object-color, #9cdcff); outline-offset: 8px; }
+.spatial-target small { color: #728a9f; font-size: 10px; line-height: 1.3; white-space: nowrap; }
+.spatial-target.is-core { width: 190px; height: 210px; padding-top: 155px; }
+.spatial-target.is-settings { width: 120px; height: 124px; padding-top: 90px; font-size: 12px; color: #8aa2b8; }
+.spatial-label-layer[hidden] { display: none; }
+.spatial-hub[data-depth="core"] .spatial-target.is-settings { height: 200px; padding-top: 160px; }
+.spatial-target[data-attention="true"]::after { content: ""; width: 5px; height: 5px; background: #ff4d57; border-radius: 50%; box-shadow: 0 0 6px #ff4d57; position: absolute; bottom: -7px; }
+.spatial-domain-targets[hidden] { display: none; }
+.spatial-hub[data-moving="true"] .spatial-target { pointer-events: none; opacity: 0; }
+.spatial-controls { position: absolute; z-index: 4; inset: auto 28px 24px; display: flex; justify-content: space-between; align-items: center; pointer-events: none; }
+.spatial-controls > * { pointer-events: auto; }
+.spatial-controls nav { display: flex; gap: 8px; }
+.spatial-controls .icon-button { width: 42px; height: 42px; background: rgba(4, 10, 19, 0.8); border-color: #263a4c; color: #c1d9eb; border-radius: 6px; }
+.spatial-controls .icon-button:hover { border-color: #8ad5ff; }
+.spatial-depth { color: #61788f; font-size: 11px; }
+.spatial-warp { position: absolute; inset: 0; pointer-events: none; opacity: 0; backdrop-filter: blur(0); }
+.spatial-hub[data-moving="true"] .spatial-warp { animation: spatial-arrival 1150ms linear both; }
+@keyframes spatial-arrival { 0%, 100% { opacity: 0; backdrop-filter: blur(0); } 35% { opacity: 1; backdrop-filter: blur(2px); } 65% { opacity: 0.5; backdrop-filter: blur(1px); } }
+.spatial-fallback { position: absolute; inset: 0; display: grid; place-content: center; gap: 18px; text-align: center; color: #d4e8f6; }
+.spatial-fallback nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; max-width: 500px; }
+.spatial-fallback a { color: #a9d7f2; }
+@media (max-width: 650px) {
+  .hub-mode .os-header { padding: 18px; }
+  .spatial-hub { min-height: 560px; }
+  .spatial-target { width: 94px; height: 132px; padding-top: 90px; font-size: 12px; }
+  .spatial-target small { font-size: 9px; }
+  .spatial-target.is-core { width: 140px; height: 164px; padding-top: 120px; }
+  .spatial-target.is-settings { width: 100px; }
+  .spatial-controls { inset: auto 16px max(16px, env(safe-area-inset-bottom)); }
+}
+@media (max-height: 650px) {
+  .spatial-depth { visibility: hidden; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .spatial-target { transition: none; }
+  .spatial-warp { display: none; }
+}

@@ -1,0 +1,85 @@
+.phengos-home, .phengos-workspace {
+  /* Shared, durable LIFE OS language. Domain pages inherit these from AppShell. */
+  --life-space-black: #01060d;
+  --life-space-deep: #020a14;
+  --life-surface-0: #06111f;
+  --life-surface-1: #091727;
+  --life-surface-2: #0c1d30;
+  --life-surface-3: #10243a;
+  --life-line-dark: #132a42;
+  --life-line-blue: #174d78;
+  --life-contour-blue: #0e6ba8;
+  --life-contour-active: #38a8e8;
+  --life-text-main: #f1f7ff;
+  --life-text-secondary: #b8c9db;
+  --life-text-muted: #98adc4;
+  --life-domain-overview: #60a5fa;
+  --life-domain-self: #60a5fa;
+  --life-domain-home: #3b82f6;
+  --life-domain-fitness: #06b6d4;
+  --life-domain-life: #22c55e;
+  --life-domain-learning: #a855f7;
+  --life-domain-calendar: #f59e0b;
+  --life-domain-system: #8ea9c7;
+  --life-attention: #ef4444;
+  --life-card-radius: 10px;
+  /* One material system. Alpha belongs to the pane, never its text or children.
+     Nested rows use a lighter film so stacked panes do not become opaque. */
+  --life-glass-top: #02091359;
+  --life-glass-bottom: #01060d85;
+  --life-glass-border: #5798c58c;
+  --life-glass-highlight: #c8eaff66;
+  --life-glass-sheen: linear-gradient(125deg, #bce7ff0d, transparent 28%, transparent 72%, #7ccaff05);
+  --life-glass-blur: blur(2px) saturate(110%);
+  --life-glass-card: var(--life-glass-sheen), linear-gradient(155deg, var(--life-glass-top), var(--life-glass-bottom));
+  --life-glass-frame: var(--life-glass-sheen), linear-gradient(155deg, #1235544d, #03102066);
+  --life-glass-row: linear-gradient(155deg, #8acbff0c, #01071030);
+  --life-glass-control: linear-gradient(155deg, #bce7ff12, #07152666);
+  --life-glass-overlay: linear-gradient(155deg, #071526d9, #020913e8);
+  --life-glass-attention: linear-gradient(145deg, #ef444429, #300a1b73 55%, #10071085);
+  --life-glass-suggestion: linear-gradient(145deg, #329dfb2e, #07264b66 55%, #020c1c85);
+  --life-glass-shadow: inset 0 1px var(--life-glass-highlight), inset 1px 0 #a9dfff12, 0 12px 30px #0005;
+  --muted: var(--life-text-secondary);
+  --border: var(--life-glass-border);
+  --ph-space: var(--life-space-deep);
+  --ph-space-deep: var(--life-space-black);
+  --ph-surface: var(--life-surface-1);
+  --ph-surface-raised: var(--life-surface-2);
+  --ph-stroke: #174d7880;
+  --ph-stroke-strong: #0e6ba8ad;
+  --ph-text: var(--life-text-main);
+  --ph-text-muted: var(--life-text-secondary);
+  --ph-accent: var(--life-domain-overview);
+  --ph-focus: #f6c87d;
+  --ph-self: var(--life-domain-self);
+  --ph-home: var(--life-domain-home);
+  --ph-fitness: var(--life-domain-fitness);
+  --ph-life: var(--life-domain-life);
+  --ph-calendar: var(--life-domain-calendar);
+  --ph-learning: var(--life-domain-learning);
+  --ph-system: var(--life-domain-system);
+  --ph-urgent: var(--life-attention);
+  --ph-ease-settle: cubic-bezier(.2, .9, .25, 1);
+  --ph-ease-spring: cubic-bezier(.2, 1.25, .3, 1);
+}
+
+/* Keep text legible when the user explicitly requests stronger contrast. */
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+  .phengos-home, .phengos-workspace {
+    --life-glass-top: #020913ef;
+    --life-glass-bottom: #01060df5;
+    --life-glass-frame: linear-gradient(155deg, #123554ed, #031020f5);
+    --life-glass-row: #071526dc;
+    --life-glass-control: #102b42ed;
+    --life-glass-attention: linear-gradient(145deg, #421724f5, #160b13f5);
+    --life-glass-suggestion: linear-gradient(145deg, #103859f5, #061323f5);
+    --life-glass-border: #86bde5;
+    --life-glass-blur: none;
+  }
+}
+
+@property --life-context-accent {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #60a5fa;
+}

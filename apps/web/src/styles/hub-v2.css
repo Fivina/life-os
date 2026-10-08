@@ -1,0 +1,2518 @@
+.living-hub {
+  position: relative;
+  min-height: calc(100svh - 70px);
+  overflow: hidden;
+  --organ-energy: #2ab8ff;
+  --organ-peak: #dff9ff;
+  --organ-dim: #0a568f;
+  --hub-cycle: 7.2s;
+  --space-bg: #010713;
+  --energy-blue: #2ab8ff;
+  --energy-blue-dim: #0a568f;
+  --energy-white: #f4fdff;
+  --energy-ice: #b8f2ff;
+  --energy-glow: rgba(52, 190, 255, 0.72);
+  --settings-dark: #01040a;
+}
+
+.living-stage {
+  position: relative;
+  width: min(100%, 1180px);
+  min-height: calc(100svh - 70px);
+  margin: 0 auto;
+}
+
+.organism-background {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.organism-background::before {
+  position: absolute;
+  inset: 12% 8%;
+  content: "";
+  background:
+    radial-gradient(ellipse at 52% 48%, rgba(31, 158, 232, 0.05), transparent 27%),
+    radial-gradient(ellipse at 49% 52%, rgba(4, 22, 50, 0) 31%, rgba(43, 164, 225, 0.018) 33%, transparent 47%);
+  transform: rotate(-8deg);
+}
+
+.field-map {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.44;
+}
+
+.gravity-line {
+  fill: none;
+  stroke: rgba(88, 187, 238, 0.055);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.gravity-line-a { stroke-dasharray: 2 18; }
+.gravity-line-b { stroke-dasharray: 48 34; }
+.gravity-line-c { stroke-dasharray: 6 22; }
+.gravity-line-d { stroke-dasharray: 80 52; }
+
+.field-crosses path {
+  fill: none;
+  stroke: rgba(159, 232, 255, 0.28);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.depth-particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: rgba(219, 249, 255, 0.8);
+  box-shadow: 0 0 8px rgba(85, 207, 255, 0.8);
+  animation: particle-drift 18s ease-in-out infinite;
+}
+
+.depth-particle-a { top: 16%; left: 37%; animation-delay: -4s; }
+.depth-particle-b { top: 29%; right: 19%; animation-delay: -11s; }
+.depth-particle-c { bottom: 19%; left: 22%; animation-delay: -8s; }
+.depth-particle-d { bottom: 12%; right: 31%; animation-delay: -14s; }
+.depth-particle-e { top: 52%; left: 8%; animation-delay: -2s; }
+
+.arm-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.arm-desktop { display: none; }
+
+.living-arm {
+  opacity: 0.92;
+  transition: opacity 260ms ease;
+}
+
+.arm-field,
+.arm-body,
+.arm-hot,
+.arm-filament {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.arm-field {
+  stroke: rgba(28, 142, 209, 0.11);
+  stroke-width: 18;
+  filter: blur(5px);
+}
+
+.arm-body {
+  stroke: url(#arm-energy);
+  stroke-width: 3.4;
+  opacity: 0.62;
+  transition: opacity 240ms ease, stroke-width 240ms ease;
+}
+
+.arm-filament {
+  stroke: rgba(159, 232, 255, 0.42);
+  stroke-width: 0.85;
+  stroke-linecap: round;
+}
+
+.arm-hot {
+  stroke: rgba(222, 249, 255, 0.52);
+  stroke-width: 0.8;
+  opacity: 0.72;
+}
+
+.arm-filament-a {
+  stroke-dasharray: 13 9 2 17;
+  animation: filament-flow 15s linear infinite;
+}
+
+.arm-filament-b {
+  stroke: rgba(28, 145, 215, 0.45);
+  stroke-dasharray: 3 14 21 9;
+  stroke-dashoffset: 24;
+  animation: filament-flow 20s linear infinite reverse;
+}
+
+.arm-pulse {
+  fill: var(--organ-peak);
+  opacity: 0.72;
+  filter: drop-shadow(0 0 5px #44c6ff);
+}
+
+.arm-pulse-b { opacity: 0.38; }
+
+.living-arm.selected .arm-body {
+  opacity: 1;
+  stroke-width: 5.5;
+}
+
+.living-arm.selected .arm-field { opacity: 0.86; }
+.living-arm.selected .arm-pulse { opacity: 1; }
+
+.organism-core {
+  position: absolute;
+  z-index: 7;
+  top: 49%;
+  left: 51.5%;
+  width: min(46vw, 190px);
+  height: min(50vw, 210px);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--organ-peak);
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 0 22px rgba(30, 173, 246, 0.42));
+  transition: opacity 380ms ease, transform 620ms cubic-bezier(0.22, 0.75, 0.2, 1), filter 300ms ease;
+  animation: organism-breathe 6.8s ease-in-out infinite;
+}
+
+.organism-core::before {
+  position: absolute;
+  inset: -30%;
+  z-index: -1;
+  content: "";
+  border-radius: 46% 54% 57% 43% / 59% 42% 58% 41%;
+  background: radial-gradient(ellipse, rgba(27, 164, 235, 0.12), rgba(7, 41, 77, 0.025) 45%, transparent 68%);
+  transform: rotate(-12deg);
+  animation: gravity-breathe 9s ease-in-out infinite;
+}
+
+.core-organism {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.core-field-layer path {
+  fill: rgba(7, 72, 122, 0.08);
+  stroke: rgba(77, 196, 250, 0.2);
+  stroke-width: 1.1;
+}
+
+.core-field-layer-a { transform-origin: 52% 48%; animation: core-layer-drift 11s ease-in-out infinite; }
+.core-field-layer-b { transform-origin: 48% 52%; animation: core-layer-drift 8s ease-in-out infinite reverse; }
+
+.core-petal-layer {
+  fill: rgba(12, 101, 161, 0.08);
+  stroke: url(#core-membrane);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+.core-petal-layer-a { transform-origin: 50% 50%; animation: petal-phase 7.4s ease-in-out infinite; }
+.core-petal-layer-b { transform-origin: 50% 50%; animation: petal-phase 9.2s ease-in-out infinite reverse; }
+.core-source-field { transform-origin: 50% 50%; animation: source-wave 5.8s ease-in-out infinite; }
+
+.core-membrane-line {
+  fill: none;
+  stroke: rgba(126, 222, 255, 0.46);
+  stroke-linecap: round;
+  stroke-width: 1;
+  stroke-dasharray: 38 11 5 19;
+}
+
+.core-membrane-line-a { animation: membrane-current 14s linear infinite; }
+.core-membrane-line-b { animation: membrane-current 17s linear infinite reverse; }
+.core-membrane-line-c { animation: membrane-current 21s linear infinite; }
+
+.core-energy-thread path {
+  fill: none;
+  stroke: rgba(221, 250, 255, 0.68);
+  stroke-width: 1.3;
+  stroke-linecap: round;
+  stroke-dasharray: 2 6;
+  animation: thread-outward 7s linear infinite;
+}
+
+.core-particles circle {
+  fill: #dffaff;
+  filter: drop-shadow(0 0 4px #40c4ff);
+}
+
+.organ-module,
+.gravity-settings {
+  position: absolute;
+  z-index: 8;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--organ-peak);
+  transform: translate(-50%, -50%);
+  transition: opacity 320ms ease, filter 250ms ease, transform 780ms cubic-bezier(0.2, 0.78, 0.2, 1);
+}
+
+.settings-warp-field {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.settings-warp-mobile { display: initial; }
+.settings-warp-desktop { display: none; }
+
+.settings-warp-veil { opacity: 0.84; }
+
+.settings-warp-lines {
+  fill: none;
+  stroke: rgba(106, 207, 248, 0.14);
+  stroke-width: 0.85;
+  stroke-linecap: round;
+  stroke-dasharray: 2 10 41 22;
+  vector-effect: non-scaling-stroke;
+  animation: settings-space-bend 47s linear infinite;
+}
+
+.settings-warp-lines path:nth-child(2n) {
+  stroke: rgba(184, 237, 255, 0.1);
+  stroke-dasharray: 1 16 54 28;
+}
+
+.settings-warp-points circle {
+  fill: rgba(203, 244, 255, 0.56);
+  filter: drop-shadow(0 0 3px rgba(101, 214, 255, 0.66));
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: settings-warp-particle 29s ease-in-out infinite;
+}
+
+.settings-warp-points circle:nth-child(2n) { animation-delay: -11s; }
+.settings-warp-points circle:nth-child(3n) { animation-delay: -19s; }
+
+.organ-module {
+  width: 106px;
+  height: 92px;
+  animation: endpoint-breathe 9s ease-in-out infinite;
+}
+
+.organ-module-calendar { left: 81.6%; top: 13.6%; animation-delay: -2s; }
+.organ-module-learning { left: 16%; top: 28.7%; animation-delay: -5s; }
+.organ-module-life { left: 84.4%; top: 31%; animation-delay: -7s; }
+.organ-module-fitness { left: 86.4%; top: 69%; animation-delay: -3.5s; }
+.organ-module-kitchen { left: 44.6%; top: 91%; animation-delay: -6.2s; }
+
+.organ-glyph {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 0 7px rgba(43, 184, 255, 0.34));
+}
+
+.glyph-root,
+.glyph-primary,
+.glyph-secondary,
+.glyph-fiber,
+.glyph-tip {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.glyph-root {
+  stroke: rgba(53, 185, 246, 0.5);
+  stroke-width: 2.2;
+}
+
+.glyph-primary {
+  stroke: rgba(213, 248, 255, 0.82);
+  stroke-width: 2;
+}
+
+.glyph-secondary {
+  stroke: rgba(70, 194, 247, 0.65);
+  stroke-width: 1.25;
+}
+
+.glyph-fiber {
+  stroke: rgba(80, 190, 239, 0.38);
+  stroke-width: 1;
+  stroke-dasharray: 5 5;
+}
+
+.glyph-tip {
+  stroke: #dffaff;
+  stroke-width: 1.5;
+}
+
+.glyph-nodes circle {
+  fill: #dffaff;
+  stroke: rgba(31, 167, 229, 0.6);
+  stroke-width: 1.2;
+  filter: drop-shadow(0 0 4px #37bdff);
+}
+
+.glyph-lobe-a { transform-origin: 52% 50%; animation: glyph-unfold 8s ease-in-out infinite; }
+.glyph-lobe-b { transform-origin: 48% 54%; animation: glyph-unfold 10s ease-in-out infinite reverse; }
+.glyph-lobe-c { transform-origin: 50% 48%; animation: glyph-unfold 11s ease-in-out infinite; }
+.glyph-nodes { animation: node-signal 7s ease-in-out infinite; }
+
+.organ-module:hover,
+.organ-module:focus-visible,
+.gravity-settings:hover,
+.gravity-settings:focus-visible,
+.organism-core:hover,
+.organism-core:focus-visible {
+  filter: drop-shadow(0 0 16px rgba(99, 216, 255, 0.72));
+  outline: none;
+}
+
+.organ-module:focus-visible::after,
+.gravity-settings:focus-visible::after,
+.organism-core:focus-visible::after {
+  position: absolute;
+  inset: 4px;
+  border: 1px dashed rgba(159, 232, 255, 0.7);
+  border-radius: 42% 58% 54% 46% / 57% 43% 57% 43%;
+  content: "";
+}
+
+.hub-tooltip {
+  position: absolute;
+  top: calc(100% + 2px);
+  left: 50%;
+  padding: 4px 7px;
+  border: 1px solid rgba(118, 214, 255, 0.18);
+  border-radius: 5px;
+  background: rgba(2, 10, 24, 0.88);
+  color: rgba(232, 250, 255, 0.94);
+  font-size: 0.7rem;
+  font-weight: 650;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 6px);
+  transition: opacity 160ms ease, transform 160ms ease;
+  white-space: nowrap;
+}
+
+.organ-module:hover .hub-tooltip,
+.organ-module:focus-visible .hub-tooltip,
+.gravity-settings:hover .hub-tooltip,
+.gravity-settings:focus-visible .hub-tooltip,
+.organism-core:hover .hub-tooltip,
+.organism-core:focus-visible .hub-tooltip {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.gravity-settings {
+  left: 13%;
+  top: 73%;
+  width: 90px;
+  height: 84px;
+  isolation: isolate;
+  animation: anomaly-hover 13s ease-in-out infinite;
+}
+
+.gravity-settings::before {
+  position: absolute;
+  inset: -34%;
+  z-index: -1;
+  content: "";
+  border: 1px solid rgba(102, 206, 248, 0.06);
+  border-radius: 47% 53% 45% 55% / 52% 42% 58% 48%;
+  background:
+    repeating-radial-gradient(ellipse at 51% 49%, transparent 0 13px, rgba(99, 200, 243, 0.045) 14px 15px, transparent 16px 26px),
+    radial-gradient(ellipse, rgba(39, 147, 201, 0.09), transparent 64%);
+  opacity: 0.58;
+  transform: rotate(-8deg) scale(0.96, 1.08);
+  transition: opacity 300ms ease, scale 300ms ease;
+  animation: anomaly-local-field 41s linear infinite;
+}
+
+.settings-warp-lines {
+  stroke: rgba(91, 192, 234, 0.12);
+  stroke-width: 0.62;
+  stroke-dasharray: none;
+  filter: none;
+}
+
+.settings-warp-lines path:nth-child(2n) {
+  stroke: rgba(169, 228, 252, 0.095);
+  stroke-dasharray: 1 12 43 24;
+}
+
+.settings-warp-points circle {
+  fill: rgba(199, 241, 255, 0.48);
+  filter: drop-shadow(0 0 2px rgba(91, 207, 250, 0.46));
+}
+
+.settings-warp-near-lines {
+  fill: none;
+  stroke: rgba(108, 207, 246, 0.16);
+  stroke-width: 0.58;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+  animation: settings-space-bend 41s linear infinite reverse;
+}
+
+.settings-warp-near-lines path:nth-child(3n) { stroke: rgba(191, 239, 255, 0.11); }
+.settings-warp-near-lines path:nth-child(4n) { opacity: 0.54; }
+
+.anomaly-absorption {
+  fill: #000208;
+  opacity: 0.76;
+  filter: blur(2.4px);
+}
+
+.anomaly-near-particles path {
+  fill: none;
+  stroke: rgba(188, 238, 255, 0.34);
+  stroke-width: 0.55;
+  stroke-linecap: round;
+}
+
+.anomaly-rim-lower-soft { opacity: 0.52; stroke-width: 0.68; }
+.anomaly-rim-lower-tail { opacity: 0.34; stroke-width: 0.58; }
+.anomaly-rim-left { opacity: 0.2; }
+
+.anomaly-rim-lower {
+  opacity: 0.46;
+  filter: blur(0.45px) drop-shadow(0 0 2px rgba(110, 218, 255, 0.3));
+}
+
+.anomaly-rim-lower-soft { opacity: 0.3; }
+.anomaly-rim-lower-tail { opacity: 0.2; }
+
+.orbit-depth-back,
+.orbit-depth-front,
+.orbit-glow-layer,
+.orbit-stars {
+  transform: scale(0.9);
+  transform-origin: 130px 132px;
+}
+
+.orbit-depth-back .orbit-route {
+  stroke-dasharray: none;
+  stroke-width: 0.92;
+  opacity: 0.62;
+  filter: drop-shadow(0 0 1px rgba(63, 192, 247, 0.34));
+}
+
+.orbit-depth-back { opacity: 0.74; }
+
+.orbit-depth-back .orbit-route-a,
+.orbit-depth-back .orbit-route-c,
+.orbit-depth-back .orbit-route-e,
+.orbit-depth-back .orbit-route-g {
+  stroke-width: 1.14;
+  opacity: 0.9;
+}
+
+.orbit-depth-back .orbit-route-b,
+.orbit-depth-back .orbit-route-f { opacity: 0.66; }
+
+.orbit-depth-back .orbit-route-d,
+.orbit-depth-back .orbit-route-h {
+  stroke-dasharray: 62 12 14 12;
+  opacity: 0.46;
+}
+
+.orbit-depth-front {
+  opacity: 0.72;
+}
+
+.orbit-foreground {
+  stroke: rgba(203, 244, 255, 0.78);
+  stroke-width: 1.16;
+}
+
+.orbit-glow-layer {
+  opacity: 0.3;
+}
+
+.orbit-glow-layer path {
+  stroke-width: 2.5;
+}
+
+.orbit-stars circle {
+  filter: drop-shadow(0 0 3px #62d3ff);
+}
+
+.orbit-stars circle:nth-child(2),
+.orbit-stars circle:nth-child(4),
+.orbit-stars circle:nth-child(7) {
+  fill: #f4fdff;
+  filter: drop-shadow(0 0 4px #7fddff);
+}
+
+.nucleus-corona {
+  filter: drop-shadow(0 0 5px rgba(105, 222, 255, 0.72));
+}
+
+.nucleus-hot {
+  filter: drop-shadow(0 0 5px #ffffff) drop-shadow(0 0 12px #42c8ff);
+}
+
+.sculpture-field {
+  stroke-width: 7;
+  filter: blur(2.2px);
+}
+
+.sculpture-backbone {
+  stroke-width: 1.82;
+  opacity: 0.96;
+  filter: drop-shadow(0 0 1px rgba(91, 211, 255, 0.68)) drop-shadow(0 0 3px rgba(31, 159, 226, 0.16));
+}
+
+.sculpture-hot {
+  stroke: rgba(226, 250, 255, 0.7);
+  opacity: 0.72;
+}
+
+.system-sculpture-calendar .sculpture-detail-2,
+.system-sculpture-life .sculpture-detail-4,
+.system-sculpture-fitness .sculpture-detail-1,
+.system-sculpture-fitness .sculpture-detail-3,
+.system-sculpture-kitchen .sculpture-detail-1 {
+  stroke: rgba(199, 242, 255, 0.88);
+  opacity: 0.95;
+}
+
+.module-caption::before {
+  width: 5px;
+  height: 5px;
+  flex-basis: 5px;
+  background: #effcff;
+  box-shadow: 0 0 5px #72dbff, 0 0 8px rgba(63, 194, 249, 0.58);
+}
+
+.gravity-settings.hovered::before {
+  opacity: 0.95;
+  scale: 1.08;
+}
+
+.gravity-anomaly {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 0 9px rgba(113, 218, 255, 0.18));
+}
+
+.anomaly-field path {
+  fill: none;
+  stroke: rgba(114, 218, 255, 0.13);
+  stroke-width: 1;
+}
+
+.anomaly-field-a { transform-origin: center; animation: anomaly-rotate 38s linear infinite; }
+.anomaly-field-b { transform-origin: center; animation: anomaly-rotate 29s linear infinite reverse; }
+.anomaly-aperture { filter: drop-shadow(0 0 8px rgba(71, 190, 242, 0.25)); }
+
+.anomaly-rim {
+  fill: none;
+  stroke: rgba(159, 232, 255, 0.56);
+  stroke-width: 1.3;
+  stroke-linecap: round;
+  stroke-dasharray: 35 18 4 20;
+}
+
+.anomaly-rim-a { animation: membrane-current 31s linear infinite; }
+.anomaly-rim-b { animation: membrane-current 37s linear infinite reverse; }
+.anomaly-particles circle { fill: rgba(205, 246, 255, 0.72); }
+
+.anomaly-mesh,
+.anomaly-infall {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+}
+
+.anomaly-mesh path {
+  stroke: rgba(124, 214, 250, 0.1);
+  stroke-width: 0.7;
+  transition: stroke 300ms ease, opacity 300ms ease;
+}
+
+.anomaly-infall path {
+  stroke: rgba(201, 245, 255, 0.38);
+  stroke-width: 0.9;
+  stroke-linecap: round;
+  stroke-dasharray: 3 12;
+  animation: anomaly-infall 8s linear infinite;
+}
+
+.gravity-settings.hovered .anomaly-mesh path {
+  stroke: rgba(161, 231, 255, 0.25);
+}
+
+.gravity-settings.hovered .anomaly-field path { stroke: rgba(117, 219, 255, 0.28); }
+.gravity-settings.hovered .anomaly-rim { stroke: rgba(215, 249, 255, 0.9); }
+.gravity-settings.hovered .anomaly-aperture { filter: drop-shadow(0 0 13px rgba(103, 211, 255, 0.38)); }
+
+.hub-selecting .organ-module:not(.selected),
+.hub-selecting .gravity-settings:not(.selected) {
+  opacity: 0.08;
+}
+
+.hub-selecting .living-arm:not(.targeted) { opacity: 0.08; }
+
+.hub-selecting .organism-core:not(.selected) {
+  opacity: 0.28;
+  transform: translate(-50%, -50%) scale(0.78);
+}
+
+.organ-module.selected,
+.gravity-settings.selected {
+  z-index: 30;
+  filter: drop-shadow(0 0 24px rgba(115, 226, 255, 0.9));
+  transform: translate(-50%, -50%) translate(var(--travel-x), var(--travel-y)) scale(0.72);
+  transition-delay: var(--selection-delay, 300ms);
+}
+
+.organism-core.selected {
+  z-index: 30;
+  transform: translate(-50%, -50%) scale(1.16);
+  filter: drop-shadow(0 0 32px rgba(128, 229, 255, 0.84));
+}
+
+.hub-selecting .organism-background { opacity: 0.35; transition: opacity 520ms ease 280ms; }
+
+.hub-returning .organism-background { animation: hub-field-return 850ms ease both; }
+.hub-returning.returning-calendar .organ-module-calendar,
+.hub-returning.returning-learning .organ-module-learning,
+.hub-returning.returning-life .organ-module-life,
+.hub-returning.returning-fitness .organ-module-fitness,
+.hub-returning.returning-kitchen .organ-module-kitchen,
+.hub-returning.returning-settings .gravity-settings {
+  animation: organ-return 850ms cubic-bezier(0.18, 0.76, 0.23, 1) both;
+}
+
+.returning-calendar .organ-module-calendar { --return-x: -270px; --return-y: -12px; }
+.returning-learning .organ-module-learning { --return-x: -18px; --return-y: -130px; }
+.returning-life .organ-module-life { --return-x: -300px; --return-y: -150px; }
+.returning-fitness .organ-module-fitness { --return-x: -306px; --return-y: -370px; }
+.returning-kitchen .organ-module-kitchen { --return-x: -145px; --return-y: -590px; }
+.returning-settings .gravity-settings { --return-x: -28px; --return-y: -450px; }
+.hub-returning.returning-self .organism-core { animation: core-return 800ms cubic-bezier(0.18, 0.76, 0.23, 1) both; }
+
+.active-module-anchor .organ-glyph {
+  width: 82px;
+  height: 68px;
+}
+
+.active-module-anchor .gravity-anomaly {
+  width: 76px;
+  height: 68px;
+}
+
+.active-core-mark {
+  width: 72px;
+  height: 72px;
+  display: grid;
+  place-items: center;
+  filter: drop-shadow(0 0 12px rgba(58, 190, 247, 0.52));
+}
+
+.core-mark {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.core-mark path:first-child {
+  fill: rgba(21, 128, 190, 0.11);
+  stroke: rgba(126, 224, 255, 0.5);
+  stroke-width: 1.2;
+}
+
+.core-mark path:last-child {
+  fill: rgba(106, 220, 255, 0.2);
+  stroke: rgba(229, 251, 255, 0.82);
+  stroke-width: 1;
+}
+
+.dock-link .organ-glyph,
+.dock-link .gravity-anomaly,
+.dock-link .core-mark {
+  width: 28px;
+  height: 28px;
+}
+
+.dock-link .glyph-primary { stroke-width: 3; }
+.dock-link .glyph-secondary,
+.dock-link .glyph-root,
+.dock-link .glyph-fiber { stroke-width: 2; }
+
+.workspace-exiting .module-surface {
+  animation: subsystem-recede 300ms ease both;
+}
+
+.workspace-exiting .active-module-anchor {
+  animation: anchor-release 320ms ease both;
+}
+
+/* Orbital reactor: one shared rhythm moves from nucleus to route to branch. */
+.core-reactor {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.reactor-field path,
+.orbit-glow-layer path,
+.orbit-secondary-arcs path,
+.orbit-route,
+.reactor-fragments path,
+.orbit-packet path,
+.nucleus-field,
+.nucleus-wave {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+}
+
+.reactor-field path {
+  stroke: rgba(74, 181, 229, 0.12);
+  stroke-width: 0.8;
+  stroke-dasharray: 2 11 28 19;
+}
+
+.orbit-glow-layer path {
+  fill: none;
+  stroke: rgba(42, 184, 255, 0.24);
+  stroke-width: 5.5;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.orbit-secondary-arcs {
+  fill: none;
+  stroke: rgba(99, 205, 247, 0.2);
+  stroke-width: 0.7;
+  stroke-linecap: round;
+  stroke-dasharray: 2 9 31 17;
+  vector-effect: non-scaling-stroke;
+  transform-origin: 130px 132px;
+  animation: orbit-precession-reverse 53s linear infinite;
+}
+
+.orbit-route {
+  stroke: url(#orbit-depth);
+  stroke-linecap: round;
+  transform-origin: 130px 132px;
+  animation: reactor-orbit-cycle 6.4s ease-in-out infinite;
+  transition: opacity 180ms ease, stroke-width 180ms ease, filter 180ms ease;
+}
+
+.orbit-depth-back { opacity: 0.72; }
+.orbit-depth-back .orbit-route-a { stroke-width: 1.4; stroke-dasharray: 30 5 7 11 25 9; }
+.orbit-depth-back .orbit-route-b { stroke-width: 1.05; stroke-dasharray: 17 8 34 5 11 25; }
+.orbit-depth-back .orbit-route-c { stroke-width: 1.2; stroke-dasharray: 44 9 4 12 19 12; }
+.orbit-depth-back .orbit-route-d { stroke-width: 0.85; stroke-dasharray: 11 7 48 16 4 14; }
+.orbit-depth-back .orbit-route-e { stroke-width: 1.5; stroke-dasharray: 28 6 8 10 34 14; }
+.orbit-depth-back .orbit-route-g { stroke-width: 0.9; stroke-dasharray: 9 8 38 13 4 19; }
+.orbit-depth-back .orbit-route-h { stroke-width: 1.12; stroke-dasharray: 24 11 48 19; }
+.orbit-depth-back .orbit-route-i { stroke-width: 0.72; stroke-dasharray: 4 8 21 6 39 18; }
+
+.orbit-depth-front {
+  opacity: 0.82;
+  pointer-events: none;
+}
+
+.orbit-foreground {
+  stroke: rgba(195, 242, 255, 0.7);
+  stroke-width: 1.35;
+  stroke-dasharray: 12 88;
+  stroke-dashoffset: -17;
+  animation: orbit-front-drift 13s linear infinite;
+}
+
+.orbit-foreground.orbit-route-b { stroke-dashoffset: -46; animation-duration: 17s; }
+.orbit-foreground.orbit-route-c { stroke-dashoffset: -67; animation-duration: 21s; }
+.orbit-foreground.orbit-route-d { stroke-dashoffset: -31; animation-duration: 25s; }
+.orbit-foreground.orbit-route-e { stroke-dashoffset: -75; animation-duration: 11s; }
+.orbit-foreground.orbit-route-g { stroke-dashoffset: -29; animation-duration: 19s; }
+.orbit-foreground.orbit-route-h { stroke-dashoffset: -61; animation-duration: 23s; }
+.orbit-foreground.orbit-route-i { stroke-dashoffset: -82; animation-duration: 29s; }
+
+.orbit-packet path,
+.orbit-packet rect {
+  fill: rgba(223, 250, 255, 0.9);
+  stroke: rgba(151, 229, 255, 0.9);
+  stroke-width: 1;
+  filter: drop-shadow(0 0 4px rgba(64, 196, 255, 0.85));
+}
+
+.orbit-packet-b,
+.orbit-packet-d { opacity: 0.48; }
+
+.reactor-fragments path {
+  stroke: rgba(151, 227, 255, 0.52);
+  stroke-width: 1;
+  stroke-linecap: round;
+  animation: reactor-fragment-pulse 8s ease-in-out infinite;
+}
+
+.reactor-fragments path:nth-child(2) { animation-delay: -2s; }
+.reactor-fragments path:nth-child(3) { animation-delay: -5s; }
+.reactor-fragments path:nth-child(4) { animation-delay: -7s; }
+
+.nucleus-system { transform-origin: 130px 132px; }
+
+.nucleus-bloom {
+  transform-origin: 130px 132px;
+  animation: nucleus-bloom-breathe var(--hub-cycle) ease-in-out infinite;
+}
+
+.nucleus-field {
+  stroke: rgba(90, 211, 255, 0.33);
+  stroke-width: 0.9;
+  stroke-dasharray: 4 7;
+  transform-origin: 130px 132px;
+  animation: nucleus-field-spin 24s linear infinite;
+}
+
+.nucleus-field-inner {
+  stroke: rgba(206, 246, 255, 0.58);
+  stroke-dasharray: 13 5 2 7;
+  animation-direction: reverse;
+  animation-duration: 17s;
+}
+
+.nucleus-corona {
+  transform-origin: 130px 132px;
+  animation: reactor-nucleus-cycle 6.4s ease-in-out infinite;
+}
+
+.nucleus-hot {
+  fill: #f4fdff;
+  filter: drop-shadow(0 0 4px #ffffff) drop-shadow(0 0 11px #4bc9ff);
+}
+
+.nucleus-hot-halo {
+  fill: rgba(174, 235, 255, 0.34);
+  filter: blur(2.2px) drop-shadow(0 0 9px rgba(63, 198, 255, 0.88));
+  transform-origin: 130px 132px;
+  animation: nucleus-hot-breathe var(--hub-cycle) ease-in-out infinite;
+}
+
+.nucleus-wave {
+  stroke: rgba(201, 246, 255, 0.66);
+  stroke-width: 1;
+  transform-origin: 130px 132px;
+  animation: nucleus-wave-cycle 6.4s ease-out infinite;
+}
+
+.target-calendar .orbit-route-calendar,
+.target-learning .orbit-route-learning,
+.target-life .orbit-route-life,
+.target-fitness .orbit-route-fitness,
+.target-kitchen .orbit-route-kitchen {
+  opacity: 1;
+  stroke-width: 2.4;
+  filter: drop-shadow(0 0 5px rgba(100, 217, 255, 0.86));
+}
+
+.energy-hover-module.phase-charge .nucleus-corona,
+.energy-select-module.phase-charge .nucleus-corona {
+  scale: 1.24;
+  filter: drop-shadow(0 0 10px rgba(148, 233, 255, 0.9));
+}
+
+.energy-select-module .nucleus-hot { filter: drop-shadow(0 0 7px #ffffff) drop-shadow(0 0 17px #42c8ff); }
+
+.idle-arm-pulse,
+.target-energy-pulse {
+  fill: none;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.idle-arm-pulse {
+  stroke: rgba(174, 234, 255, 0.34);
+  stroke-width: 1.8;
+  stroke-dasharray: 7 93;
+  stroke-dashoffset: 100;
+  opacity: 0;
+  animation: idle-energy-travel 6.4s ease-in-out infinite;
+}
+
+.target-energy-pulse {
+  stroke: rgba(224, 250, 255, 0.98);
+  stroke-width: 3.2;
+  stroke-dasharray: 12 88;
+  stroke-dashoffset: 100;
+  filter: drop-shadow(0 0 4px #80dcff) drop-shadow(0 0 8px rgba(41, 179, 241, 0.8));
+  animation: target-energy-travel var(--target-pulse-duration) cubic-bezier(0.19, 0.72, 0.31, 1) forwards;
+}
+
+.target-energy-pulse.strong {
+  stroke-width: 5;
+  stroke-dasharray: 15 85;
+  filter: drop-shadow(0 0 5px #e8fbff) drop-shadow(0 0 13px #35bfff);
+}
+
+.living-arm.targeted .arm-body {
+  opacity: 0.92;
+  stroke-width: 4.2;
+}
+
+.living-arm.targeted .arm-field { opacity: 0.82; }
+.living-arm.activated .arm-body { opacity: 1; }
+.arm-filament-a { translate: 0 -1.8px; }
+.arm-filament-b { translate: 0 1.8px; }
+
+.organ-module:hover,
+.organ-module:focus-visible { filter: none; }
+
+.phase-active.target-calendar .organ-module-calendar,
+.phase-active.target-learning .organ-module-learning,
+.phase-active.target-life .organ-module-life,
+.phase-active.target-fitness .organ-module-fitness,
+.phase-active.target-kitchen .organ-module-kitchen {
+  scale: 1.045;
+  filter: drop-shadow(0 0 16px rgba(108, 220, 255, 0.82));
+}
+
+.phase-decay.target-calendar .organ-module-calendar,
+.phase-decay.target-learning .organ-module-learning,
+.phase-decay.target-life .organ-module-life,
+.phase-decay.target-fitness .organ-module-fitness,
+.phase-decay.target-kitchen .organ-module-kitchen {
+  filter: drop-shadow(0 0 8px rgba(76, 191, 239, 0.35));
+}
+
+.target-self.phase-active .orbit-route,
+.target-self.phase-active .arm-body {
+  opacity: 0.88;
+}
+
+.core-mark-orbit {
+  fill: none !important;
+  stroke: rgba(126, 224, 255, 0.58) !important;
+  stroke-width: 1.25 !important;
+}
+
+.core-mark-source {
+  fill: rgba(222, 249, 255, 0.92);
+  stroke: rgba(71, 196, 246, 0.78);
+  stroke-width: 1;
+  filter: drop-shadow(0 0 4px #4bc9ff);
+}
+
+/* Fourth iteration: one master breath, continuous arm fills, readable endpoints. */
+.organism-core {
+  animation: core-master-breathe var(--hub-cycle) ease-in-out infinite;
+}
+
+.nucleus-corona {
+  animation: nucleus-master-breathe var(--hub-cycle) ease-in-out infinite;
+}
+
+.nucleus-hot {
+  transform-origin: 130px 132px;
+  animation: nucleus-hot-breathe var(--hub-cycle) ease-in-out infinite;
+}
+
+.nucleus-wave {
+  animation: nucleus-wave-cycle var(--hub-cycle) ease-out infinite;
+}
+
+.orbit-depth-back .orbit-route-a {
+  animation: reactor-orbit-cycle var(--hub-cycle) ease-in-out infinite, orbit-precession-forward 38s linear infinite;
+}
+
+.orbit-depth-back .orbit-route-b {
+  animation: reactor-orbit-cycle var(--hub-cycle) ease-in-out infinite, orbit-precession-reverse 29s linear infinite;
+}
+
+.orbit-depth-back .orbit-route-c {
+  animation: reactor-orbit-cycle var(--hub-cycle) ease-in-out infinite, orbit-precession-forward 44s linear infinite;
+}
+
+.orbit-depth-back .orbit-route-d {
+  animation: reactor-orbit-cycle var(--hub-cycle) ease-in-out infinite, orbit-precession-reverse 34s linear infinite;
+}
+
+.orbit-depth-back .orbit-route-e {
+  animation: reactor-orbit-cycle var(--hub-cycle) ease-in-out infinite, orbit-precession-forward 23s linear infinite;
+}
+
+.orbit-depth-back .orbit-route-g {
+  animation: reactor-orbit-cycle var(--hub-cycle) ease-in-out infinite, orbit-precession-forward 31s linear infinite;
+}
+
+.orbit-depth-back .orbit-route-h {
+  animation: reactor-orbit-cycle var(--hub-cycle) ease-in-out infinite, orbit-precession-reverse 47s linear infinite;
+}
+
+.orbit-depth-back .orbit-route-i {
+  animation: reactor-orbit-cycle var(--hub-cycle) ease-in-out infinite, orbit-precession-forward 27s linear infinite;
+}
+
+.orbit-foreground.orbit-route-a {
+  animation: reactor-orbit-cycle var(--hub-cycle) ease-in-out infinite, orbit-front-drift 13s linear infinite, orbit-precession-forward 38s linear infinite;
+}
+
+.orbit-foreground.orbit-route-b {
+  animation: reactor-orbit-cycle var(--hub-cycle) ease-in-out infinite, orbit-front-drift 17s linear infinite, orbit-precession-reverse 29s linear infinite;
+}
+
+.orbit-foreground.orbit-route-c {
+  animation: reactor-orbit-cycle var(--hub-cycle) ease-in-out infinite, orbit-front-drift 21s linear infinite, orbit-precession-forward 44s linear infinite;
+}
+
+.orbit-foreground.orbit-route-d {
+  animation: reactor-orbit-cycle var(--hub-cycle) ease-in-out infinite, orbit-front-drift 25s linear infinite, orbit-precession-reverse 34s linear infinite;
+}
+
+.orbit-foreground.orbit-route-e {
+  animation: reactor-orbit-cycle var(--hub-cycle) ease-in-out infinite, orbit-front-drift 11s linear infinite, orbit-precession-forward 23s linear infinite;
+}
+
+.orbit-foreground.orbit-route-f {
+  animation: reactor-orbit-cycle var(--hub-cycle) ease-in-out infinite, orbit-front-drift 19s linear infinite, orbit-precession-reverse 31s linear infinite;
+}
+
+.orbit-foreground.orbit-route-g {
+  animation: reactor-orbit-cycle var(--hub-cycle) ease-in-out infinite, orbit-front-drift 23s linear infinite, orbit-precession-forward 31s linear infinite;
+}
+
+.orbit-foreground.orbit-route-h {
+  animation: reactor-orbit-cycle var(--hub-cycle) ease-in-out infinite, orbit-front-drift 27s linear infinite, orbit-precession-reverse 47s linear infinite;
+}
+
+.orbit-foreground.orbit-route-i {
+  animation: reactor-orbit-cycle var(--hub-cycle) ease-in-out infinite, orbit-front-drift 31s linear infinite, orbit-precession-forward 27s linear infinite;
+}
+
+.living-arm {
+  transform-box: view-box;
+  transform-origin: 52% 50%;
+  animation: arm-master-breathe var(--hub-cycle) ease-in-out infinite;
+}
+
+.sculpture-filament {
+  stroke: rgba(132, 220, 255, 0.3);
+  stroke-width: 0.75;
+  stroke-dasharray: 2 11 19 14;
+  stroke-dashoffset: 18;
+  animation: filament-flow 24s linear infinite;
+}
+
+.sculpture-companion {
+  stroke: rgba(116, 211, 250, 0.2);
+  stroke-width: 0.65;
+  stroke-dasharray: 32 17 4 22;
+  animation-duration: 31s;
+}
+
+.sculpture-hot {
+  stroke: rgba(219, 248, 255, 0.58);
+  stroke-width: 0.78;
+  opacity: 0.7;
+  filter: drop-shadow(0 0 1px rgba(225, 250, 255, 0.72));
+}
+
+.sculpture-details path {
+  fill: none;
+  stroke: rgba(104, 207, 248, 0.48);
+  stroke-width: 1.15;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+  transition: opacity 360ms ease, stroke 360ms ease, filter 360ms ease;
+}
+
+.sculpture-detail-1 { opacity: 0.96; }
+.sculpture-detail-2 { opacity: 0.78; }
+.sculpture-detail-3 { opacity: 0.72; }
+.sculpture-detail-4 { opacity: 0.82; }
+
+.system-sculpture-calendar .sculpture-details path,
+.system-sculpture-fitness .sculpture-details path,
+.system-sculpture-kitchen .sculpture-details path {
+  stroke: rgba(120, 216, 252, 0.82);
+}
+
+.sculpture-detail-2 { opacity: 0.76; }
+.sculpture-detail-3 { opacity: 0.58; }
+
+.sculpture-nodes circle {
+  fill: rgba(220, 248, 255, 0.9);
+  stroke: rgba(133, 225, 255, 0.72);
+  stroke-width: 0.65;
+  vector-effect: non-scaling-stroke;
+  filter: drop-shadow(0 0 3px rgba(115, 221, 255, 0.84));
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: sculpture-node-breathe var(--hub-cycle) ease-in-out infinite;
+  transition: opacity 280ms ease, filter 280ms ease;
+}
+
+.system-sculpture.targeted.phase-dwell .sculpture-details path { stroke: rgba(126, 217, 251, 0.58); }
+.system-sculpture.targeted.phase-dwell .sculpture-nodes circle { filter: drop-shadow(0 0 4px rgba(155, 235, 255, 0.86)); }
+
+.system-sculpture.targeted.phase-active .sculpture-details path {
+  stroke: rgba(210, 247, 255, 0.88);
+  filter: drop-shadow(0 0 3px rgba(86, 207, 255, 0.72));
+}
+
+.system-sculpture.targeted.phase-active .sculpture-nodes circle {
+  fill: #effcff;
+  filter: drop-shadow(0 0 5px #a7eaff);
+}
+
+.system-sculpture.targeted.phase-decay .sculpture-details path { opacity: 0.3; }
+.system-sculpture.targeted.phase-decay .sculpture-nodes circle { opacity: 0.45; }
+
+.organ-module {
+  animation: module-master-breathe var(--hub-cycle) ease-in-out infinite;
+}
+
+.glyph-lobe {
+  transform-origin: center;
+  animation: symbol-master-breathe var(--hub-cycle) ease-in-out infinite;
+}
+
+.glyph-continuation {
+  stroke: rgba(205, 246, 255, 0.78);
+  stroke-width: 2.15;
+}
+
+.glyph-binding {
+  fill: none;
+  stroke: rgba(222, 249, 255, 0.9);
+  stroke-width: 2.6;
+  stroke-linecap: round;
+}
+
+.glyph-date {
+  fill: rgba(76, 194, 243, 0.2);
+  stroke: rgba(213, 248, 255, 0.82);
+  stroke-width: 1;
+}
+
+.phase-dwell.target-calendar .organ-module-calendar,
+.phase-dwell.target-learning .organ-module-learning,
+.phase-dwell.target-life .organ-module-life,
+.phase-dwell.target-fitness .organ-module-fitness,
+.phase-dwell.target-kitchen .organ-module-kitchen {
+  scale: 1.01;
+  filter: drop-shadow(0 0 7px rgba(87, 197, 241, 0.28));
+}
+
+.phase-dwell.target-calendar .orbit-route-calendar,
+.phase-dwell.target-learning .orbit-route-learning,
+.phase-dwell.target-life .orbit-route-life,
+.phase-dwell.target-fitness .orbit-route-fitness,
+.phase-dwell.target-kitchen .orbit-route-kitchen {
+  opacity: 0.42;
+  stroke-width: 1.3;
+  filter: none;
+}
+
+.phase-orbit.target-calendar .orbit-route-calendar,
+.phase-travel.target-calendar .orbit-route-calendar,
+.phase-active.target-calendar .orbit-route-calendar,
+.phase-orbit.target-learning .orbit-route-learning,
+.phase-travel.target-learning .orbit-route-learning,
+.phase-active.target-learning .orbit-route-learning,
+.phase-orbit.target-life .orbit-route-life,
+.phase-travel.target-life .orbit-route-life,
+.phase-active.target-life .orbit-route-life,
+.phase-orbit.target-fitness .orbit-route-fitness,
+.phase-travel.target-fitness .orbit-route-fitness,
+.phase-active.target-fitness .orbit-route-fitness,
+.phase-orbit.target-kitchen .orbit-route-kitchen,
+.phase-travel.target-kitchen .orbit-route-kitchen,
+.phase-active.target-kitchen .orbit-route-kitchen {
+  opacity: 1;
+  stroke-width: 2.4;
+  filter: drop-shadow(0 0 5px rgba(100, 217, 255, 0.86));
+}
+
+.target-energy-halo,
+.target-energy-fill,
+.target-energy-front {
+  fill: none;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.target-energy-halo {
+  stroke: rgba(43, 184, 255, 0.32);
+  stroke-width: 12;
+  stroke-dasharray: 0 100;
+  filter: blur(4px);
+}
+
+.target-energy-halo.strong { stroke-width: 17; }
+
+.target-energy-fill {
+  stroke: rgba(211, 247, 255, 0.96);
+  stroke-width: 3.6;
+  stroke-dasharray: 0 100;
+  stroke-dashoffset: 0;
+  filter: drop-shadow(0 0 3px #bfefff) drop-shadow(0 0 8px rgba(39, 181, 242, 0.72));
+}
+
+.target-energy-fill.strong {
+  stroke-width: 5;
+  filter: drop-shadow(0 0 5px #effdff) drop-shadow(0 0 13px #35bfff);
+}
+
+.energy-fill-travel {
+  animation: arm-energy-fill var(--target-pulse-duration) cubic-bezier(0.2, 0.7, 0.28, 1) forwards;
+}
+
+.energy-fill-active {
+  stroke-dasharray: 100 0;
+  opacity: 0.9;
+}
+
+.energy-fill-decay {
+  stroke-dasharray: 100 0;
+  animation: arm-energy-retreat 760ms ease-in forwards;
+}
+
+.target-energy-front {
+  stroke: rgba(244, 253, 255, 0.98);
+  stroke-width: 5.5;
+  stroke-dasharray: 9 91;
+  stroke-dashoffset: 0;
+  filter: drop-shadow(0 0 7px #8cddff);
+  animation: arm-energy-front var(--target-pulse-duration) cubic-bezier(0.2, 0.7, 0.28, 1) forwards;
+}
+
+.living-arm.targeted .arm-body { opacity: 0.62; stroke-width: 3.4; }
+.living-arm.targeted.phase-orbit .arm-body { opacity: 0.76; }
+.living-arm.targeted.phase-travel .arm-body { opacity: 0.7; stroke-width: 3.7; }
+.living-arm.targeted.phase-active .arm-body { opacity: 0.96; stroke-width: 4.1; }
+.living-arm.targeted.phase-decay .arm-body { opacity: 0.8; stroke-width: 3.8; }
+
+.phase-active.target-calendar .organ-module-calendar .glyph-continuation,
+.phase-active.target-learning .organ-module-learning .glyph-continuation,
+.phase-active.target-life .organ-module-life .glyph-continuation,
+.phase-active.target-fitness .organ-module-fitness .glyph-continuation,
+.phase-active.target-kitchen .organ-module-kitchen .glyph-continuation {
+  stroke: rgba(244, 253, 255, 0.98);
+  filter: drop-shadow(0 0 4px rgba(105, 218, 255, 0.92));
+}
+
+.gravity-settings {
+  animation: settings-drift 43s ease-in-out infinite;
+}
+
+.anomaly-lensed-background,
+.anomaly-lensed-crosses,
+.anomaly-drawn-particles {
+  fill: none;
+  pointer-events: none;
+  transform-origin: 65px 60px;
+  transition: opacity 500ms ease, transform 700ms ease;
+}
+
+.anomaly-lensed-background {
+  opacity: 0.6;
+  animation: settings-lens-rotation 57s linear infinite;
+}
+
+.anomaly-lensed-background path {
+  stroke: rgba(143, 220, 249, 0.16);
+  stroke-width: 0.8;
+  stroke-dasharray: 18 9 3 15;
+}
+
+.anomaly-lensed-crosses { opacity: 0.5; }
+.anomaly-lensed-crosses path { stroke: rgba(184, 237, 255, 0.22); stroke-width: 0.8; }
+.anomaly-drawn-particles { opacity: 0.62; animation: settings-particle-infall 36s ease-in-out infinite; }
+.anomaly-drawn-particles circle { fill: rgba(207, 245, 255, 0.48); }
+.anomaly-drawn-particles path { stroke: rgba(126, 213, 247, 0.14); stroke-width: 0.7; stroke-dasharray: 2 9; }
+
+.gravity-settings.hovered .anomaly-lensed-background { opacity: 0.78; transform: scale(1.06, 0.94); }
+.gravity-settings.hovered .anomaly-lensed-crosses { opacity: 0.82; transform: scale(1.04); }
+.gravity-settings.hovered .anomaly-drawn-particles { opacity: 0.88; transform: scale(0.9); }
+
+.organ-module:focus-visible::after {
+  inset: auto 24px 1px;
+  height: 3px;
+  border: 0;
+  border-bottom: 1px solid rgba(159, 232, 255, 0.78);
+  border-radius: 0;
+  box-shadow: 0 3px 8px rgba(60, 194, 247, 0.35);
+}
+
+/* Reference polish: crisper energy hierarchy and small navigational captions. */
+.field-stars circle {
+  fill: rgba(199, 242, 255, 0.58);
+  filter: drop-shadow(0 0 2px rgba(97, 211, 255, 0.74));
+}
+
+.depth-particle-f { top: 9%; left: 58%; animation-delay: -7s; }
+.depth-particle-g { top: 65%; right: 9%; animation-delay: -16s; }
+.depth-particle-h { bottom: 8%; left: 36%; animation-delay: -10s; }
+
+.gravity-line-e { stroke-dasharray: 1 26 58 32; }
+.gravity-line-f { stroke-dasharray: 90 70; opacity: 0.72; }
+
+.reactor-field ellipse {
+  fill: none;
+  stroke: rgba(73, 182, 232, 0.08);
+  stroke-width: 0.7;
+  stroke-dasharray: 3 18 46 29;
+  vector-effect: non-scaling-stroke;
+}
+
+.orbit-depth-back .orbit-route {
+  filter: drop-shadow(0 0 2px rgba(63, 192, 247, 0.4));
+}
+
+.orbit-depth-back { opacity: 0.92; }
+
+.orbit-depth-back .orbit-route-f {
+  stroke-width: 0.9;
+  stroke-dasharray: 18 7 5 13 39 18;
+  animation: reactor-orbit-cycle var(--hub-cycle) ease-in-out infinite, orbit-precession-reverse 31s linear infinite;
+}
+
+.orbit-foreground.orbit-route-f {
+  stroke-dashoffset: -56;
+  animation: reactor-orbit-cycle var(--hub-cycle) ease-in-out infinite, orbit-front-drift 19s linear infinite, orbit-precession-reverse 31s linear infinite;
+}
+
+.orbit-stars circle {
+  fill: #eafcff;
+  stroke: rgba(80, 205, 252, 0.82);
+  stroke-width: 0.7;
+  filter: drop-shadow(0 0 4px #62d3ff);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: orbit-star-breathe var(--hub-cycle) ease-in-out infinite;
+}
+
+.orbit-stars circle:nth-child(2n) { animation-delay: -2.4s; }
+.orbit-stars circle:nth-child(3n) { animation-delay: -4.1s; }
+
+.nucleus-hot {
+  filter: drop-shadow(0 0 5px #ffffff) drop-shadow(0 0 14px #42c8ff);
+}
+
+.sculpture-backbone {
+  stroke-width: 2.7;
+  opacity: 0.88;
+  filter: drop-shadow(0 0 2px rgba(91, 211, 255, 0.7));
+}
+
+.sculpture-field {
+  stroke: rgba(30, 155, 220, 0.15);
+  stroke-width: 16;
+  filter: blur(4px);
+}
+
+.sculpture-details path {
+  stroke: rgba(144, 226, 255, 0.72);
+  stroke-width: 1.05;
+}
+
+.sculpture-nodes circle {
+  fill: #effcff;
+  filter: drop-shadow(0 0 4px #8ee4ff) drop-shadow(0 0 7px rgba(67, 199, 250, 0.62));
+}
+
+.module-caption {
+  top: calc(100% - 5px);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: rgba(220, 247, 255, 0.86);
+  font-size: 0.64rem;
+  font-weight: 560;
+  opacity: 0.9;
+  transform: translate(-50%, 0);
+  text-shadow: 0 0 7px rgba(58, 194, 247, 0.46);
+}
+
+.module-caption::before {
+  width: 4px;
+  height: 4px;
+  flex: 0 0 4px;
+  border-radius: 50%;
+  background: #dff9ff;
+  box-shadow: 0 0 5px #62d5ff, 0 0 9px rgba(63, 194, 249, 0.62);
+  content: "";
+}
+
+.organ-module:hover .module-caption,
+.organ-module:focus-visible .module-caption,
+.gravity-settings:hover .module-caption,
+.gravity-settings:focus-visible .module-caption {
+  color: #f1fcff;
+  opacity: 1;
+  transform: translate(-50%, -1px);
+}
+
+.anomaly-vortex-streams,
+.anomaly-vortex-stars {
+  pointer-events: none;
+  transform-origin: 65px 60px;
+  transition: opacity 600ms ease, filter 600ms ease, transform 900ms ease;
+}
+
+.anomaly-vortex-streams {
+  fill: none;
+  opacity: 0.72;
+  filter: drop-shadow(0 0 2px rgba(71, 196, 246, 0.34));
+  animation: vortex-stream-rotation 58s linear infinite;
+}
+
+.anomaly-vortex-streams path {
+  stroke: rgba(117, 213, 250, 0.3);
+  stroke-width: 0.85;
+  stroke-linecap: round;
+  stroke-dasharray: 3 10 31 18;
+  vector-effect: non-scaling-stroke;
+}
+
+.anomaly-vortex-streams path:nth-child(2n) {
+  stroke: rgba(195, 239, 255, 0.22);
+  stroke-dasharray: 1 14 46 22;
+}
+
+.anomaly-vortex-stars circle {
+  fill: rgba(223, 249, 255, 0.84);
+  filter: drop-shadow(0 0 4px #75d9ff);
+  animation: vortex-star-drift 21s ease-in-out infinite;
+}
+
+.anomaly-vortex-stars circle:nth-child(2n) { animation-delay: -8s; }
+.anomaly-vortex-stars circle:nth-child(3n) { animation-delay: -14s; }
+
+.gravity-settings.hovered .anomaly-vortex-streams {
+  opacity: 0.96;
+  filter: drop-shadow(0 0 2px rgba(119, 220, 255, 0.4));
+  transform: scale(1.025);
+}
+
+.gravity-settings.hovered .anomaly-vortex-stars { opacity: 1; }
+
+.anomaly-shadow-swirl {
+  fill: none;
+  stroke: rgba(0, 5, 14, 0.96);
+  stroke-width: 6;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 2px rgba(151, 229, 255, 0.24));
+}
+
+/* Reference-B fidelity: dense reactor, layered energy, and a quiet gravity well. */
+.reactor-field {
+  opacity: 0.36;
+  transform-origin: 130px 132px;
+  animation: ghost-field-drift 67s linear infinite;
+}
+
+.reactor-field path,
+.reactor-field ellipse {
+  stroke: rgba(84, 190, 236, 0.065);
+}
+
+.orbit-glow-layer { opacity: 0.22; }
+
+.orbit-glow-layer path {
+  stroke: rgba(42, 184, 255, 0.19);
+  stroke-width: 3.2;
+}
+
+.orbit-depth-back .orbit-route {
+  filter: drop-shadow(0 0 1.5px rgba(63, 192, 247, 0.32));
+}
+
+.orbit-depth-back { opacity: 0.58; }
+.orbit-depth-front { opacity: 0.54; }
+.orbit-depth-front .orbit-route:nth-child(3n) { opacity: 0.56; }
+.orbit-depth-front .orbit-route:nth-child(4n) { opacity: 0.42; }
+
+.orbit-stars circle:nth-child(4n + 1) { opacity: 0.52; }
+.orbit-stars circle:nth-child(5n + 2) { opacity: 0.72; }
+
+.nucleus-bloom {
+  opacity: 0.34;
+  mix-blend-mode: screen;
+}
+
+.nucleus-corona {
+  filter: drop-shadow(0 0 4px rgba(105, 222, 255, 0.58));
+}
+
+.sculpture-field {
+  stroke: rgba(31, 164, 228, 0.1);
+  stroke-width: 8;
+  filter: blur(2.8px);
+}
+
+.sculpture-backbone {
+  stroke-width: 1.85;
+  opacity: 0.88;
+  filter: drop-shadow(0 0 1.5px rgba(91, 211, 255, 0.62)) drop-shadow(0 0 4px rgba(31, 159, 226, 0.18));
+}
+
+.sculpture-hot {
+  stroke-width: 0.55;
+  opacity: 0.58;
+  filter: none;
+}
+
+.sculpture-filament { opacity: 0.62; }
+.sculpture-companion { opacity: 0.5; }
+
+.sculpture-details path {
+  stroke: rgba(93, 202, 247, 0.72);
+  stroke-width: 0.82;
+  filter: drop-shadow(0 0 1.5px rgba(62, 196, 247, 0.3));
+}
+
+.sculpture-nodes circle {
+  stroke-width: 0.45;
+  filter: drop-shadow(0 0 3px rgba(115, 221, 255, 0.72));
+}
+
+.gravity-anomaly {
+  filter: none;
+}
+
+.anomaly-aperture {
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.92));
+}
+
+.anomaly-rim {
+  stroke: rgba(168, 232, 255, 0.54);
+  stroke-width: 0.82;
+  stroke-linecap: round;
+  stroke-dasharray: none;
+  filter: drop-shadow(0 0 2px rgba(110, 218, 255, 0.42));
+}
+
+.anomaly-rim-glint {
+  stroke: rgba(225, 250, 255, 0.78);
+  stroke-width: 1.05;
+}
+
+.anomaly-near-streams {
+  fill: none;
+  stroke: rgba(105, 205, 245, 0.18);
+  stroke-width: 0.56;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+  animation: settings-space-bend 52s linear infinite;
+}
+
+.anomaly-near-streams path:nth-child(2n) { stroke: rgba(180, 235, 255, 0.12); }
+
+.anomaly-near-particles circle {
+  fill: rgba(210, 247, 255, 0.5);
+  filter: drop-shadow(0 0 2px rgba(106, 214, 255, 0.56));
+}
+
+.gravity-settings.hovered .anomaly-aperture {
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.95));
+}
+
+.gravity-settings.hovered .anomaly-rim { stroke: rgba(216, 247, 255, 0.74); }
+.gravity-settings.hovered .anomaly-near-streams { stroke: rgba(126, 219, 252, 0.26); }
+
+.anomaly-vortex-streams { opacity: 0.62; }
+.anomaly-vortex-streams path { stroke-width: 0.68; }
+.anomaly-field path { stroke: rgba(91, 191, 232, 0.055); }
+.anomaly-mesh,
+.anomaly-lensed-crosses { opacity: 0.08; }
+.anomaly-mesh path { stroke: rgba(114, 207, 244, 0.04); }
+.anomaly-lensed-background { opacity: 0.34; }
+
+.gravity-settings::before {
+  inset: -54%;
+  border-color: rgba(102, 206, 248, 0.035);
+  background: radial-gradient(ellipse, rgba(39, 147, 201, 0.035), transparent 68%);
+}
+
+.organ-module-kitchen .module-caption { top: calc(100% - 14px); }
+.organ-module-life .module-caption { top: 76%; }
+.organ-module-fitness .module-caption { top: 80%; }
+.organ-module-calendar .module-caption { top: calc(100% + 34px); }
+
+@keyframes core-master-breathe {
+  0%, 100% { scale: 0.985; filter: drop-shadow(0 0 18px rgba(30, 173, 246, 0.34)); }
+  48% { scale: 1.018; filter: drop-shadow(0 0 25px rgba(47, 188, 251, 0.52)); }
+  58% { scale: 1.024; filter: drop-shadow(0 0 27px rgba(82, 205, 255, 0.58)); }
+}
+
+@keyframes nucleus-bloom-breathe {
+  0%, 100% { transform: scale(0.92); opacity: 0.62; }
+  50% { transform: scale(1.08); opacity: 0.94; }
+}
+
+@keyframes ghost-field-drift {
+  to { transform: rotate(360deg) scale(1.015); }
+}
+
+@keyframes settings-space-bend {
+  to { stroke-dashoffset: -180; }
+}
+
+@keyframes settings-warp-particle {
+  0%, 100% { transform: translate(0, 0) scale(0.76); opacity: 0.32; }
+  50% { transform: translate(5px, 3px) scale(1.08); opacity: 0.78; }
+}
+
+@keyframes nucleus-master-breathe {
+  0%, 100% { transform: scale(0.86); opacity: 0.7; }
+  42% { transform: scale(1.12); opacity: 0.96; }
+  53% { transform: scale(1.23); opacity: 1; }
+  70% { transform: scale(1.02); opacity: 0.86; }
+}
+
+@keyframes nucleus-hot-breathe {
+  0%, 100% { transform: scale(0.84); opacity: 0.78; }
+  52% { transform: scale(1.16); opacity: 1; }
+  68% { transform: scale(1.02); opacity: 0.9; }
+}
+
+@keyframes orbit-precession-forward { to { transform: rotate(360deg); } }
+@keyframes orbit-precession-reverse { to { transform: rotate(-360deg); } }
+
+@keyframes arm-master-breathe {
+  0%, 100% { transform: scale(0.996); opacity: 0.88; }
+  58% { transform: scale(1.009); opacity: 0.98; }
+  74% { transform: scale(1.003); opacity: 0.93; }
+}
+
+@keyframes module-master-breathe {
+  0%, 100% { translate: 0 0; scale: 0.99; }
+  62% { translate: 0 -2px; scale: 1.008; }
+}
+
+@keyframes symbol-master-breathe {
+  0%, 100% { transform: scale(0.994); opacity: 0.88; }
+  64% { transform: scale(1.008); opacity: 1; }
+}
+
+@keyframes sculpture-node-breathe {
+  0%, 100% { transform: scale(0.82); opacity: 0.58; }
+  67% { transform: scale(1.12); opacity: 0.96; }
+}
+
+@keyframes orbit-star-breathe {
+  0%, 100% { transform: scale(0.72); opacity: 0.42; }
+  54% { transform: scale(1.18); opacity: 1; }
+}
+
+@keyframes vortex-stream-rotation { to { transform: rotate(360deg); } }
+
+@keyframes vortex-star-drift {
+  0%, 100% { transform: translate(0, 0) scale(0.8); opacity: 0.42; }
+  50% { transform: translate(5px, -4px) scale(1.08); opacity: 0.92; }
+}
+
+@keyframes arm-energy-fill {
+  from { stroke-dasharray: 0 100; opacity: 0.18; }
+  to { stroke-dasharray: 100 0; opacity: 0.94; }
+}
+
+@keyframes arm-energy-front {
+  0% { stroke-dashoffset: 100; opacity: 0; }
+  8% { opacity: 0.94; }
+  91% { opacity: 0.94; }
+  100% { stroke-dashoffset: -100; opacity: 0; }
+}
+
+@keyframes arm-energy-retreat {
+  0% { stroke-dasharray: 100 0; opacity: 0.88; }
+  28% { opacity: 0.52; }
+  100% { stroke-dasharray: 0 100; opacity: 0; }
+}
+
+@keyframes settings-drift {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 2px -3px; }
+}
+
+@keyframes settings-lens-rotation { to { transform: rotate(360deg); } }
+
+@keyframes settings-particle-infall {
+  0%, 100% { transform: scale(1); opacity: 0.45; }
+  50% { transform: scale(0.86); opacity: 0.76; }
+}
+
+@keyframes organism-breathe {
+  0%, 100% { scale: 0.98; }
+  50% { scale: 1.02; }
+}
+
+@keyframes reactor-nucleus-cycle {
+  0%, 8%, 100% { transform: scale(0.88); opacity: 0.72; }
+  18% { transform: scale(1.2); opacity: 1; }
+  32%, 72% { transform: scale(1); opacity: 0.88; }
+}
+
+@keyframes nucleus-wave-cycle {
+  0%, 43% { transform: scale(0.65); opacity: 0; }
+  52% { opacity: 0.72; }
+  76%, 100% { transform: scale(2.25); opacity: 0; }
+}
+
+@keyframes nucleus-field-spin { to { transform: rotate(360deg); } }
+
+@keyframes reactor-orbit-cycle {
+  0%, 26%, 100% { opacity: 0.52; }
+  49%, 64% { opacity: 1; }
+  82% { opacity: 0.68; }
+}
+
+@keyframes orbit-front-drift { to { stroke-dashoffset: -117; } }
+
+@keyframes reactor-fragment-pulse {
+  0%, 100% { opacity: 0.22; }
+  46% { opacity: 0.86; }
+}
+
+@keyframes idle-energy-travel {
+  0%, 53% { stroke-dashoffset: 100; opacity: 0; }
+  61% { opacity: 0.28; }
+  78% { stroke-dashoffset: 62; opacity: 0.08; }
+  84%, 100% { stroke-dashoffset: 62; opacity: 0; }
+}
+
+@keyframes target-energy-travel {
+  0% { stroke-dashoffset: 100; opacity: 0; }
+  8% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { stroke-dashoffset: 0; opacity: 0.28; }
+}
+
+@keyframes anomaly-infall { to { stroke-dashoffset: -45; } }
+
+@keyframes anomaly-local-field {
+  to { transform: rotate(352deg) scale(0.96, 1.08); }
+}
+
+@keyframes gravity-breathe {
+  0%, 100% { transform: rotate(-12deg) scale(0.96, 1.02); opacity: 0.62; }
+  50% { transform: rotate(-5deg) scale(1.04, 0.97); opacity: 1; }
+}
+
+@keyframes core-layer-drift {
+  0%, 100% { transform: rotate(-3deg) scale(0.98); }
+  50% { transform: rotate(5deg) scale(1.025); }
+}
+
+/* Precision image-match pass: darker space, saturated cyan, concentrated peaks. */
+.os-shell:has(.living-hub) {
+  background:
+    radial-gradient(circle at 50% 44%, rgba(8, 83, 142, 0.055), transparent 31%),
+    linear-gradient(155deg, #000612 0%, #000816 48%, #000714 100%);
+}
+
+.sculpture-backbone {
+  stroke: #22a9e5;
+  stroke-width: 1.88;
+  opacity: 0.98;
+  filter: drop-shadow(0 0 1px rgba(86, 205, 247, 0.76)) drop-shadow(0 0 3px rgba(17, 138, 197, 0.2));
+}
+
+.sculpture-hot {
+  stroke: rgba(215, 247, 255, 0.82);
+  stroke-width: 0.58;
+  opacity: 0.78;
+}
+
+.sculpture-field {
+  stroke: rgba(11, 111, 168, 0.13);
+  stroke-width: 7;
+  filter: blur(2.1px);
+}
+
+.sculpture-details path {
+  stroke: rgba(57, 191, 243, 0.8);
+  filter: drop-shadow(0 0 1px rgba(86, 205, 247, 0.38));
+}
+
+.sculpture-nodes circle {
+  fill: #eefcff;
+  stroke: rgba(86, 205, 247, 0.92);
+  filter: drop-shadow(0 0 3px #56cdf7) drop-shadow(0 0 6px rgba(34, 169, 229, 0.5));
+}
+
+.module-caption {
+  color: rgba(230, 242, 246, 0.94);
+  opacity: 0.98;
+  text-shadow: 0 0 4px rgba(57, 191, 243, 0.28);
+}
+
+.module-caption::before {
+  width: 5px;
+  height: 5px;
+  flex-basis: 5px;
+  background: #f3fdff;
+  box-shadow: 0 0 4px #56cdf7, 0 0 8px rgba(34, 169, 229, 0.64);
+}
+
+.field-stars circle { fill: rgba(119, 212, 245, 0.44); filter: none; }
+.field-stars circle:nth-child(3n) { fill: rgba(204, 245, 255, 0.68); }
+.field-stars circle:nth-child(7n) { fill: #effcff; filter: drop-shadow(0 0 2px rgba(86, 205, 247, 0.72)); }
+
+.depth-particle {
+  background: rgba(190, 239, 255, 0.74);
+  box-shadow: 0 0 5px rgba(57, 191, 243, 0.68);
+}
+
+/* Final reference-fidelity layers: fast continuous draw, compact hot peaks. */
+.target-energy-halo { stroke-width: 8; filter: blur(3px); }
+.target-energy-halo.strong { stroke-width: 11; }
+.target-energy-fill { stroke-width: 2.65; }
+.target-energy-fill.strong { stroke-width: 3.35; }
+.target-energy-front { stroke-width: 3.7; stroke-dasharray: 7 93; }
+
+.target-companion-fill,
+.target-detail-fill {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.target-companion-fill {
+  stroke: rgba(169, 236, 255, 0.84);
+  stroke-width: 1.15;
+  filter: drop-shadow(0 0 3px rgba(57, 191, 243, 0.68));
+}
+
+.target-detail-fill {
+  stroke: #d7f7ff;
+  stroke-width: 1.7;
+  filter: drop-shadow(0 0 2px #a9ecff) drop-shadow(0 0 5px rgba(34, 169, 229, 0.68));
+}
+
+.target-companion-fill.energy-fill-travel {
+  animation: arm-energy-fill var(--target-pulse-duration) cubic-bezier(0.2, 0.7, 0.28, 1) forwards;
+}
+
+.target-detail-fill.energy-fill-travel {
+  stroke-dasharray: 0 100;
+  animation: target-symbol-draw var(--detail-duration) cubic-bezier(0.18, 0.74, 0.28, 1) var(--detail-delay) forwards;
+}
+
+.target-detail-fill.energy-fill-active,
+.target-companion-fill.energy-fill-active {
+  stroke-dasharray: 100 0;
+  opacity: 0.98;
+}
+
+.target-detail-fill.energy-fill-decay,
+.target-companion-fill.energy-fill-decay {
+  stroke-dasharray: 100 0;
+  animation: arm-energy-retreat 540ms ease-in forwards;
+}
+
+.target-detail-system-life .target-detail-fill:not(.target-detail-4) {
+  stroke: rgba(111, 215, 250, 0.74);
+  stroke-width: 1.05;
+  filter: drop-shadow(0 0 2px rgba(34, 169, 229, 0.5));
+}
+
+.target-detail-system-life .target-detail-4 {
+  stroke: #eefcff;
+  stroke-width: 2.05;
+  filter: drop-shadow(0 0 3px #d7f7ff) drop-shadow(0 0 8px #39bff3);
+}
+
+.sculpture-details path {
+  stroke-width: 1.16;
+  opacity: 0.94;
+}
+
+.sculpture-backbone {
+  stroke: #2ab5ed;
+  stroke-width: 2.02;
+  opacity: 1;
+  filter: drop-shadow(0 0 1px rgba(169, 236, 255, 0.88)) drop-shadow(0 0 4px rgba(17, 138, 197, 0.3));
+}
+
+.sculpture-hot {
+  stroke: #d7f7ff;
+  stroke-width: 0.66;
+  opacity: 0.92;
+}
+
+.sculpture-filament { stroke: rgba(169, 236, 255, 0.46); opacity: 0.76; }
+.sculpture-companion { opacity: 0.62; }
+
+.system-sculpture-calendar .sculpture-detail-2,
+.system-sculpture-fitness .sculpture-detail-1,
+.system-sculpture-fitness .sculpture-detail-3,
+.system-sculpture-life .sculpture-detail-4 {
+  stroke: rgba(215, 247, 255, 0.96);
+  stroke-width: 1.42;
+  filter: drop-shadow(0 0 2px #a9ecff) drop-shadow(0 0 5px rgba(57, 191, 243, 0.62));
+}
+
+.system-sculpture-life .sculpture-detail-1,
+.system-sculpture-life .sculpture-detail-2,
+.system-sculpture-life .sculpture-detail-3 {
+  stroke: rgba(57, 191, 243, 0.7);
+  stroke-width: 0.92;
+}
+
+.sculpture-nodes .terminal-node {
+  fill: #ffffff;
+  filter: drop-shadow(0 0 3px #d7f7ff) drop-shadow(0 0 8px #22a9e5);
+}
+
+.target-node-light {
+  fill: #f7feff;
+  opacity: 0;
+  filter: drop-shadow(0 0 3px #d7f7ff) drop-shadow(0 0 7px #39bff3);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.target-node-light.node-phase-travel {
+  animation: target-node-arrival 150ms ease-out var(--node-delay) forwards;
+}
+
+.target-node-light.node-phase-active {
+  opacity: 1;
+}
+
+.target-node-light.node-phase-decay {
+  animation: target-node-fade 540ms ease-in forwards;
+}
+
+.target-node-light.terminal-node-light.node-phase-travel {
+  animation: target-terminal-arrival 180ms ease-out var(--node-delay) forwards;
+}
+
+.target-node-light.terminal-node-light.node-phase-active {
+  animation: terminal-star-shine 1.9s ease-in-out infinite;
+}
+
+.orbit-depth-back,
+.orbit-depth-front,
+.orbit-glow-layer,
+.orbit-stars {
+  transform: scale(0.955);
+  transform-origin: 130px 132px;
+}
+
+.orbit-glow-layer { opacity: 0.48; }
+.orbit-depth-back { opacity: 0.84; }
+.orbit-depth-front { opacity: 0.78; }
+.orbit-depth-back .orbit-route-a,
+.orbit-depth-back .orbit-route-c,
+.orbit-depth-back .orbit-route-e,
+.orbit-depth-back .orbit-route-g {
+  stroke-width: 1.22;
+  opacity: 0.96;
+}
+
+.orbit-depth-back .orbit-route-i,
+.orbit-depth-back .orbit-route-j {
+  stroke: rgba(86, 205, 247, 0.72);
+  stroke-width: 1.02;
+  stroke-dasharray: 28 8 4 11;
+  opacity: 0.9;
+}
+
+.orbit-depth-front .orbit-route-i,
+.orbit-depth-front .orbit-route-j {
+  stroke-width: 0.92;
+  opacity: 0.84;
+}
+
+.nucleus-bloom { opacity: 0.68; }
+.nucleus-corona {
+  filter: drop-shadow(0 0 6px rgba(169, 236, 255, 0.9)) drop-shadow(0 0 14px rgba(34, 169, 229, 0.72));
+}
+.nucleus-hot {
+  filter: drop-shadow(0 0 5px #ffffff) drop-shadow(0 0 11px #a9ecff) drop-shadow(0 0 19px #118ac5);
+}
+.orbit-stars circle { fill: #eefcff; }
+.orbit-stars circle:nth-child(3n + 1) { opacity: 1; filter: drop-shadow(0 0 4px #56cdf7); }
+
+.settings-warp-compressed-lines,
+.settings-infall-pulses {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+}
+
+.settings-warp-compressed-lines {
+  stroke: rgba(57, 191, 243, 0.24);
+  stroke-width: 0.62;
+}
+
+.settings-warp-compressed-lines path:nth-child(3n) { stroke: rgba(169, 236, 255, 0.31); }
+.settings-warp-compressed-lines path:nth-child(2n) { opacity: 0.62; }
+
+.settings-infall-pulses {
+  stroke: rgba(169, 236, 255, 0.72);
+  stroke-width: 0.74;
+  stroke-linecap: round;
+  stroke-dasharray: 4 96;
+  filter: drop-shadow(0 0 2px rgba(57, 191, 243, 0.7));
+}
+
+.settings-infall-pulses path { animation: settings-infall-pulse 11s linear infinite; }
+.settings-infall-pulses path:nth-child(2) { animation-duration: 14s; animation-delay: -9s; }
+.settings-infall-pulses path:nth-child(3) { animation-duration: 17s; animation-delay: -5s; }
+.settings-infall-pulses path:nth-child(4) { animation-duration: 8s; animation-delay: -6s; }
+.settings-infall-pulses path:nth-child(5) { animation-duration: 12s; animation-delay: -3s; }
+.settings-infall-pulses path:nth-child(6) { animation-duration: 15s; animation-delay: -11s; }
+.settings-infall-pulses path:nth-child(7) { animation-duration: 9s; animation-delay: -4s; }
+
+.settings-infall-particles circle {
+  fill: #d7f7ff;
+  filter: drop-shadow(0 0 2px #39bff3);
+}
+
+.anomaly-near-streams { stroke: rgba(86, 205, 247, 0.28); }
+.anomaly-rim-lower,
+.anomaly-rim-lower-soft,
+.anomaly-rim-lower-tail,
+.anomaly-rim-glint {
+  animation: anomaly-rim-breathe 5.2s ease-in-out infinite;
+}
+.anomaly-rim-lower { stroke: #a9ecff; opacity: 0.86; stroke-width: 1.18; }
+.anomaly-rim-lower-soft { stroke: #56cdf7; opacity: 0.66; }
+.anomaly-rim-lower-tail { stroke: #22a9e5; opacity: 0.5; }
+.anomaly-rim-glint { stroke: #eefcff; opacity: 0.94; stroke-width: 1.35; }
+
+@keyframes target-symbol-draw {
+  from { stroke-dasharray: 0 100; opacity: 0.15; }
+  to { stroke-dasharray: 100 0; opacity: 1; }
+}
+
+@keyframes target-node-arrival {
+  0% { opacity: 0; transform: scale(0.35); }
+  65% { opacity: 1; transform: scale(1.35); }
+  100% { opacity: 0.92; transform: scale(1); }
+}
+
+@keyframes target-terminal-arrival {
+  0% { opacity: 0; transform: scale(0.25); }
+  62% { opacity: 1; transform: scale(2.1); }
+  100% { opacity: 1; transform: scale(1.25); }
+}
+
+@keyframes target-node-fade {
+  to { opacity: 0; transform: scale(0.5); }
+}
+
+@keyframes terminal-star-shine {
+  0%, 100% { opacity: 0.88; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.52); }
+}
+
+@keyframes settings-infall-pulse {
+  from { stroke-dashoffset: 104; opacity: 0.12; }
+  28% { opacity: 0.66; }
+  82% { opacity: 0.88; }
+  to { stroke-dashoffset: 0; opacity: 0.08; }
+}
+
+@keyframes anomaly-rim-breathe {
+  0%, 100% { opacity: 0.78; }
+  50% { opacity: 0.92; }
+}
+
+@keyframes arm-master-breathe {
+  0%, 100% { transform: scale(0.996); opacity: 0.95; }
+  58% { transform: scale(1.006); opacity: 1; }
+  74% { transform: scale(1.002); opacity: 0.98; }
+}
+
+@keyframes reactor-orbit-cycle {
+  0%, 26%, 100% { opacity: 0.7; }
+  49%, 64% { opacity: 1; }
+  82% { opacity: 0.82; }
+}
+
+/* Dark-space and motion refinement. */
+.os-shell:has(.living-hub) {
+  background:
+    radial-gradient(circle at 50% 44%, rgba(5, 59, 105, 0.035), transparent 30%),
+    linear-gradient(155deg, #000106 0%, #00030b 48%, #00020a 100%);
+}
+
+.core-reactor {
+  transform-origin: center;
+  transition:
+    transform 560ms cubic-bezier(0.16, 1, 0.3, 1),
+    filter 480ms ease,
+    opacity 420ms ease;
+}
+
+.orbit-depth-back,
+.orbit-depth-front,
+.orbit-glow-layer,
+.orbit-stars {
+  transition: opacity 460ms ease, filter 460ms ease;
+}
+
+.organism-core:hover .core-reactor,
+.organism-core:focus-visible .core-reactor {
+  transform: scale(1.08);
+  filter: drop-shadow(0 0 8px rgba(215, 247, 255, 0.38)) drop-shadow(0 0 28px rgba(34, 169, 229, 0.62));
+}
+
+.organism-core:hover .orbit-glow-layer,
+.organism-core:focus-visible .orbit-glow-layer { opacity: 0.78; }
+
+.organism-core:hover .orbit-depth-back,
+.organism-core:focus-visible .orbit-depth-back { opacity: 0.96; }
+
+.organism-core:hover .orbit-depth-front,
+.organism-core:focus-visible .orbit-depth-front { opacity: 1; }
+
+.organism-core:hover .nucleus-corona,
+.organism-core:focus-visible .nucleus-corona {
+  filter: drop-shadow(0 0 8px #d7f7ff) drop-shadow(0 0 20px rgba(57, 191, 243, 0.94));
+}
+
+.organism-core:hover .nucleus-hot,
+.organism-core:focus-visible .nucleus-hot {
+  filter: drop-shadow(0 0 7px #ffffff) drop-shadow(0 0 15px #a9ecff) drop-shadow(0 0 26px #118ac5);
+}
+
+.anomaly-accretion-shell {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.anomaly-accretion-shell {
+  animation: dark-hole-accretion-rotate 18s linear infinite;
+}
+
+.anomaly-accretion-orbit {
+  fill: none;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.anomaly-accretion-orbit-a {
+  stroke: rgba(57, 191, 243, 0.34);
+  stroke-width: 0.72;
+  stroke-dasharray: 21 8 4 13;
+}
+
+.anomaly-accretion-orbit-b {
+  stroke: rgba(169, 236, 255, 0.22);
+  stroke-width: 0.58;
+  stroke-dasharray: 7 16 31 11;
+}
+
+.anomaly-accretion-orbit-c {
+  stroke: rgba(17, 138, 197, 0.2);
+  stroke-width: 0.54;
+  stroke-dasharray: 36 19 3 16;
+}
+
+.anomaly-horizon-glow,
+.anomaly-horizon-ring,
+.anomaly-horizon-flow,
+.anomaly-horizon-embers,
+.anomaly-horizon-sparks {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.anomaly-horizon-glow {
+  stroke: rgba(34, 169, 229, 0.62);
+  stroke-width: 4.4;
+  filter: blur(2.5px) drop-shadow(0 0 5px rgba(57, 191, 243, 0.64));
+  animation: dark-hole-burning-glow 2.8s ease-in-out infinite;
+}
+
+.anomaly-horizon-ring {
+  stroke: rgba(169, 236, 255, 0.9);
+  stroke-width: 1.05;
+  filter: drop-shadow(0 0 2px #56cdf7) drop-shadow(0 0 5px rgba(34, 169, 229, 0.72));
+}
+
+.anomaly-horizon-flow {
+  stroke: #f2fdff;
+  stroke-width: 1.65;
+  stroke-dasharray: 10 90;
+  filter: drop-shadow(0 0 3px #d7f7ff) drop-shadow(0 0 7px #39bff3);
+  animation: dark-hole-horizon-flow 4.8s linear infinite, dark-hole-hot-flicker 1.65s ease-in-out infinite;
+}
+
+.anomaly-horizon-embers {
+  stroke: rgba(215, 247, 255, 0.94);
+  stroke-width: 1.4;
+  stroke-dasharray: 3 6 5 9 2 8 4 12 3 11 5 32;
+  filter: drop-shadow(0 0 2px #eefcff) drop-shadow(0 0 6px #22a9e5);
+  animation: dark-hole-horizon-embers 7.2s linear infinite reverse, dark-hole-ember-flicker 2.1s ease-in-out infinite;
+}
+
+.anomaly-horizon-sparks {
+  stroke: rgba(86, 205, 247, 0.88);
+  stroke-width: 0.92;
+  stroke-dasharray: 1.2 4.5 2.2 5.5 1.4 6.5 3 7.5 1.5 8.5 2 10 2.5 34.2;
+  filter: drop-shadow(0 0 2px #39bff3) drop-shadow(0 0 5px rgba(34, 169, 229, 0.82));
+  animation: dark-hole-horizon-sparks 5.6s linear infinite, dark-hole-spark-flicker 1.35s ease-in-out infinite;
+}
+
+.gravity-settings.hovered .anomaly-horizon-glow { stroke: rgba(57, 191, 243, 0.78); }
+.gravity-settings.hovered .anomaly-horizon-ring { stroke: #d7f7ff; }
+.gravity-settings.hovered .anomaly-accretion-shell { animation-duration: 13s; }
+.gravity-settings.hovered .anomaly-horizon-flow { animation-duration: 3.8s, 1.35s; }
+.gravity-settings.hovered .anomaly-horizon-embers { animation-duration: 5.8s, 1.7s; }
+.gravity-settings.hovered .anomaly-horizon-sparks { animation-duration: 4.6s, 1.1s; }
+
+.target-energy-halo.energy-fill-travel,
+.target-energy-fill.energy-fill-travel,
+.target-energy-front,
+.target-companion-fill.energy-fill-travel,
+.target-detail-fill.energy-fill-travel {
+  animation-timing-function: cubic-bezier(0.16, 0.82, 0.24, 1);
+}
+
+.target-node-light.node-phase-travel { animation-duration: 210ms; }
+.target-node-light.terminal-node-light.node-phase-travel { animation-duration: 250ms; }
+
+@keyframes dark-hole-accretion-rotate {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes dark-hole-horizon-flow {
+  to { stroke-dashoffset: -100; }
+}
+
+@keyframes dark-hole-horizon-embers {
+  to { stroke-dashoffset: -100; }
+}
+
+@keyframes dark-hole-horizon-sparks {
+  to { stroke-dashoffset: -100; }
+}
+
+@keyframes dark-hole-burning-glow {
+  0%, 100% { opacity: 0.58; stroke-width: 4.1; }
+  23% { opacity: 0.72; stroke-width: 4.7; }
+  49% { opacity: 0.61; stroke-width: 4.25; }
+  73% { opacity: 0.8; stroke-width: 4.9; }
+}
+
+@keyframes dark-hole-hot-flicker {
+  0%, 100% { opacity: 0.72; stroke-width: 1.35; }
+  36% { opacity: 1; stroke-width: 1.8; }
+  61% { opacity: 0.82; stroke-width: 1.5; }
+  84% { opacity: 1; stroke-width: 1.72; }
+}
+
+@keyframes dark-hole-ember-flicker {
+  0%, 100% { opacity: 0.42; }
+  31% { opacity: 0.88; }
+  54% { opacity: 0.56; }
+  79% { opacity: 0.96; }
+}
+
+@keyframes dark-hole-spark-flicker {
+  0%, 100% { opacity: 0.36; }
+  22% { opacity: 0.84; }
+  47% { opacity: 0.52; }
+  68% { opacity: 0.94; }
+  87% { opacity: 0.61; }
+}
+
+.organism-background::before {
+  inset: 0;
+  background:
+    radial-gradient(ellipse 25% 21% at 52% 50%, rgba(28, 154, 226, 0.09) 0%, rgba(8, 76, 132, 0.045) 38%, rgba(1, 18, 38, 0.012) 62%, transparent 76%),
+    radial-gradient(ellipse 34% 29% at 52% 50%, transparent 36%, rgba(34, 169, 229, 0.018) 43%, transparent 67%);
+  opacity: 0.7;
+  transform-origin: 52% 50%;
+  filter: blur(3px);
+  animation: core-reflection-breathe var(--hub-cycle) cubic-bezier(0.37, 0, 0.23, 1) infinite;
+}
+
+@keyframes core-reflection-breathe {
+  0%, 100% { transform: translate(0, 1px) rotate(-2deg) scale(0.95, 0.92); opacity: 0.5; }
+  42% { transform: translate(2px, -2px) rotate(1deg) scale(1.04, 1.02); opacity: 0.74; }
+  55% { transform: translate(-1px, -1px) rotate(2deg) scale(1.1, 1.06); opacity: 0.86; }
+  72% { transform: translate(-2px, 1px) rotate(0deg) scale(1.02, 0.99); opacity: 0.68; }
+}
+
+@keyframes petal-phase {
+  0%, 100% { transform: rotate(-2deg) scale(0.985); opacity: 0.76; }
+  50% { transform: rotate(3deg) scale(1.025); opacity: 1; }
+}
+
+@keyframes source-wave {
+  0%, 100% { transform: scale(0.92); opacity: 0.82; }
+  50% { transform: scale(1.07); opacity: 1; }
+}
+
+@keyframes membrane-current { to { stroke-dashoffset: -146; } }
+@keyframes thread-outward { to { stroke-dashoffset: -48; } }
+@keyframes filament-flow { to { stroke-dashoffset: -100; } }
+
+@keyframes endpoint-breathe {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -4px; }
+}
+
+@keyframes glyph-unfold {
+  0%, 100% { transform: rotate(-1deg) scale(0.985); }
+  50% { transform: rotate(1.5deg) scale(1.018); }
+}
+
+@keyframes node-signal {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+
+@keyframes anomaly-hover {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 2px -3px; }
+}
+
+@keyframes anomaly-rotate { to { transform: rotate(360deg); } }
+
+@keyframes particle-drift {
+  0%, 100% { transform: translate3d(0, 0, 0); opacity: 0.35; }
+  50% { transform: translate3d(8px, -12px, 0); opacity: 0.9; }
+}
+
+@keyframes organ-return {
+  from { opacity: 0.35; transform: translate(-50%, -50%) translate(var(--return-x), var(--return-y)) scale(0.72); }
+  to { opacity: 1; transform: translate(-50%, -50%) translate(0, 0) scale(1); }
+}
+
+@keyframes core-return {
+  from { opacity: 0.35; transform: translate(-50%, -50%) scale(0.7); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes hub-field-return {
+  from { opacity: 0.2; }
+  to { opacity: 1; }
+}
+
+@keyframes subsystem-recede {
+  to { opacity: 0; transform: translateY(10px) scale(0.985); }
+}
+
+@keyframes anchor-release {
+  to { opacity: 0; transform: translate(24px, 28px) scale(1.2); }
+}
+
+@media (min-width: 760px) {
+  .arm-mobile { display: none; }
+  .arm-desktop { display: initial; }
+  .settings-warp-mobile { display: none; }
+  .settings-warp-desktop { display: initial; }
+  .organ-module-calendar .module-caption { top: calc(100% - 5px); }
+
+  .organism-core {
+    top: 50%;
+    left: 52%;
+    width: min(35vmin, 350px);
+    height: min(37vmin, 370px);
+  }
+
+  .organ-module { width: 148px; height: 122px; }
+  .organ-module-calendar { left: 16%; top: 16%; }
+  .organ-module-learning { left: 14.2%; top: 35.4%; }
+  .organ-module-life { left: 87.3%; top: 23.1%; }
+  .organ-module-fitness { left: 89.4%; top: 56%; }
+  .organ-module-kitchen { left: 46.4%; top: 89.4%; }
+  .gravity-settings { left: 8%; top: 72%; width: 148px; height: 136px; }
+
+  .returning-calendar .organ-module-calendar { --return-x: -110px; --return-y: -25px; }
+  .returning-learning .organ-module-learning { --return-x: -90px; --return-y: -170px; }
+  .returning-life .organ-module-life { --return-x: -880px; --return-y: -85px; }
+  .returning-fitness .organ-module-fitness { --return-x: -900px; --return-y: -350px; }
+  .returning-kitchen .organ-module-kitchen { --return-x: -470px; --return-y: -610px; }
+  .returning-settings .gravity-settings { --return-x: -50px; --return-y: -470px; }
+}
+
+@media (max-width: 759px) {
+  .workspace-navigation { align-items: flex-start; }
+
+  .organ-module-kitchen .module-caption { top: calc(100% + 4px); }
+
+  .orbit-dock {
+    max-width: none;
+    display: grid;
+    grid-template-columns: repeat(4, 38px);
+    gap: 4px;
+    overflow: visible;
+  }
+
+  .dock-link {
+    width: 38px;
+    height: 38px;
+    flex-basis: 38px;
+  }
+
+  .dock-home { margin-left: 0; }
+}
+
+@media (max-height: 670px) and (orientation: landscape) {
+  .living-hub,
+  .living-stage { min-height: 600px; }
+  .living-hub { overflow: auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .living-hub *,
+  .living-hub *::before,
+  .living-hub *::after,
+  .workspace-frame *,
+  .workspace-frame *::before,
+  .workspace-frame *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .arm-pulse,
+  .idle-arm-pulse,
+  .target-energy-pulse,
+  .target-energy-front,
+  .settings-infall-pulses,
+  .settings-infall-particles,
+  .orbit-packets { display: none; }
+
+  .energy-fill-travel,
+  .energy-fill-active {
+    stroke-dasharray: 100 0;
+    opacity: 0.72;
+  }
+
+  .target-detail-fill.energy-fill-travel,
+  .target-companion-fill.energy-fill-travel {
+    stroke-dasharray: 100 0;
+    opacity: 0.9;
+  }
+
+  .target-node-light {
+    opacity: 1;
+    transform: none;
+  }
+
+  .hub-returning .organ-module,
+  .hub-returning .gravity-settings,
+  .hub-returning .organism-core { transform: translate(-50%, -50%); }
+}

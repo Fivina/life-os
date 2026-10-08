@@ -1,0 +1,16 @@
+{
+  "name": "fitness-coach",
+  "version": "2.1.1",
+  "description": "Fitness status, workout execution, and measurement assistance.",
+  "assistant_roles": ["FITNESS_COACH"],
+  "default_capability": "FAST",
+  "max_capability": "REASONING",
+  "allowed_tools": ["get_current_state", "get_current_plan", "get_plan_block_explanation", "get_fitness_status", "report_state", "start_workout", "record_workout_set", "complete_workout", "add_body_measurement"],
+  "read_scopes": ["state", "planning", "fitness"],
+  "write_scopes": ["state", "fitness"],
+  "memory_scopes": ["conversation-summary", "semantic-memory", "episodic-memory", "behavioral-patterns"],
+  "max_tool_calls": 3,
+  "max_iterations": 4,
+  "confirmation_policy": "registry",
+  "cost_class": "low"
+}

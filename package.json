@@ -1,0 +1,13 @@
+{
+  "name": "life-os",
+  "private": true,
+  "version": "2.0.0",
+  "scripts": {
+    "web:dev": "pnpm --dir apps/web dev",
+    "web:test": "pnpm --dir apps/web test",
+    "web:typecheck": "pnpm --dir apps/web typecheck",
+    "backend:test": "cd backend && pytest",
+    "planner:simulate": "python scripts/run_planner_simulation.py"
+  },
+  "packageManager": "pnpm@11.19.0"
+}
