@@ -3,6 +3,21 @@
 OpenAI Symphony is installed as development tooling outside the Life OS application.
 The agents inside the application remain a separate system.
 
+## Durable handoff and checkpoints
+
+The root [HANDOFF.md](../HANDOFF.md) is the durable resume entry point when a chat,
+Codex account, or worker session ends. Keep it current at completed work chunks,
+review and correction outcomes, blockers, handoffs or account switches, and
+milestone boundaries. Do not record every intermediate step.
+
+When an implementation document is supplied, the lead turns its requirements into
+stable requirement IDs and related, dependency-aware subtasks. Each subtask records
+an owner, status, source requirement, evidence, and remaining work. The lead
+orchestrator owns sequencing, integration, and the final review. Workers stay bounded
+by the repository cost policy; an independent read-only reviewer is distinct from
+the implementation worker. The handoff records the resulting state so work can
+resume without relying on this chat's history.
+
 ## Installed components
 
 - Official source checkout: `E:\LifeOS-Tools\symphony` (source revision
@@ -132,3 +147,8 @@ Official references:
 - The official Symphony GitHub adapter successfully reads the private issue queue
   using the GitHub CLI credential. The connected service is running on port 8787;
   it reports no active or queued work and zero model tokens at setup completion.
+
+The preceding connected-service statement records the setup-time observation. The
+latest check on 2026-10-08 found Life OS frontend `5173` responding HTTP 200 and
+backend readiness on `8000` ready; Symphony dashboard `8787` was unavailable at
+that check. This guide does not infer a cause from that observation.

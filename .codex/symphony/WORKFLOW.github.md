@@ -46,6 +46,9 @@ User brief:
 This workflow builds the application. The application's internal agent architecture
 is a separate product concern. Follow the repository's AGENTS.md and applicable
 subdirectory instructions. Inspect the live implementation before planning changes.
+Read root HANDOFF.md first and reconcile its checkpoint with this issue's workpad,
+branch and actual files. The handoff describes prior state, not proof that services
+are still running or that requirements have passed.
 For UI redesign work, preserve the features and feedback gates in the Phengos docs.
 
 Own planning, implementation coordination, independent review, and integration.
@@ -61,6 +64,13 @@ The user supplies the outcome and source material, not a hand-written task plan.
    ownership. Use at most two concurrent subagents, with disjoint write scopes.
    Keep architectural decisions and final integration in this lead context. Delegate
    only when the chunk justifies it; perform trivial work directly.
+   Preserve the accessible source brief in the repository and assign stable
+   requirement IDs with page/section references. Map related subtasks, dependencies,
+   owners and verification evidence to those IDs in HANDOFF.md or a linked per-brief
+   ledger. Track pending, in-progress, implemented, verified and blocked work;
+   record review and user acceptance separately. Use narrow fast workers for
+   mechanical work and deeper workers only where architectural difficulty requires
+   them, following AGENTS.md. Do not default every subtask to the strongest model.
 3. Work on a codex/ branch in this isolated issue workspace. Preserve newer working
    behavior and all existing routed workflows. Keep runtime data and credentials out
    of commits. Do not modify the user's primary checkout or production data.
@@ -82,6 +92,17 @@ The user supplies the outcome and source material, not a hand-written task plan.
    only after review and verification are complete. Do not merge or deploy without
    the user's authorization. If blocked, save progress, document the precise blocker,
    add symphony:blocked, and remove symphony:ready. Do not mark blocked work complete.
+
+The lead owns HANDOFF.md updates. Workers return concrete results and do not edit
+the shared handoff concurrently. Save the initial plan before lengthy work, then
+checkpoint completed chunks, review/correction outcomes, blockers, milestone
+boundaries and planned chat/account handoffs. Do not require an update after every
+step. Include who did what, source requirement coverage, branch/workspace, commit
+or uncommitted files, actual checks, open findings and the exact next action. Commit
+and push safe checkpoints when possible; label incomplete progress honestly. Keep
+HANDOFF.md and the issue workpad consistent and link any detailed task ledger.
+On an unexpected interruption, reconcile work since the last checkpoint before
+resuming; checkpoints cannot guarantee every last uncommitted edit is documented.
 
 Use the provided github_api tool for tracker operations where available. Keep
 credentials out of prompts, comments, logs, and files. Persist meaningful progress

@@ -1,5 +1,32 @@
 # Life OS — Codex Development Rules
 
+## Checkpoints and Resuming Work
+
+Read root `HANDOFF.md` when starting or resuming project work. Verify its branch,
+commit and working-tree notes against Git before relying on them. It is the resume
+entry point; the live code and referenced source requirements remain authoritative.
+
+The primary session owns orchestration, integration and final review. Use bounded
+workers according to the cost policy below; do not default every task to a high
+capability model. Require a separate read-only reviewer for substantial implementation.
+
+When an implementation document arrives, preserve an accessible source copy and
+assign stable requirement IDs with page/section references. Derive related subtasks
+and dependencies; record each requirement's owner, status, verification evidence
+and remaining work in the handoff or a linked per-brief task ledger. Distinguish
+implemented work from reviewed, verified and user-accepted work. Do not claim a
+completion percentage without a defined denominator and counting method.
+
+Update the handoff at completed work chunks, review/correction outcomes, blockers,
+milestone boundaries and before a planned chat/account handoff. Do not update it
+after every command or minor edit. Before lengthy implementation, persist the plan
+and ownership so an interrupted run has a recovery point. Workers report results;
+the primary session consolidates checkpoints to avoid concurrent handoff edits.
+Record branch/workspace, commits or uncommitted files, who did what, checks actually
+run, open review findings, blockers and the exact next action. Keep secrets out.
+Unexpected chat/process loss may leave work since the last checkpoint unrecorded;
+on resume, reconcile the ledger with Git and actual files before continuing.
+
 ## Delegation and Cost Policy
 
 Default behavior: perform work in the primary Codex session. Do not create subagents merely because they are available.
