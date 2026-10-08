@@ -5,16 +5,24 @@ Checkpoint owner: primary Codex session, development orchestrator and final revi
 
 ## Where we stopped
 
-The user is preparing a large implementation document. It has **not been supplied
-yet**, so there is no approved requirement ledger, implementation backlog or live
-Symphony issue for it. Current work is making development resumable before intake.
-The user explicitly chose **no Figma or other external design tools** for this work.
+The user supplied the 88-page unified implementation contract and 25 reference
+images on 2026-10-08 and authorized AFK development orchestration with careful token
+usage. No Figma or other external design tool is required. Source files are preserved
+under `docs/implementation/unified-contract/source/`, with byte hashes verified.
+The requirement ledger is `docs/implementation/unified-contract/LEDGER.md`.
 
-Next action: read the supplied document completely, preserve its accessible source,
-inspect the relevant existing implementation, and create a requirement-to-task
-ledger before dispatching implementation. The lead derives the engineering plan;
-the user does not have to write subtasks. Resolve material conflicts with existing
-working behavior and milestone gates before dependent changes.
+Current chunk: integration credential foundation (backend milestone 1). Primary
+read the full text, inspected the relevant implementation and captured baseline
+Calendar/Kitchen/Settings screenshots in `artifacts/unified-contract/baseline/`
+(local, ignored by Git). Deep worker `integration_vault` owns scoped backend Vault,
+integration routes/model/migration/tests; fast worker `checkpoint_setup_docs` owns
+the new Settings integration view/client/tests. Primary owns registration and
+integration. No substantial implementation has passed independent review yet.
+
+Next action: align the worker DTOs, integrate the credential foundation, run focused
+security/frontend checks and independent review; route corrections. Follow the
+ledger for remaining work and explicit decision gates. No new bank production,
+paid media benchmark, unapproved backend ticket or open visual design is activated.
 
 ## Resume checklist
 
@@ -33,9 +41,9 @@ working behavior and milestone gates before dependent changes.
 | --- | --- |
 | Primary workspace | `D:/Life OS` |
 | Repository | Private: <https://github.com/Fivina/life-os> |
-| Branch at checkpoint | `master`; Symphony implementation uses isolated `codex/` branches |
+| Branch at checkpoint | `codex/unified-contract`; source intake and implementation work branch |
 | Last published baseline before this handoff | `875d5da` — Record private repository and tracker verification |
-| Current documentation chunk | `HANDOFF.md`, `AGENTS.md`, `.codex/symphony/WORKFLOW.github.md`, `docs/SYMPHONY_SETUP.md`; use Git history/status to identify its checkpoint commit |
+| Last completed handoff rules chunk | `f857f15`, pushed to master; new source intake/progress is on `codex/unified-contract` |
 | Frontend | <http://localhost:5173>; HTTP 200 verified on 2026-10-08 |
 | Backend | <http://localhost:8000/readiness>; HTTP 200, ready, database reachable, auth configured on 2026-10-08 |
 | Symphony | Installed and GitHub queue previously verified; <http://localhost:8787/api/v1/state> unreachable at this checkpoint. Startup cause not investigated. No new implementation issue dispatched. |
@@ -75,7 +83,7 @@ subagent attribution is inferred.
 | Local application restart | Current primary Codex session | Frontend/backend checks above; no product code changed | User testing and document-driven changes |
 | Durable handoff and checkpoint rules | Current primary Codex session | Root handoff, repository resume policy and workflow checkpoint instructions | Keep requirement ledger current at meaningful checkpoints |
 | Setup documentation continuity | Fast worker `checkpoint_setup_docs`; primary reviewed/integrated | Updated setup guide with checkpoint/ledger rules and corrected historical runtime wording; diff reviewed | No open findings for this documentation chunk |
-| New document implementation | Not assigned; document awaited | No implementation has started | Intake, task decomposition, workers, independent review, corrections, integrated checks |
+| Unified contract implementation | Primary orchestrator; `integration_vault` backend; fast `checkpoint_setup_docs` Settings UI | Complete text read and source hash preservation; requirement/dependency/decision ledger; baseline source/UI inspection | Credential foundation in progress; see ledger for all later work and review gates |
 | Existing Phengos product work | Prior contributors; see domain docs | Existing implementation retained; `docs/PHENGOS_ROADMAP.md` records status and feedback gates | Visual acceptance remains open in recorded roadmap; new document may require explicit scope reconciliation |
 
 For UI work read `docs/PHENGOS_ROADMAP.md` and
@@ -85,10 +93,10 @@ existing product behavior or close any user acceptance gate.
 
 ## Requirement and related-task ledger
 
-No source document received yet. Do not invent requirement IDs or completion rates.
-When it arrives, place a detailed ledger under `docs/implementation/` if needed and
-link its exact path here. Keep that ledger as the source for requirement statuses;
-this file remains the concise resume checkpoint.
+Source received and preserved; detailed ledger:
+`docs/implementation/unified-contract/LEDGER.md`. It maps source pages and stable
+requirements to related tasks, owners, status, evidence and open decisions. Keep
+that ledger as the requirement-status source; this file is the concise checkpoint.
 
 Required ledger fields:
 
@@ -142,3 +150,13 @@ the current agreed workflow.
 | --- | --- | --- | --- |
 | 2026-10-08 | Primary | Local app restarted and readiness verified | Frontend/backend HTTP 200; next: user testing |
 | 2026-10-08 | Primary + fast worker `checkpoint_setup_docs` | Handoff policy/documentation complete; primary reviewed worker diff, existing model roles and consistency across all four files; no product implementation | `git diff --check` passed; app readiness verified; Symphony unavailable. Checkpoint commit: find `Add durable development handoff and worker checkpoints` in Git. Next: receive source document and create requirement ledger. |
+| 2026-10-08 | Primary + fast `checkpoint_setup_docs` | Contract intake, unchanged PDF +25 images preserved/hash-verified, complete text read, requirement/decision ledger created; backend/UI workers dispatched | Branch `codex/unified-contract`. Next: milestone1 integration and independent review. Usage89% five-hour/83% weekly at last check; below5% resume-task condition not met. |
+
+## AFK usage instruction
+
+Check account limits at chunk boundaries. If the minimum available relevant usage
+window has less than5% remaining, save a safe checkpoint and create a thread
+scheduled task at16:55 Europe/Berlin prompting `keep going`. Verify current time;
+use the next16:55 if today's time has passed. No scheduled task created yet.
+Do not consume reset credits or switch accounts automatically. A resume must read
+this handoff/ledger, check current limits and respect contract decision gates.
