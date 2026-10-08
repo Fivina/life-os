@@ -215,3 +215,10 @@ scheduled task at16:55 Europe/Berlin prompting `keep going`. Verify current time
 use the next16:55 if today's time has passed. No scheduled task created yet.
 Do not consume reset credits or switch accounts automatically. A resume must read
 this handoff/ledger, check current limits and respect contract decision gates.
+
+Published checkpoint verified: f5593a2 on codex/unified-contract; clean tree after push.
+Private review issue5 prepared (symphony:review-task only, NOT ready):
+https://github.com/Fivina/life-os/issues/5 . Next resume action: check allowance,
+review daemon8787, add exact safe.directory for E:/LifeOS-Tools/symphony-review-workspaces/GH-5,
+then add symphony:ready to issue5. Review exactf5593a2 vs331e917; do not duplicate issue4.
+Use the existing standard-tier bounded read-only workflow. Hosted checks remain open.

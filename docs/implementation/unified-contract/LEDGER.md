@@ -274,3 +274,7 @@ IMPLEMENTED and targeted-tests passed; independent cache review PENDING. Hosted
 Frontend review corrections published331e917; source review retained in REVIEW_SPORTS.md.
 Next action: bounded independent cache review against331e917, then correct findings.
 No workers active. Account allowance last4%;16:35 Berlin heartbeat already verified.
+
+Publication: f5593a2 pushed, repository PRIVATE reverified, staged Gitleaks20.69KB
+no leaks. Independent cache review queued as issue5 without ready label; dispatch
+on resume after usage check. PR3 description updated to published scope/limits.
