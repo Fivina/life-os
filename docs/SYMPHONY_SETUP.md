@@ -58,29 +58,51 @@ or relying on it for unattended production operation.
 
 ## Connecting real development work
 
-Installation does not configure the complete planning and review loop. Before a
-live workflow can run, Life OS needs a committed, cloneable source repository
-and a chosen task tracker with credentials. At installation time the current
-repository has no commits, Git remote, or configured tracker credentials.
-Do not commit `.env` files or credentials when preparing the source repository.
+The private repository is <https://github.com/Fivina/life-os>; `origin` points to
+its HTTPS Git URL. GitHub Issues is the tracker. GitHub CLI is installed at
+`E:\LifeOS-Tools\github-cli\bin\gh.exe` and authorized as `Fivina`.
 
-The intended follow-up is a lead agent that reads the user's brief, inspects the
-existing application, creates tasks with dependencies and acceptance criteria,
-and assigns bounded work. An independent reviewer returns findings to workers;
-the lead integrates and verifies full workflows. The user supplies requirements,
-not a hand-written task plan. This planning/review layer has not been installed
-or verified by the installation step.
+The connected development workflow is `.codex/symphony/WORKFLOW.github.md`:
 
-Use a separately configured workflow when ready:
+- Only open issues with `symphony:ready` are dispatchable. Ordinary issues do not
+  start agent work. `symphony:review` and `symphony:blocked` are handoff labels.
+- A lead creates the dependency-ordered task checklist from the user's brief,
+  assigns bounded work, requires independent review, routes corrections back to
+  workers, and verifies integration. Progress belongs in an issue workpad and Git.
+- One top-level issue runs at a time, with at most two nested subagents. The lead
+  keeps integration ownership and respects the existing milestone feedback gates.
+- Changes run in isolated workspaces on codex/ branches. Completion produces a PR;
+  the workflow does not authorize merging or deploying.
+- The launcher obtains the tracker token from GitHub CLI into its process environment.
+  Symphony strips declared tracker token variables from the Codex child. No token
+  is written into the repository or workflow.
+
+Run the connected checks and service:
 
 ```powershell
-.\scripts\start-symphony.ps1 -WorkflowPath 'D:\Life OS\WORKFLOW.md'
+.\scripts\start-symphony.ps1 -GitHub -Doctor
+.\scripts\start-symphony.ps1 -GitHub
 ```
 
-Preserve existing `AGENTS.md` rules, Phengos milestone feedback gates, and routed
-features when creating that workflow. Use isolated workspaces and enforce the
-project-wide agent limit in the complete configuration, including any nested
-subagents; the Symphony concurrency setting alone only caps top-level runs.
+Stop the existing idle/dashboard process with Ctrl+C before starting another
+instance on port 8787. No file attached to a chat is automatically ingested by
+Symphony: the brief must be represented by an issue body or accessible referenced
+material. When the user supplies the brief here, the assistant can prepare that
+issue; the lead is responsible for task decomposition.
+
+This is an instruction-based planning/review workflow atop the official scheduler.
+Live implementation, subagent review, and correction cycles need verification with
+a bounded real brief; merely connecting the queue does not prove those behaviors.
+
+## Switching accounts
+
+GitHub identity and Codex/ChatGPT identity are separate. Switching the Codex account
+does not transfer repository ownership or replace the GitHub CLI credential.
+Stop active Symphony workers before changing the Codex sign-in. Preserve in-progress
+branches and the issue workpad, verify `codex login status`, and restart the service
+under the intended account. Do not assume an already-running Codex process changes
+accounts when the desktop app does. Account-specific plan entitlements and usage
+limits still apply. This setup does not automatically rotate accounts.
 
 Official references:
 
