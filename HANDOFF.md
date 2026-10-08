@@ -30,6 +30,9 @@ Primary fixed Settings navigation identity for the new nested routes;48 navigati
 tests passed. Corrections, workflow compatibility and the next-match groundwork
 are included in the checkpoint titled `Correct imports and add next-match groundwork`.
 Use Git to verify its exact commit and publication state when resuming.
+Published implementation checkpoint: `55ddfc3`, private draft PR
+<https://github.com/Fivina/life-os/pull/3>. Working tree was clean after publication;
+this progress-only note is a later checkpoint. All scoped workers have finished.
 Hosted migration
 0031 has not been applied; current primary app database is PostgreSQL.
 
@@ -192,6 +195,7 @@ as Fivina independently of the current Codex account; no account switch is requi
 | 2026-10-08 | deep `integration_vault` + standard `settings_completion`; primary review | Credential foundation and shared Settings/Movie CSV importer implemented; targeted checks pass; primary corrections preserved explicit metadata clearing and import draft continuity | Next: publish checkpoint, Symphony independent read-only review and isolated UI/runtime checks; hostedVault pending. Latest usage73% five-hour/80% weekly; no resume task needed yet. |
 | 2026-10-08 | Primary + Symphony reviewer | Published `f3ef64d`; issue2 now has a real read-only model session. Fixed native CLI approval policy from unsupported reject object to never; added exact Git safe.directory for GH-2 on E: | Local status/scopes/mobile/detail checks pass;48 navigation tests passed. Review pending. Latest usage40% five-hour/75% weekly remaining; threshold not met. |
 | 2026-10-08 | Symphony reviewer; standard `settings_completion`; standard `sports_provider`; primary | Review report saved; two P2 importer findings corrected; next-match provider/cadence/card groundwork implemented with targeted checks |71 frontend +typecheck;35 sports backend +1 migration test. Remaining tasks above and ledger. Latest usage10% five-hour/70% weekly; no threshold-triggered automation yet. User will click Continue; no automatic account rotation. |
+| 2026-10-08 | Primary | Published `55ddfc3` and private draft PR3; staged Gitleaks scanned38.5KB, no leaks; reverified private before push | Watchlist browser correction verified in isolated DB. Latest usage6% five-hour/70% weekly; below5% trigger not met. Next: sports review/Vault/deep link and approved backlog |
 
 ## AFK usage instruction
 
