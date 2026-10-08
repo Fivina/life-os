@@ -133,3 +133,25 @@ class IntegrationSecretStore(ProviderSecretStore):
 
     def delete_connection_token(self, db, user, connection_id: str) -> None:
         self._scoped(db, user, "plaid", "connection", "delete", connection_id=connection_id)
+
+    def fixture_runtime_key(self, db: Session, user: UserProfile, scope: str) -> str | None:
+        """Read the selected sports source only; never grant credential management.
+
+        Installation lookup has a separate fixed-provider, backend-only SQL function.
+        Ordinary users do not gain installation admin rights through this read path.
+        Subsequent provider calls use the selected Vault source exclusively.
+        """
+        if scope == "tenant":
+            return self.get_scoped(db, user, "api-football") if self.configured_scoped(db, user, "api-football") else None
+        if scope != "installation":
+            raise HTTPException(422, "Invalid fixture credential scope.")
+        if db.bind is None or db.bind.dialect.name != "postgresql":
+            return None
+        try:
+            ready = db.scalar(text("SELECT to_regprocedure('private.get_lifeos_fixture_installation_secret()') IS NOT NULL"))
+            if not ready:
+                raise HTTPException(503, "Hosted fixture secret storage is not ready.")
+            secret = db.scalar(text("SELECT private.get_lifeos_fixture_installation_secret()"))
+            return str(secret) if secret else None
+        except SQLAlchemyError as exc:
+            raise self._vault_error(exc) from None

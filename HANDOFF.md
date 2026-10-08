@@ -46,6 +46,27 @@ source safely, and implement the specific Calendar entry link. Hosted migrations
 ledger for remaining work and explicit decision gates. No new bank production,
 paid media benchmark, unapproved backend ticket or open visual design is activated.
 
+Active continuation2026-10-08: primary owns backend sports Vault lookup, narrowly
+scoped installation read function/migration0033, service integration/security tests.
+Standard worker `sports_calendar_link` (gpt-5.6-sol/medium) owns frontend fixture href,
+Calendar selected-record query/workspace and focused tests, plus minimal API client
+GET using the existing authorized commitment endpoint. Separate Symphony review
+will follow the integrated published diff. Neither task applies hosted migrations.
+User explicitly requested immediate one-time16:35 Berlin continuation: automation
+`continue-life-os-development` is ACTIVE, prompt `keep doing`, on2026-10-08. This
+supersedes the earlier conditional16:55 instruction. Work until allowance is exhausted,
+saving coherent checkpoints; do not auto-switch accounts or consume reset credits.
+
+Continuation implementation checkpoint: primary added explicit Vault-only fixture
+runtime scope (installation default; tenant selectable), narrow fixed-provider
+backend SQL getter in0033, failure savepoint/redaction and bounded no-redirect
+provider response. Standard `sports_calendar_link` added canonical Calendar deep
+link/read/error/TBD states; primary fixed nullable CommitmentRead and tested owner
+isolation.96 backend and37 frontend targeted tests/typecheck passed. Worker finished.
+Next: bounded independent Symphony review (gpt-5.6-sol/medium, two-turn cap), local
+runtime check, corrections. Shared installation fetch-once remains unverified/
+unfinished; hosted migrations0031–0033 are unapplied. Full sports acceptance stays open.
+
 Related next-match task implemented: standard `sports_provider` updated only existing
 provider/service and test_next_fixture_sync.py;35 targeted tests pass. Primary added
 daily-cadence migration0032 (isolated SQLite roundtrip passed), safe typed next-pointer

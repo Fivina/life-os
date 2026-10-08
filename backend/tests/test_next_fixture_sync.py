@@ -30,8 +30,8 @@ class JsonResponse:
     def __exit__(self, *_args):
         return None
 
-    def read(self):
-        return self.body
+    def read(self, size=-1):
+        return self.body if size < 0 else self.body[:size]
 
 
 def raw_fixture(*, fixture_id: int = 9001, kickoff: datetime | None = None) -> dict:
@@ -103,6 +103,23 @@ def test_provider_defensively_keeps_only_one_next_fixture(monkeypatch):
     fixtures = ApiFootballFixtureProvider(provider_settings()).fetch(team_id="549")
 
     assert [fixture.source_fixture_id for fixture in fixtures] == ["9001"]
+
+
+@pytest.mark.parametrize("body", [b"[]", b'{"response":{}}', b'\xff', b"x" * (256 * 1024 + 1)], ids=["array", "bad-list", "encoding", "oversize"])
+def test_invalid_or_oversize_provider_response_fails_safely(monkeypatch, body):
+    response = JsonResponse({})
+    response.body = body
+    monkeypatch.setattr("app.standing_calendar.providers.urlopen", lambda *_args, **_kwargs: response)
+    with pytest.raises(FixtureProviderError) as error:
+        ApiFootballFixtureProvider(provider_settings()).fetch(team_id="549")
+    assert not error.value.transient
+
+
+def test_provider_redirect_does_not_forward_secret():
+    from app.standing_calendar.providers import _NoRedirect
+    from urllib.request import Request
+    request = Request("https://v3.football.api-sports.io/fixtures", headers={"x-apisports-key": "synthetic"})
+    assert _NoRedirect().redirect_request(request, None, 302, "", {}, "https://untrusted.example") is None
 
 
 def test_provider_normalizes_next_fixture_with_unconfirmed_tbd_kickoff():

@@ -135,6 +135,7 @@ class Settings(BaseSettings):
     api_football_api_key: str | None = None
     api_football_base_url: str = "https://v3.football.api-sports.io"
     api_football_besiktas_team_id: str = "549"
+    fixture_credential_scope: Literal["installation", "tenant"] = "installation"
     fixture_sync_timeout_seconds: float = Field(default=10.0, ge=1, le=60)
     leisure_movies_enabled: bool = True
     movie_metadata_provider: str = "disabled"

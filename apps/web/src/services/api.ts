@@ -387,6 +387,7 @@ export const api = {
     apiRequest<FinanceBudget>("/finance/budgets", { method: "POST", body: JSON.stringify(payload) }),
   refreshRecurringExpenses: () => apiRequest("/finance/recurring/refresh", { method: "POST" }),
   commitments: () => apiRequest<Commitment[]>("/commitments"),
+  getCommitment: (id: string) => apiRequest<Commitment>(`/commitments/${encodeURIComponent(id)}`),
   notebookEntries: (filters: { entryType?: string; status?: string } = {}) => {
     const params = new URLSearchParams();
     if (filters.entryType) params.set("entry_type", filters.entryType);

@@ -107,6 +107,32 @@ additional approvals. Frozen UI appearance does not authorize gated new schemas.
 
 ## Current implementation map (inspection evidence, not full acceptance)
 
+Current continuation tasks: T2-VAULT primary (existing IntegrationSecretStore plus
+fixed-provider backend-only installation read; no writes or tenant-admin bypass),
+T2-CALENDAR-LINK standard `sports_calendar_link` gpt-5.6-sol/medium (bounded existing
+Calendar/frontend read path). Follow with independent Symphony review of integrated
+published commit. Source pages55–56, existing namespace/functions/runtime retained.
+One-time thread wake-up `continue-life-os-development` created for2026-10-08 16:35
+Europe/Berlin, exact prompt `keep doing`; latest user instruction replaces16:55 trigger.
+
+Continuation checkpoint: T2-VAULT IMPLEMENTED with explicit
+`FIXTURE_CREDENTIAL_SCOPE=installation|tenant` (default installation), fixed-provider
+backend-only installation read function in migration0033; tenant management rights
+unchanged. Runtime rereads selected Vault source and never falls back to environment
+key after removal. SQLite/missing function fails closed. Savepoint rolls back partial
+Calendar writes and sanitizes unexpected errors. Provider requests reject redirects/
+environment proxies and cap response256KiB. Low-level env-key constructor remains
+for legacy compatibility/tests, but canonical sync uses Vault only.
+T2-CALENDAR-LINK IMPLEMENTED by standard `sports_calendar_link`: encoded commitment
+query, authorized canonical read beyond projection, actual selected details, missing/
+forbidden/error/TBD states. Primary corrected nullable CommitmentRead for already
+valid unconfirmed fixture records; cross-tenant read isolation tested.
+Checks:96 backend tests across integration/provider/sports/migration boundary;
+37 frontend tests across Calendar/cards/Settings/Movies; typecheck passed.
+Independent sports review and browser current-runtime check pending. Shared provider
+fetch once across installation users is not yet accepted; existing worker still
+reconciles each user's rule. Hosted migrations0031–0033 remain unapplied.
+
 - App.tsx routes existing /self/assistant, Calendar, Kitchen, Finance, Movies,
   Settings, Personal Model and feature previews. New /settings/integrations and
   /settings/integrations/:provider added in f3ef64d. No /chat or /developer yet.

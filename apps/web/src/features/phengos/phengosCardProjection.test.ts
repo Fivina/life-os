@@ -32,7 +32,7 @@ it("prioritizes today's saved work and does not duplicate a planned commitment",
 it("shows one nearest future fixture regardless of provider order and keeps safe club logo URLs", () => {
   const now = new Date(2026, 9, 3, 9, 0);
   const fixture = (id: string, hours: number, homeLogo: string): FixtureBinding => ({
-    id, fixture_status: "SCHEDULED", suppressed: false,
+    id, commitment_id: id === "soon" ? "commitment/id with spaces" : null, fixture_status: "SCHEDULED", suppressed: false,
     kickoff_at: new Date(now.getTime() + hours * 60 * 60_000).toISOString(),
     normalized_json: { home_team: "Beşiktaş", away_team: "Fenerbahçe", home_team_logo_url: homeLogo },
   } as unknown as FixtureBinding);
@@ -40,10 +40,12 @@ it("shows one nearest future fixture regardless of provider order and keeps safe
   expect(cards).toHaveLength(1);
   expect(cards[0].title).toBe("Beşiktaş vs Fenerbahçe");
   expect(cards[0].fixture?.homeLogo).toBe("https://example.org/besiktas.png");
+  expect(cards[0].href).toBe("/calendar?commitment=commitment%2Fid%20with%20spaces");
   const distant = projectPhengosCards({ fixtures: [fixture("distant", 24 * 30, "javascript:alert(1)")] }, now);
   expect(distant).toHaveLength(1);
   expect(distant[0].fixture?.homeLogo).toBeUndefined();
   expect(distant[0].priority).toBeLessThan(cards[0].priority);
+  expect(distant[0].href).toBe("/calendar");
 });
 
 it("uses an authoritative empty next selection without deleting cached Calendar data", () => {

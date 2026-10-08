@@ -10,6 +10,7 @@ from sqlalchemy.orm import Session
 from app.core.config import Settings, get_settings
 from app.database.models import Commitment, FixtureBinding, StandingCalendarRule, UserProfile
 from app.events.service import append_event
+from app.integrations.credentials import IntegrationSecretStore
 from app.standing_calendar.providers import FixtureProvider, FixtureProviderError, configured_provider
 from app.standing_calendar.schemas import FixtureOverrideRequest, FixtureSyncSummary, NormalizedFixture
 
@@ -173,31 +174,38 @@ def sync_rule(db: Session, user: UserProfile, rule: StandingCalendarRule, *, pro
     settings = settings or get_settings(); now = (now or utcnow()).astimezone(UTC)
     if not rule.enabled:
         return FixtureSyncSummary(rule_id=rule.id, status="SKIPPED")
-    provider = provider or configured_provider(settings)
     try:
-        fixtures = provider.fetch(team_id=str(rule.source_config_json["team_id"]))
-        counts = {"created": 0, "updated": 0, "cancelled": 0, "noop": 0, "suppressed": 0}
-        for fixture in fixtures: counts[reconcile_fixture(db, user, rule, fixture, now=now)] += 1
-        summary = FixtureSyncSummary(rule_id=rule.id, status="SUCCESS", fetched=len(fixtures), **counts)
-        metadata = dict(rule.metadata_json or {})
-        metadata["fixture_sync_mode"] = "NEXT_FIXTURE"
-        metadata["current_next_fixture_id"] = fixtures[0].source_fixture_id if fixtures else None
-        rule.metadata_json = metadata
-        rule.last_sync_at = now; rule.next_sync_at = now + timedelta(days=SYNC_DAYS); rule.last_sync_status = "SUCCESS"
-        rule.last_sync_summary_json = summary.model_dump(mode="json"); rule.last_error = None; rule.version += 1
-        append_event(db, user, event_type="standing_rule.sync_completed", aggregate_type="standing_calendar_rule", aggregate_id=rule.id,
-                     payload=summary.model_dump(mode="json"), outbox=True)
+        # A provider/Vault/database failure must not partially update Calendar or
+        # leave the surrounding manual/worker transaction unusable.
+        with db.begin_nested():
+            if provider is None:
+                secret = IntegrationSecretStore(settings).fixture_runtime_key(db, user, settings.fixture_credential_scope)
+                runtime_settings = settings.model_copy(update={"api_football_api_key": secret})
+                provider = configured_provider(runtime_settings)
+            fixtures = provider.fetch(team_id=str(rule.source_config_json["team_id"]))
+            counts = {"created": 0, "updated": 0, "cancelled": 0, "noop": 0, "suppressed": 0}
+            for fixture in fixtures: counts[reconcile_fixture(db, user, rule, fixture, now=now)] += 1
+            summary = FixtureSyncSummary(rule_id=rule.id, status="SUCCESS", fetched=len(fixtures), **counts)
+            metadata = dict(rule.metadata_json or {})
+            metadata["fixture_sync_mode"] = "NEXT_FIXTURE"
+            metadata["current_next_fixture_id"] = fixtures[0].source_fixture_id if fixtures else None
+            rule.metadata_json = metadata
+            rule.last_sync_at = now; rule.next_sync_at = now + timedelta(days=SYNC_DAYS); rule.last_sync_status = "SUCCESS"
+            rule.last_sync_summary_json = summary.model_dump(mode="json"); rule.last_error = None; rule.version += 1
+            append_event(db, user, event_type="standing_rule.sync_completed", aggregate_type="standing_calendar_rule", aggregate_id=rule.id,
+                         payload=summary.model_dump(mode="json"), outbox=True)
         logger.info("fixture_sync_completed", extra={"sync_summary": summary.model_dump(mode="json")})
         return summary
     except Exception as exc:
-        summary = FixtureSyncSummary(rule_id=rule.id, status="FAILED", error=str(exc))
+        reason = str(exc) if isinstance(exc, FixtureProviderError) else "Fixture synchronization is unavailable."
+        summary = FixtureSyncSummary(rule_id=rule.id, status="FAILED", error=reason)
         transient = isinstance(exc, FixtureProviderError) and exc.transient
         retry_after = timedelta(hours=RETRY_HOURS) if transient else timedelta(days=SYNC_DAYS)
         rule.last_sync_at = now; rule.next_sync_at = now + retry_after; rule.last_sync_status = "FAILED"
-        rule.last_sync_summary_json = summary.model_dump(mode="json"); rule.last_error = str(exc)[:2000]; rule.version += 1
+        rule.last_sync_summary_json = summary.model_dump(mode="json"); rule.last_error = reason; rule.version += 1
         append_event(db, user, event_type="standing_rule.sync_failed", aggregate_type="standing_calendar_rule", aggregate_id=rule.id,
                      payload={"rule_id": rule.id, "reason_code": "PROVIDER_UNAVAILABLE"}, outbox=True)
-        logger.warning("fixture_sync_failed", extra={"rule_id": rule.id, "reason": str(exc)})
+        logger.warning("fixture_sync_failed", extra={"rule_id": rule.id, "reason": reason})
         return summary
 
 

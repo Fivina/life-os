@@ -160,7 +160,8 @@ export function projectPhengosCards(sources: Sources, now = new Date()): Phengos
     const when = confirmedTime ? new Intl.DateTimeFormat(undefined, { weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }).format(kickoff) : "Time not confirmed";
     cards.push({ id: `fixture:${fixture.id}`, kind: "fixture", priority: kickoff <= currentTime + 48 * 60 * 60_000 ? 75 : 52,
       title: `${home} vs ${away}`, eyebrow: "MATCH COMING UP", detail: [when, competition].filter(Boolean).join(" · "),
-      href: "/calendar", startsAt: fixture.kickoff_at ?? undefined, size: "wide",
+      href: fixture.commitment_id ? `/calendar?commitment=${encodeURIComponent(fixture.commitment_id)}` : "/calendar",
+      startsAt: fixture.kickoff_at ?? undefined, size: "wide",
       fixture: { home, away, homeLogo: validLogo(details.home_team_logo_url), awayLogo: validLogo(details.away_team_logo_url) },
     });
   }

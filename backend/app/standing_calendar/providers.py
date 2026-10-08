@@ -7,10 +7,20 @@ import time
 from typing import Protocol
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
-from urllib.request import Request, urlopen
+from urllib.request import HTTPRedirectHandler, ProxyHandler, Request, build_opener
 
 from app.core.config import Settings
 from app.standing_calendar.schemas import NormalizedFixture
+
+
+class _NoRedirect(HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        return None
+
+
+# Provider keys must not be forwarded to redirects or environment proxies.
+urlopen = build_opener(ProxyHandler({}), _NoRedirect()).open
+MAX_RESPONSE_BYTES = 256 * 1024
 
 
 class FixtureProviderError(RuntimeError):
@@ -47,7 +57,7 @@ def normalize_api_football(raw: dict) -> NormalizedFixture:
     away = away if isinstance(away, dict) else {}
     raw_status = str((fixture.get("status") or {}).get("short") or "TBD").upper()
     if raw_status not in STATUS_MAP:
-        raise FixtureProviderError(f"Unsupported fixture status: {raw_status}")
+        raise FixtureProviderError("Unsupported fixture status.")
     status = STATUS_MAP[raw_status]
     kickoff = _parse_datetime(fixture.get("date"))
     if status == "POSTPONED" and raw_status == "PST" and not fixture.get("date"):
@@ -88,7 +98,10 @@ class ApiFootballFixtureProvider:
         for attempt in range(self.max_attempts):
             try:
                 with urlopen(request, timeout=self.settings.fixture_sync_timeout_seconds) as response:
-                    payload = json.loads(response.read().decode("utf-8"))
+                    body = response.read(MAX_RESPONSE_BYTES + 1)
+                    if len(body) > MAX_RESPONSE_BYTES:
+                        raise FixtureProviderError("Fixture provider response exceeded the size limit.")
+                    payload = json.loads(body.decode("utf-8"))
                 break
             except HTTPError as exc:
                 transient = exc.code in {408, 429} or 500 <= exc.code < 600
@@ -99,11 +112,11 @@ class ApiFootballFixtureProvider:
             except (URLError, TimeoutError) as exc:
                 if attempt + 1 == self.max_attempts:
                     raise FixtureProviderError("Fixture provider request failed.", transient=True) from exc
-            except json.JSONDecodeError as exc:
+            except (json.JSONDecodeError, UnicodeDecodeError) as exc:
                 raise FixtureProviderError("Fixture provider returned an invalid response.") from exc
             time.sleep(self.retry_backoff_seconds * (2 ** attempt))
-        if payload is None:  # Defensive: the bounded loop either succeeds or raises.
-            raise FixtureProviderError("Fixture provider request failed.", transient=True)
+        if not isinstance(payload, dict) or not isinstance(payload.get("response"), list):
+            raise FixtureProviderError("Fixture provider returned an invalid response.")
         if payload.get("errors"):
             raise FixtureProviderError("Fixture provider returned an error response.")
         fixtures = [normalize_api_football(item) for item in payload.get("response", [])[:1]]

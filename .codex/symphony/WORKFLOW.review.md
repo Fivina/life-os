@@ -18,9 +18,9 @@ hooks:
   timeout_ms: 180000
 agent:
   max_concurrent_agents: 1
-  max_turns: 5
+  max_turns: 2
 codex:
-  command: '"$SYMPHONY_CODEX_BIN" --config model=gpt-6.1-sol --config model_reasoning_effort=high --config shell_environment_policy.inherit=all app-server'
+  command: '"$SYMPHONY_CODEX_BIN" --config model=gpt-5.6-sol --config model_reasoning_effort=medium --config shell_environment_policy.inherit=all app-server'
   approval_policy: never
   thread_sandbox: read-only
   turn_sandbox_policy:
@@ -43,6 +43,10 @@ specified published commit/diff and its relevant source acceptance criteria.
 You did not implement this change. Do not modify any source, create commits/PRs,
 deploy, apply live migrations, read secrets, call paid providers, or spawn workers.
 This is a bounded review, not a second implementation or full backlog audit.
+Keep the review cost bounded: read only the assigned source sections and changed
+paths plus essential dependencies. Do not reread the entire contract or dump whole
+large files. Use focused commands and concise output. Run only meaningful targeted
+checks in existing environments; do not install dependencies or repeatedly poll.
 
 Use the provided github_api tool to create/update one comment headed
 "Life OS independent review". Report concrete actionable findings with priority,

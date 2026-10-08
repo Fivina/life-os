@@ -74,8 +74,8 @@ class CommitmentRead(BaseModel):
     description: str | None
     level: str
     commitment_type: str
-    starts_at: datetime
-    ends_at: datetime
+    starts_at: datetime | None
+    ends_at: datetime | None
     timezone: str
     all_day: bool
     location: str | None

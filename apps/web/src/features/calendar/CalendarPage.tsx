@@ -1,6 +1,7 @@
 import { Check, CircleSlash, Info, Play, Plus, RefreshCw, TimerReset, X } from "lucide-react";
 import { FormEvent, useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useSearchParams } from "react-router-dom";
 
 import { api } from "../../services/api";
 import { CalendarWorkspace } from "./CalendarWorkspace";
@@ -23,6 +24,8 @@ function displayDate(value?: string | null) {
 
 export function CalendarPage() {
   const queryClient = useQueryClient();
+  const [searchParams] = useSearchParams();
+  const requestedCommitmentId = searchParams.get("commitment") || null;
   const tomorrow = useMemo(() => {
     const date = new Date();
     date.setDate(date.getDate() + 1);
@@ -52,6 +55,13 @@ export function CalendarPage() {
   const projection = useQuery({
     queryKey: ["calendar-projection"],
     queryFn: api.calendarProjection
+  });
+
+  const requestedCommitment = useQuery({
+    queryKey: ["commitment", requestedCommitmentId],
+    queryFn: () => api.getCommitment(requestedCommitmentId!),
+    enabled: Boolean(requestedCommitmentId),
+    retry: false
   });
 
   const currentPlan = useQuery({
@@ -181,6 +191,10 @@ export function CalendarPage() {
         plan={currentPlan.data}
         horizon={horizon.data}
         proposals={proposals.data}
+        requestedCommitmentId={requestedCommitmentId}
+        requestedCommitment={requestedCommitment.data}
+        requestedCommitmentLoading={requestedCommitment.isLoading}
+        requestedCommitmentError={requestedCommitment.isError}
         loading={projection.isLoading || currentPlan.isLoading}
         error={projection.isError || currentPlan.isError}
         onAddCommitment={() => document.getElementById("add-commitment")?.scrollIntoView({ behavior: "smooth", block: "start" })}
