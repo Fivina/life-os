@@ -124,3 +124,11 @@ Official references:
 - Life OS frontend (`5173`) and backend health (`8000/health`) still return HTTP 200.
 - The Windows build emits a Phoenix colocated-JS symlink warning; dashboard and
   state API checks pass without elevation. Live task execution remains unverified.
+- GitHub setup completed as `Fivina`: `Fivina/life-os` is verified `PRIVATE`, Issues
+  is enabled, source and workflow commits are pushed, and local/remote heads match.
+- Gitleaks passes for the uploaded source. Exact synthetic test fixtures have
+  path-scoped exceptions; environment files, databases, runtime screenshots, logs,
+  and generated artifacts are excluded from Git.
+- The official Symphony GitHub adapter successfully reads the private issue queue
+  using the GitHub CLI credential. The connected service is running on port 8787;
+  it reports no active or queued work and zero model tokens at setup completion.
