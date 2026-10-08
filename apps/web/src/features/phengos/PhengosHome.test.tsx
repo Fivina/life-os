@@ -63,18 +63,21 @@ it("plays the Blender scene and hands its last frame to one live clickable circl
   expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
 });
 
-it("lets the user skip and preserves all existing destinations in the launcher", async () => {
+it("lets the user skip, exposes direct domains, and preserves all existing destinations in Search", async () => {
   mount();
   fireEvent.click(screen.getByRole("button", { name: "Skip opening" }));
   expect(screen.getByRole("main")).toHaveAttribute("data-phase", "workspace");
   fireEvent.click(screen.getByRole("button", { name: "Open Phengos menu" }));
   const rail = within(screen.getByRole("navigation", { name: "Life OS domains" }));
-  for (const group of [...new Set(phengosFeatures.map(feature => feature.group))]) {
-    fireEvent.click(rail.getByRole("button", { name: group === "System" ? "Settings" : group }));
-    const domain = within(screen.getByRole("navigation", { name: `${group} features` }));
-    for (const feature of phengosFeatures.filter(feature => feature.group === group)) {
-      expect(domain.getByRole("link", { name: feature.label })).toHaveAttribute("href", feature.href);
-    }
+  expect(rail.getAllByRole("link").filter(link => ["Home", "Calendar", "Chat", "Learning", "Fitness", "Life", "Kitchen", "Settings"].includes(link.textContent ?? "")).map(link => link.textContent))
+    .toEqual(["Home", "Calendar", "Chat", "Learning", "Fitness", "Life", "Kitchen", "Settings"]);
+  expect(rail.queryByText("Self")).not.toBeInTheDocument();
+  fireEvent.click(rail.getByRole("button", { name: "Search" }));
+  const search = within(screen.getByRole("navigation", { name: "Search results" }));
+  const searchLinks = search.getAllByRole("link");
+  expect(searchLinks).toHaveLength(21);
+  for (const feature of phengosFeatures) {
+    expect(searchLinks.some(link => link.getAttribute("href") === feature.href)).toBe(true);
   }
   await waitFor(() => expect(shoppingApi.shoppingList).toHaveBeenCalled());
   fireEvent.click(screen.getByRole("button", { name: "Return to horizon" }));
@@ -95,25 +98,23 @@ it("finds canonical destinations from the Home rail search", () => {
   expect(within(screen.getByRole("navigation", { name: "Search results" })).getByRole("link", { name: /Shopping/ })).toHaveAttribute("href", "/kitchen#shopping");
 });
 
-it("moves from the overview into a domain and returns without losing the assistant draft", () => {
+it("opens a primary domain directly and keeps the assistant draft for Chat", () => {
   window.sessionStorage.setItem(PHENGOS_INTRO_KEY, "seen");
   mount();
   fireEvent.click(screen.getByRole("button", { name: "Open Phengos menu" }));
   const rail = within(screen.getByRole("navigation", { name: "Life OS domains" }));
-  expect(rail.getByRole("button", { name: "Overview" })).toHaveAttribute("aria-pressed", "true");
   fireEvent.change(screen.getByRole("textbox", { name: "Message for your assistant" }), { target: { value: "Plan tomorrow" } });
-  fireEvent.click(rail.getByRole("button", { name: "Home" }));
-  expect(rail.getByRole("button", { name: "Home" })).toHaveAttribute("aria-pressed", "true");
-  expect(within(screen.getByRole("navigation", { name: "Home features" })).getByRole("link", { name: "Shopping" })).toHaveAttribute("href", "/kitchen#shopping");
-  fireEvent.click(screen.getByRole("button", { name: "Back to overview" }));
-  expect(rail.getByRole("button", { name: "Overview" })).toHaveAttribute("aria-pressed", "true");
-  expect(screen.getByRole("textbox", { name: "Message for your assistant" })).toHaveValue("Plan tomorrow");
+  expect(rail.getByRole("link", { name: "Calendar" })).toHaveAttribute("href", "/calendar");
+  fireEvent.click(rail.getByRole("link", { name: "Calendar" }));
+  expect(screen.getByRole("heading", { name: "Existing feature" })).toBeInTheDocument();
+  expect(window.sessionStorage.getItem("life-os:phengos-draft")).toBe("Plan tomorrow");
 });
 
-it("restores the originating domain and saved prompt on a working-view return", () => {
+it("restores the dashboard and saved prompt without a domain interstitial", () => {
   mount([{ pathname: "/", state: { phengosReturn: true, phengosOpen: true, phengosGroup: "Home" } }]);
-  expect(screen.getByRole("dialog", { name: "Home" })).toBeInTheDocument();
-  expect(within(screen.getByRole("navigation", { name: "Home features" })).getByRole("link", { name: "Shopping" })).toBeInTheDocument();
+  expect(screen.getByRole("dialog", { name: /Good/ })).toBeInTheDocument();
+  expect(screen.queryByText("Choose where to work")).not.toBeInTheDocument();
+  expect(screen.getByRole("heading", { name: "Today at a glance" })).toBeInTheDocument();
   fireEvent.change(screen.getByRole("textbox", { name: "Message for your assistant" }), { target: { value: "Plan dinner" } });
   fireEvent.click(screen.getByRole("button", { name: "Close Phengos menu" }));
   fireEvent.click(screen.getByRole("button", { name: "Open Phengos menu" }));

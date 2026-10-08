@@ -22,3 +22,10 @@ targetRules = ["generic-api-key"]
 condition = "AND"
 paths = ['''^scripts/verify_v2_postgres\.py$''']
 regexes = ['''^v2-smoke-finance$''']
+
+[[allowlists]]
+description = "Exact synthetic replacement credential in integration tests"
+targetRules = ["generic-api-key"]
+condition = "AND"
+paths = ['''^backend/tests/test_integration_credentials\.py$''']
+regexes = ['''^replacement-key-never-return-1234567890$''']

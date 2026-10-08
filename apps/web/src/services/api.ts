@@ -76,7 +76,7 @@ import type {
 
 export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "http://127.0.0.1:8000";
 
-async function apiRequest<T>(path: string, options: RequestInit = {}): Promise<T> {
+export async function apiRequest<T>(path: string, options: RequestInit = {}): Promise<T> {
   const token = await getValidAuthToken();
   const response = await fetch(`${API_BASE_URL}/api/v1${path}`, {
     ...options,
@@ -387,6 +387,7 @@ export const api = {
     apiRequest<FinanceBudget>("/finance/budgets", { method: "POST", body: JSON.stringify(payload) }),
   refreshRecurringExpenses: () => apiRequest("/finance/recurring/refresh", { method: "POST" }),
   commitments: () => apiRequest<Commitment[]>("/commitments"),
+  getCommitment: (id: string) => apiRequest<Commitment>(`/commitments/${encodeURIComponent(id)}`),
   notebookEntries: (filters: { entryType?: string; status?: string } = {}) => {
     const params = new URLSearchParams();
     if (filters.entryType) params.set("entry_type", filters.entryType);

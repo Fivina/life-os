@@ -22,8 +22,10 @@ it("mounts the real Motion components and opens the workspace without any Canvas
   expect(screen.queryByRole("textbox")).not.toBeInTheDocument();
   fireEvent.click(screen.getByRole("button", { name: "Open Phengos menu" }));
   await waitFor(() => expect(screen.getByRole("textbox", { name: "Message for your assistant" })).toBeVisible(), { timeout: 2000 });
-  fireEvent.click(within(screen.getByRole("navigation", { name: "Life OS domains" })).getByRole("button", { name: "Home" }));
-  expect(within(screen.getByRole("navigation", { name: "Home features" })).getByRole("link", { name: "Kitchen" })).toHaveAttribute("href", "/kitchen");
+  const domains = within(screen.getByRole("navigation", { name: "Life OS domains" }));
+  expect(domains.getByRole("link", { name: "Home" })).toHaveAttribute("href", "/");
+  expect(domains.getByRole("link", { name: "Kitchen" })).toHaveAttribute("href", "/kitchen");
+  expect(screen.queryByText("Choose where to work")).not.toBeInTheDocument();
   expect(document.querySelector("canvas")).toBeNull();
   await waitFor(() => expect(request).toHaveBeenCalledTimes(6));
 });

@@ -20,11 +20,7 @@ agent:
   max_turns: 20
 codex:
   command: '"$SYMPHONY_CODEX_BIN" --config shell_environment_policy.inherit=all app-server'
-  approval_policy:
-    reject:
-      sandbox_approval: true
-      rules: true
-      mcp_elicitations: true
+  approval_policy: never
   thread_sandbox: workspace-write
   turn_sandbox_policy:
     type: workspaceWrite
@@ -71,6 +67,8 @@ The user supplies the outcome and source material, not a hand-written task plan.
    record review and user acceptance separately. Use narrow fast workers for
    mechanical work and deeper workers only where architectural difficulty requires
    them, following AGENTS.md. Do not default every subtask to the strongest model.
+   Use the standard worker tier for routine engineering rather than forcing all
+   work into fast/deep extremes. Record model, effort and why each task fits it.
 3. Work on a codex/ branch in this isolated issue workspace. Preserve newer working
    behavior and all existing routed workflows. Keep runtime data and credentials out
    of commits. Do not modify the user's primary checkout or production data.

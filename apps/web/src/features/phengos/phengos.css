@@ -394,8 +394,9 @@
 }
 .phengos-rail-orb { display: block; flex: 0 0 42px; width: 42px; height: 42px; margin: 0 auto 7px; border: 1px solid #a5e4ff; border-radius: 50%; background: radial-gradient(circle at 43% 42%, #081629 0 45%, #0c3c68 62%, #98ddff 77%, #08172b 86%); box-shadow: inset 0 0 9px #6dbfffa8, 0 0 11px #5bbfffad, 0 0 24px #1b6ebc70; }
 .phengos-domain-rail .phengos-rail-route { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; width: 100%; min-height: 58px; padding: 6px 3px; border: 1px solid transparent; border-radius: 10px; color: #a9bdd0; text-decoration: none; font-size: 11px; }
-.phengos-rail-route svg { color: var(--life-domain-home); }
-.phengos-rail-route:hover { border-color: #3b82f66b; background: #3b82f614; color: var(--life-text-main); }
+.phengos-rail-route svg { color: var(--phengos-role); }
+.phengos-rail-route:hover, .phengos-rail-route[aria-current="page"] { border-color: color-mix(in srgb, var(--phengos-role) 45%, #19435f); background: color-mix(in srgb, var(--phengos-role) 9%, transparent); color: var(--life-text-main); box-shadow: inset 3px 0 var(--phengos-role); }
+.phengos-chat-route .pn-chat-orb { display: block; width: 20px; height: 20px; flex: 0 0 20px; border-radius: 50%; background: radial-gradient(circle at 45% 43%, #fff, #e8f4ff); box-shadow: inset 0 0 6px #ffffffb8, 0 0 8px #fff, 0 0 16px #ffffff73; }
 .phengos-rail-utilities { display: flex; flex-direction: column; gap: 3px; margin-top: auto; padding-top: 12px; border-top: 1px solid #31587675; }
 .phengos-domain-rail .phengos-rail-utilities button { min-height: 50px; }
 .phengos-search-field { display: grid; gap: 6px; max-width: 720px; margin: 4px auto 22px; color: var(--life-text-secondary); font-size: 12px; }

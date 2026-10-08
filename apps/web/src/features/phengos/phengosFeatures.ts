@@ -1,8 +1,8 @@
-import { BookOpen, CalendarDays, CircleDot, Dumbbell, Film, House, Leaf, ListChecks, MessageCircle, NotebookPen, Settings, ShoppingCart, Target, Users, Utensils, WalletCards } from "lucide-react";
+import { BookOpen, CalendarDays, CircleDot, Dumbbell, Film, House, Leaf, ListChecks, NotebookPen, Settings, ShoppingCart, Target, Users, Utensils, WalletCards } from "lucide-react";
 
 // These are existing workflows, not a new canonical domain hierarchy.
 export const phengosFeatures = [
-  { label: "Assistant", detail: "Plan, review, and ask", href: "/self/assistant", icon: MessageCircle, group: "Self", color: "#60a5fa" },
+  { label: "Chat", detail: "Plan, review, and ask PHENGOS", href: "/chat", icon: CircleDot, group: "Self", color: "#ffffff" },
   { label: "Calendar", detail: "Shape plans and commitments", href: "/calendar", icon: CalendarDays, group: "Calendar", color: "#f59e0b" },
   { label: "Daily list", detail: "See and complete today's actions", href: "/calendar#daily-list", icon: ListChecks, group: "Calendar", color: "#f59e0b" },
   { label: "Kitchen", detail: "Plan meals and manage food", href: "/kitchen", icon: Utensils, group: "Home", color: "#3b82f6" },

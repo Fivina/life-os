@@ -27,6 +27,7 @@ class Settings(BaseSettings):
     supabase_jwt_issuer: str | None = None
     supabase_jwt_audience: str = "authenticated"
     authorized_auth_subjects: str = ""
+    integration_installation_admin_subjects: str = Field(default="", description="Explicit auth-subject allowlist for shared installation credentials; empty denies access.")
     frontend_base_url: str | None = None
     cors_origins: str = "http://localhost:5173,http://127.0.0.1:5173,http://localhost:5174,http://127.0.0.1:5174"
     log_level: str = "INFO"
@@ -134,6 +135,7 @@ class Settings(BaseSettings):
     api_football_api_key: str | None = None
     api_football_base_url: str = "https://v3.football.api-sports.io"
     api_football_besiktas_team_id: str = "549"
+    fixture_credential_scope: Literal["installation", "tenant"] = "installation"
     fixture_sync_timeout_seconds: float = Field(default=10.0, ge=1, le=60)
     leisure_movies_enabled: bool = True
     movie_metadata_provider: str = "disabled"

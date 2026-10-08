@@ -1324,6 +1324,8 @@ export type StandingCalendarRule = {
   last_sync_status: string;
   last_sync_summary_json: Record<string, unknown>;
   last_error?: string | null;
+  next_fixture_selection_known?: boolean;
+  current_next_fixture_id?: string | null;
   version: number;
 };
 

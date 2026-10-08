@@ -10,6 +10,8 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database.base import Base
 from app.database.types import PortableVector
+from app.integrations.models import IntegrationConfiguration  # Register additive integration metadata with Base.
+from app.standing_calendar.models import FixtureSnapshotCache  # Register backend-only public fixture snapshots with Base.
 
 
 def utcnow() -> datetime:
@@ -585,9 +587,19 @@ class StandingCalendarRule(TimestampedModel, Base):
     __table_args__ = (
         UniqueConstraint("user_id", "rule_type", "source_provider", "source_identity", name="uq_standing_rules_identity"),
         CheckConstraint("rule_type IN ('SPORTS_FIXTURE')", name="ck_standing_rules_type"),
-        CheckConstraint("sync_interval_days = 14", name="ck_standing_rules_sync_interval"),
+        CheckConstraint("sync_interval_days IN (1, 14)", name="ck_standing_rules_sync_interval"),
         Index("ix_standing_rules_due", "enabled", "next_sync_at"),
     )
+
+    @property
+    def next_fixture_selection_known(self) -> bool:
+        metadata = self.metadata_json or {}
+        return metadata.get("fixture_sync_mode") == "NEXT_FIXTURE" and "current_next_fixture_id" in metadata
+
+    @property
+    def current_next_fixture_id(self) -> str | None:
+        value = (self.metadata_json or {}).get("current_next_fixture_id")
+        return value if isinstance(value, str) else None
 
 
 class FixtureBinding(TimestampedModel, Base):

@@ -37,6 +37,7 @@ from app.api.routes_self_core import router as self_core_router
 from app.api.routes_quick_capture import router as quick_capture_router
 from app.api.routes_review import router as review_router
 from app.api.routes_intelligence_settings import router as intelligence_settings_router
+from app.api.routes_integrations import router as integrations_router
 
 api_router = APIRouter()
 api_router.include_router(health_router)
@@ -55,6 +56,7 @@ api_router.include_router(self_core_router)
 api_router.include_router(quick_capture_router)
 api_router.include_router(review_router)
 api_router.include_router(intelligence_settings_router)
+api_router.include_router(integrations_router)
 api_router.include_router(commitments_router)
 api_router.include_router(actions_router)
 api_router.include_router(calendar_router)

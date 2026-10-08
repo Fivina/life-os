@@ -4,7 +4,7 @@ import { MemoryRouter, Route, Routes, useLocation, useNavigate } from "react-rou
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { AppShell } from "../../../layouts/AppShell";
 import { phengosFeatures } from "../phengosFeatures";
-import { activeFeature, backFallback, navigationGroups } from "./navigationModel";
+import { activeFeature, backFallback, primaryNavigation } from "./navigationModel";
 
 const mocks = vi.hoisted(() => ({
   connection: "LIVE",
@@ -46,6 +46,7 @@ function renderWorkspace(entry: string | { pathname: string; search?: string; ha
     <RouterControls />
     <Routes>
       <Route element={<AppShell />}>{paths.map(path => <Route key={path} path={path} element={<FixturePage />} />)}</Route>
+      <Route element={<AppShell />}><Route path="/settings/integrations/*" element={<FixturePage />} /></Route>
       <Route path="/" element={<h1>Phengos home</h1>} />
       <Route path="/login" element={<h1>Login</h1>} />
       <Route path="/outside" element={<h1>Unobserved prior page</h1>} />
@@ -54,14 +55,15 @@ function renderWorkspace(entry: string | { pathname: string; search?: string; ha
 }
 
 function sidebar() { return within(screen.getByRole("navigation", { name: "Life OS navigation" })); }
-function openGroup(group: string) {
-  const existing = sidebar().queryByRole("group", { name: `${group} features` });
-  if (!existing) fireEvent.click(sidebar().getByRole("button", { name: group === "System" ? "Settings" : group }));
-  return within(sidebar().getByRole("group", { name: `${group} features` }));
+function openSearch() {
+  const existing = sidebar().queryByRole("search", { name: "Search destinations" });
+  if (!existing) fireEvent.click(sidebar().getByRole("button", { name: "Search" }));
+  return within(sidebar().getByRole("search", { name: "Search destinations" }));
 }
 function featureLink(label: string) {
-  const feature = phengosFeatures.find(item => item.label === label)!;
-  return openGroup(feature.group).getByRole("link", { name: label });
+  const search = openSearch();
+  fireEvent.change(search.getByRole("searchbox", { name: "Find a destination" }), { target: { value: label } });
+  return search.getByRole("link", { name: label });
 }
 describe("navigation directory identity", () => {
   it.each(phengosFeatures)("resolves $href to $group / $label", feature => {
@@ -69,23 +71,26 @@ describe("navigation directory identity", () => {
     expect(activeFeature(pathname, section ? `#${section}` : "")).toBe(feature);
   });
 
-  it("retains all 21 canonical entries in the seven requested groups", () => {
+  it("renders the seven direct primary destinations in order and retains all 21 workflows in Search", () => {
     renderWorkspace();
     expect(phengosFeatures).toHaveLength(21);
-    expect(sidebar().getAllByRole("button").filter(node => node.classList.contains("pn-domain-button"))).toHaveLength(7);
-    for (const group of navigationGroups) {
-      const panel = openGroup(group);
-      for (const feature of phengosFeatures.filter(item => item.group === group)) {
-        expect(panel.getByRole("link", { name: feature.label })).toHaveAttribute("href", feature.href);
-      }
+    const domains = within(sidebar().getByRole("group", { name: "Life OS domains" })).getAllByRole("link");
+    expect(domains.map(link => link.textContent)).toEqual(primaryNavigation.map(item => item.label));
+    expect(domains.map(link => link.getAttribute("href"))).toEqual(primaryNavigation.map(item => item.href));
+    expect(sidebar().queryByText("Self")).not.toBeInTheDocument();
+    expect(sidebar().queryByRole("group", { name: /features/ })).not.toBeInTheDocument();
+    const search = openSearch();
+    expect(search.getAllByRole("link")).toHaveLength(21);
+    for (const feature of phengosFeatures) {
+      expect(search.getByRole("link", { name: feature.label })).toHaveAttribute("href", feature.href);
     }
   });
 
-  it("offers the main dashboard from the Home domain panel", () => {
+  it("opens the main dashboard directly from Home", () => {
     renderWorkspace("/calendar");
-    const overview = openGroup("Home").getByRole("link", { name: "Overview" });
-    expect(overview).toHaveAttribute("href", "/");
-    fireEvent.click(overview);
+    const home = within(sidebar().getByRole("group", { name: "Life OS domains" })).getByRole("link", { name: "Home" });
+    expect(home).toHaveAttribute("href", "/");
+    fireEvent.click(home);
     expect(screen.getByRole("heading", { name: "Phengos home" })).toBeInTheDocument();
     expect(screen.getByTestId("location-state")).toHaveTextContent('"phengosOpen":true');
   });
@@ -93,7 +98,7 @@ describe("navigation directory identity", () => {
   it("searches the canonical feature list from the sidebar utility", () => {
     renderWorkspace();
     fireEvent.click(sidebar().getByRole("button", { name: "Search" }));
-    const panel = within(sidebar().getByRole("group", { name: "Search features" }));
+    const panel = within(sidebar().getByRole("search", { name: "Search destinations" }));
     fireEvent.change(panel.getByRole("searchbox", { name: "Find a destination" }), { target: { value: "shop" } });
     expect(panel.getByRole("link", { name: "Shopping" })).toHaveAttribute("href", "/kitchen#shopping");
     expect(panel.queryByRole("link", { name: "Fitness" })).not.toBeInTheDocument();
@@ -103,18 +108,15 @@ describe("navigation directory identity", () => {
     ["/kitchen#nutrition", "Home", "Nutrition"],
     ["/life#household", "Home", "Household"],
     ["/settings/personal-model", "System", "Personal model"],
+    ["/settings/integrations", "System", "Settings"],
+    ["/settings/integrations/tmdb", "System", "Settings"],
   ])("marks only the correct group and breadcrumb for %s", (path, group, label) => {
     renderWorkspace(path);
-    const link = featureLink(label);
-    expect(link).toHaveAttribute("aria-current", "page");
-    expect(sidebar().getAllByRole("link").filter(node => node.hasAttribute("aria-current"))).toEqual([link]);
-    const selectedDomain = path.startsWith("/kitchen")
-      ? sidebar().getAllByRole("link", { name: "Kitchen" }).find(node => node.classList.contains("pn-kitchen-link"))
-      : sidebar().getByRole("button", { name: group === "System" ? "Settings" : group });
+    const selectedDomain = sidebar().getByRole("link", { name: path.startsWith("/kitchen") ? "Kitchen" : path.startsWith("/life") ? "Life" : group === "System" ? "Settings" : group });
     expect(selectedDomain).toHaveAttribute("data-active", "true");
     const breadcrumbs = screen.getByRole("navigation", { name: "Breadcrumb" });
-    expect(breadcrumbs).toHaveTextContent(group);
-    expect(breadcrumbs.querySelector("[aria-current=page]")).toHaveTextContent(label);
+    expect(breadcrumbs).toHaveTextContent(group === "System" ? "Settings" : group);
+    expect(breadcrumbs.querySelector("[aria-current=page]")).toHaveTextContent(group === "System" && label === "Settings" ? "Overview" : label);
   });
 
   it("handles encoded, unknown and malformed hashes without inventing sections", () => {
@@ -122,7 +124,19 @@ describe("navigation directory identity", () => {
     expect(activeFeature("/kitchen", "#unknown")?.label).toBe("Kitchen");
     expect(activeFeature("/kitchen", "#%ZZ")?.label).toBe("Kitchen");
     expect(activeFeature("/unknown", "")).toBeUndefined();
+    expect(activeFeature("/settings/integrations-other", "")).toBeUndefined();
     expect(backFallback(undefined)).toBe("/");
+  });
+
+  it("uses the existing circle artwork and white Chat identity without exposing Self", () => {
+    renderWorkspace("/chat");
+    const chat = sidebar().getByRole("link", { name: "Chat" });
+    expect(chat).toHaveAttribute("href", "/chat");
+    expect(chat).toHaveAttribute("aria-current", "page");
+    expect(chat.querySelector(".pn-circle.pn-chat-orb")).toBeInTheDocument();
+    expect(chat).toHaveStyle({ "--pn-accent": "var(--life-domain-chat)" });
+    expect(screen.getByRole("navigation", { name: "Breadcrumb" })).toHaveTextContent("Chat");
+    expect(sidebar().queryByText("Self")).not.toBeInTheDocument();
   });
 });
 
@@ -206,19 +220,19 @@ describe("history and route state", () => {
     expect(screen.getByTestId("location-state")).toHaveTextContent('"phengosReturn":true');
   });
 
-  it("returns a card-opened workspace to its Phengos domain layer", () => {
+  it("returns a card-opened workspace to the Home dashboard without a domain layer", () => {
     renderWorkspace({ pathname: "/kitchen", hash: "#shopping", state: { phengosOriginLayer: "domain", phengosOriginGroup: "Home" } });
     fireEvent.click(screen.getByRole("button", { name: "Back" }));
     expect(screen.getByTestId("location")).toHaveTextContent(/^\/$/);
     expect(screen.getByTestId("location-state")).toHaveTextContent('"phengosOpen":true');
-    expect(screen.getByTestId("location-state")).toHaveTextContent('"phengosGroup":"Home"');
+    expect(screen.getByTestId("location-state")).not.toHaveTextContent("phengosGroup");
   });
 });
 
 describe("single routed navigation", () => {
   it("uses the persistent sidebar as the only feature menu and toggles it with the circle", () => {
     renderWorkspace("/kitchen#nutrition");
-    expect(sidebar().getAllByRole("button").filter(node => node.classList.contains("pn-domain-button"))).toHaveLength(7);
+    expect(within(sidebar().getByRole("group", { name: "Life OS domains" })).getAllByRole("link")).toHaveLength(7);
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: "Close Phengos navigation" }));
     expect(screen.queryByRole("navigation", { name: "Life OS navigation" })).not.toBeInTheDocument();
@@ -231,7 +245,7 @@ describe("single routed navigation", () => {
   it("closes the one sidebar with Escape without losing the working draft", () => {
     renderWorkspace();
     fireEvent.change(screen.getByRole("textbox", { name: "Page draft" }), { target: { value: "Draft" } });
-    featureLink("Kitchen").focus();
+    sidebar().getByRole("link", { name: "Kitchen" }).focus();
     fireEvent.keyDown(window, { key: "Escape" });
     expect(screen.queryByRole("navigation", { name: "Life OS navigation" })).not.toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Open Phengos navigation" })).toHaveFocus();

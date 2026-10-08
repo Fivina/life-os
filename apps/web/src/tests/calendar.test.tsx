@@ -2,14 +2,17 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import type { PropsWithChildren } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { MemoryRouter } from "react-router-dom";
 
 import { CalendarPage } from "../features/calendar/CalendarPage";
+import { CalendarWorkspace } from "../features/calendar/CalendarWorkspace";
 import { api } from "../services/api";
 import type { ActionIntention, CalendarProjection, Commitment, Plan, PlanProposal } from "../types/api";
 
 vi.mock("../services/api", () => ({
   api: {
     calendarProjection: vi.fn(),
+    getCommitment: vi.fn(),
     addCommitment: vi.fn(),
     addAction: vi.fn(),
     updateCommitment: vi.fn(),
@@ -34,7 +37,7 @@ vi.mock("../services/api", () => ({
 
 const mockedApi = vi.mocked(api);
 
-function renderCalendar() {
+function renderCalendar(path = "/calendar") {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: { retry: false },
@@ -43,7 +46,7 @@ function renderCalendar() {
   });
 
   function Wrapper({ children }: PropsWithChildren) {
-    return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
+    return <QueryClientProvider client={queryClient}><MemoryRouter initialEntries={[path]}>{children}</MemoryRouter></QueryClientProvider>;
   }
 
   return render(<CalendarPage />, { wrapper: Wrapper });
@@ -182,6 +185,63 @@ describe("V0.2 Calendar and Planning Pool", () => {
     expect(screen.getByRole("heading", { name: "Add Commitment" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Add Intention" })).toBeInTheDocument();
     expect(await screen.findByText("No fixed commitments yet.")).toBeInTheDocument();
+  });
+
+  it("opens an encoded distant commitment on its actual day from the route", async () => {
+    mockedApi.getCommitment.mockResolvedValue({
+      ...commitmentFixture(),
+      id: "fixture/id with spaces",
+      title: "Distant derby",
+      starts_at: "2030-12-20T18:00:00Z",
+      ends_at: "2030-12-20T20:00:00Z"
+    });
+    renderCalendar("/calendar?commitment=fixture%2Fid%20with%20spaces");
+
+    expect(await screen.findByRole("heading", { name: "Distant derby" })).toBeInTheDocument();
+    expect(mockedApi.getCommitment).toHaveBeenCalledWith("fixture/id with spaces");
+    expect(screen.getByRole("button", { name: "day" })).toHaveAttribute("aria-pressed", "true");
+    const expectedDate = new Intl.DateTimeFormat(undefined, { weekday: "long", month: "long", day: "numeric", year: "numeric" }).format(new Date("2030-12-20T18:00:00Z"));
+    expect(screen.getAllByText(expectedDate).length).toBeGreaterThan(0);
+  });
+
+  it("shows an explicit unavailable state without selecting an unrelated commitment", async () => {
+    mockedApi.calendarProjection.mockResolvedValue(projectionFixture());
+    mockedApi.getCommitment.mockRejectedValue(new Error("Not found"));
+    renderCalendar("/calendar?commitment=missing-fixture");
+
+    expect(await screen.findByText(/Could not open the requested commitment/)).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "University" })).not.toBeInTheDocument();
+  });
+
+  it("preserves Calendar navigation on a linked-record refresh and opens a new requested record", async () => {
+    const linked = { ...commitmentFixture(), id: "linked", title: "Linked match" };
+    const props = { loading: false, error: false, onAddCommitment: vi.fn(), onAddIntention: vi.fn(),
+      requestedCommitmentId: linked.id, requestedCommitment: linked };
+    const view = render(<CalendarWorkspace {...props} />);
+    expect(await screen.findByRole("heading", { name: "Linked match" })).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "month" }));
+    view.rerender(<CalendarWorkspace {...props} requestedCommitment={{ ...linked, title: "Updated match", version: 2 }} />);
+    expect(screen.getByRole("button", { name: "month" })).toHaveAttribute("aria-pressed", "true");
+    expect(screen.queryByRole("heading", { name: "Updated match" })).not.toBeInTheDocument();
+    const next = { ...linked, id: "new-link", title: "Next linked match" };
+    view.rerender(<CalendarWorkspace {...props} requestedCommitmentId={next.id} requestedCommitment={next} />);
+    expect(await screen.findByRole("heading", { name: "Next linked match" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "day" })).toHaveAttribute("aria-pressed", "true");
+  });
+
+  it("shows the actual requested commitment when its date and kickoff are unconfirmed", async () => {
+    mockedApi.getCommitment.mockResolvedValue({
+      ...commitmentFixture(),
+      id: "tbd-fixture",
+      title: "Beşiktaş vs Opponent",
+      starts_at: null,
+      ends_at: null
+    });
+    renderCalendar("/calendar?commitment=tbd-fixture");
+
+    expect(await screen.findByRole("heading", { name: "Beşiktaş vs Opponent" })).toBeInTheDocument();
+    expect(screen.getByText("Date not confirmed")).toBeInTheDocument();
+    expect(screen.getByText("Time not confirmed")).toBeInTheDocument();
   });
 
   it("navigates week, month, and day views while keeping calendar actions accessible", async () => {

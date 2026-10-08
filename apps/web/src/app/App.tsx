@@ -2,6 +2,7 @@ import { lazy, Suspense } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import { AssistantPage } from "../features/assistant/AssistantPage";
+import { LegacyChatRedirect } from "../features/assistant/LegacyChatRedirect";
 import { CalendarPage } from "../features/calendar/CalendarPage";
 import { LoginPage } from "../features/auth/LoginPage";
 import { FitnessPage } from "../features/fitness/FitnessPage";
@@ -14,6 +15,7 @@ import { LearningPage } from "../features/learning/LearningPage";
 import { LifePage } from "../features/life/LifePage";
 import { PersonalModelPage } from "../features/personal-model/PersonalModelPage";
 import { SettingsPage } from "../features/settings/SettingsPage";
+import { IntegrationsPage } from "../features/settings/IntegrationsPage";
 import { NotebookPage } from "../features/notebook/NotebookPage";
 import { MoviesPage } from "../features/movies/MoviesPage";
 import { SocialPage } from "../features/social/SocialPage";
@@ -105,8 +107,9 @@ export function App() {
             <Route path="/" element={<Suspense fallback={<main>Life OS</main>}><PhengosHome /></Suspense>} />
             <Route path="/space" element={<SpatialHomeRedirect />} />
             <Route element={<AppShell />}>
-              <Route path="/self" element={<Navigate to="/self/assistant" replace />} />
-              <Route path="/self/assistant" element={<AssistantPage />} />
+              <Route path="/self" element={<LegacyChatRedirect />} />
+              <Route path="/self/assistant" element={<LegacyChatRedirect />} />
+              <Route path="/chat" element={<AssistantPage />} />
               <Route path="/calendar" element={<CalendarPage />} />
               <Route path="/life" element={<LifePage />} />
               <Route path="/fitness" element={<FitnessPage />} />
@@ -114,11 +117,13 @@ export function App() {
               <Route path="/kitchen" element={<KitchenPage />} />
               <Route path="/finance" element={<FinancePage />} />
               <Route path="/settings" element={<SettingsPage />} />
+              <Route path="/settings/integrations" element={<IntegrationsPage />} />
+              <Route path="/settings/integrations/:provider" element={<IntegrationsPage />} />
               <Route path="/notebook" element={<NotebookPage />} />
               <Route path="/movies" element={<MoviesPage />} />
               <Route path="/social" element={<SocialPage />} />
               <Route path="/settings/personal-model" element={<PersonalModelPage />} />
-              <Route path="/assistant" element={<Navigate to="/self/assistant" replace />} />
+              <Route path="/assistant" element={<LegacyChatRedirect />} />
               <Route path="/personal-model" element={<Navigate to="/settings/personal-model" replace />} />
             </Route>
           </Route>

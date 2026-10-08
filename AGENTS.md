@@ -43,6 +43,30 @@ Delegate only for narrow, mechanically defined, independent, low-risk work that 
 
 Delegate only for genuine architectural ambiguity, important cross-module changes, unresolved integration problems, or difficult regressions. Do not use it for routine implementation.
 
+### standard_worker and task-sensitive model routing
+
+Use `standard_worker` for bounded feature implementation, provider adapters,
+UI refactors and meaningful tests once architecture and acceptance criteria are
+known. Do not force ordinary engineering into either the cheapest mechanical role
+or the deepest architecture role. The user explicitly requested multiple models
+matched to their tasks on 2026-10-08.
+
+| Task | Starting role / model / effort |
+| --- | --- |
+| Mechanical source/file handling or exact edits | `fast_worker`, `gpt-5.6-luna`, low |
+| Routine feature implementation, adapters, UI and regression tests | `standard_worker`, `gpt-5.6-sol`, medium |
+| Difficult architecture/security/integration/regressions | `deep_worker`, `gpt-6.1-sol`, high |
+| Independent review | Separate read-only context; choose effort for risk, ordinarily Sol medium, higher for consequential security |
+
+Record role/model/effort and a short selection reason in the task ledger. Do not
+inherit the primary's expensive model accidentally: project `[agents]` defaults
+select the standard tier. When a client does not list a custom role, use its worker
+role with an explicit equivalent model/effort. If a model is unavailable, record
+the compatible substitution. Escalate a bounded task for observed difficulty or
+failed corrections; do not run competing implementations. Primary retains
+architecture, sequencing, integration and final review. Maximum two concurrent
+workers and disjoint ownership remain in force.
+
 ## Hard Cost Rules
 
 - Maximum two subagents at a time, with disjoint write scopes.

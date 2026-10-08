@@ -63,6 +63,7 @@ export function SettingsPage() {
           {controlQuery.isLoading ? "Loading settings" : controlQuery.isError ? "Controls unavailable" : "Connected"}
         </span>
       </header>
+      <Link className="secondary-button inline-action" to="/settings/integrations"><KeyRound size={16} />Integrations</Link>
 
       <section className="content-band settings-section">
         <SectionTitle icon={<SlidersHorizontal size={18} />} title="Initiative" copy="How often Life OS should surface non-urgent intelligence." />
