@@ -47,4 +47,19 @@ describe("v1.8B cinema workspace", () => {
     await waitFor(() => expect(mockedApi.recordMovieOutcome).toHaveBeenCalledWith("r1", "o1", "SELECTED"));
     expect(mockedApi.markMovieWatched).not.toHaveBeenCalled();
   });
+
+  it("keeps an import preview when switching between movie tabs", async () => {
+    mockedApi.previewLetterboxdImport.mockResolvedValue({ id: "batch-1", provider: "letterboxd_export", file_name: "diary.csv", status: "PREVIEW", summary: { total: 1, ready: 1, review_required: 0 }, confirmed_at: null, rows: [{ id: "row-1", source_kind: "DIARY", source_row_key: "1", status: "READY", error: null, normalized: { title: "Arrival", year: 2016 }, movie_id: "movie-1" }] });
+    renderPage();
+    fireEvent.click(screen.getByRole("button", { name: /Import/i }));
+    const file = new File(["Name,Year\nArrival,2016"], "diary.csv", { type: "text/csv" });
+    Object.defineProperty(file, "text", { value: vi.fn().mockResolvedValue("Name,Year\nArrival,2016") });
+    fireEvent.change(screen.getByLabelText("Choose Letterboxd CSV"), { target: { files: [file] } });
+    expect(await screen.findByText("Arrival")).toBeVisible();
+    fireEvent.click(screen.getByRole("button", { name: /Discover/i }));
+    expect(screen.getByText("Arrival")).not.toBeVisible();
+    fireEvent.click(screen.getByRole("button", { name: /Import/i }));
+    expect(screen.getByText("Arrival")).toBeVisible();
+    expect(mockedApi.previewLetterboxdImport).toHaveBeenCalledTimes(1);
+  });
 });

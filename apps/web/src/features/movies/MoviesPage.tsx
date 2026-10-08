@@ -3,7 +3,8 @@ import { type FormEvent, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { api } from "../../services/api";
-import type { MovieImportBatch, MovieRecommendation } from "../../types/api";
+import type { MovieRecommendation } from "../../types/api";
+import { LetterboxdImportPanel } from "./LetterboxdImportPanel";
 
 
 type View = "discover" | "watchlist" | "history" | "import";
@@ -19,9 +20,6 @@ export function MoviesPage() {
   const [availableMinutes, setAvailableMinutes] = useState("140");
   const [mood, setMood] = useState("ANY");
   const [preferredGenres, setPreferredGenres] = useState("");
-  const [importBatch, setImportBatch] = useState<MovieImportBatch | null>(null);
-  const [importKind, setImportKind] = useState("DIARY");
-  const [resolutionMovie, setResolutionMovie] = useState<Record<string, string>>({});
 
   const trajectory = useQuery({ queryKey: ["leisure-trajectory"], queryFn: api.leisureTrajectory });
   const movies = useQuery({ queryKey: ["movies", query], queryFn: () => api.movies(query) });
@@ -52,18 +50,6 @@ export function MoviesPage() {
     mutationFn: api.updateLeisureTrajectory,
     onSuccess: (data) => queryClient.setQueryData(["leisure-trajectory"], data)
   });
-  const previewImport = useMutation({
-    mutationFn: api.previewLetterboxdImport,
-    onSuccess: setImportBatch
-  });
-  const confirmImport = useMutation({
-    mutationFn: api.confirmMovieImport,
-    onSuccess: (data) => { setImportBatch(data); refreshMovies(); }
-  });
-  const resolveImport = useMutation({
-    mutationFn: ({ rowId, movieId }: { rowId: string; movieId: string }) => api.resolveMovieImportRow(rowId, movieId),
-    onSuccess: (_, variables) => setImportBatch((current) => current ? { ...current, rows: current.rows.map((row) => row.id === variables.rowId ? { ...row, status: "READY", error: null, movie_id: variables.movieId } : row) } : current)
-  });
 
   function submitMovie(event: FormEvent) {
     event.preventDefault();
@@ -74,11 +60,6 @@ export function MoviesPage() {
       runtime_minutes: runtime ? Number(runtime) : null,
       genres: genres.split(",").map((item) => item.trim()).filter(Boolean)
     });
-  }
-
-  async function readImport(file?: File) {
-    if (!file) return;
-    previewImport.mutate({ file_name: file.name, content: await file.text(), source_kind: importKind });
   }
 
   const trajectoryValue = trajectory.data;
@@ -139,12 +120,7 @@ export function MoviesPage() {
 
     {view === "history" ? <section className="content-band"><div className="section-header"><h2>Watch history</h2><span>{history.data?.length ?? 0} viewings</span></div><div className="movie-history-list">{(history.data ?? []).map((item) => <article className="history-row" key={item.id}><span className="history-date">{formatDate(item.watched_at)}</span><div><strong>{item.movie.title}</strong><small>{item.rewatch ? "Rewatch" : "First watch"}{item.rating != null ? ` · ${item.rating}/${item.rating_scale}` : ""}</small></div></article>)}</div></section> : null}
 
-    {view === "import" ? <section className="content-band import-panel">
-      <div className="section-header"><h2>Letterboxd export</h2><span>Preview before saving</span></div>
-      <div className="import-controls"><label>File type<select aria-label="Letterboxd file type" value={importKind} onChange={(event) => setImportKind(event.target.value)}><option value="DIARY">Diary</option><option value="WATCHLIST">Watchlist</option><option value="WATCHED">Watched</option><option value="RATINGS">Ratings</option></select></label><label className="file-button"><Upload size={16} /> Choose CSV<input aria-label="Choose Letterboxd CSV" type="file" accept=".csv,text/csv" onChange={(event) => void readImport(event.target.files?.[0])} /></label></div>
-      {previewImport.isPending ? <p className="status-text">Reading export…</p> : null}
-      {importBatch ? <><div className="import-summary"><span>{importBatch.summary.total ?? importBatch.rows.length} rows</span><span>{importBatch.summary.ready ?? 0} ready</span><span>{importBatch.summary.review_required ?? 0} need review</span></div><div className="import-rows">{importBatch.rows.map((row) => <article className="import-row" key={row.id}><div><strong>{row.normalized.title ?? "Untitled"}</strong><small>{row.normalized.year ?? "Year unknown"} · {row.status.replaceAll("_", " ")}</small>{row.error ? <p>{row.error}</p> : null}</div>{row.status === "REVIEW_REQUIRED" ? <div className="import-resolution"><select aria-label={`Resolve ${row.normalized.title}`} value={resolutionMovie[row.id] ?? ""} onChange={(event) => setResolutionMovie((current) => ({ ...current, [row.id]: event.target.value }))}><option value="">Choose matching movie</option>{(movies.data ?? []).map((movie) => <option key={movie.id} value={movie.id}>{movie.title} {movie.release_year ? `(${movie.release_year})` : ""}</option>)}</select><button className="icon-button" title="Confirm match" aria-label={`Confirm ${row.normalized.title} match`} disabled={!resolutionMovie[row.id]} onClick={() => resolveImport.mutate({ rowId: row.id, movieId: resolutionMovie[row.id] })}><Check size={16} /></button></div> : null}</article>)}</div><button className="primary-button import-confirm" disabled={!importBatch.rows.some((row) => row.status === "READY") || confirmImport.isPending} onClick={() => confirmImport.mutate(importBatch.id)}><Check size={16} /> Confirm ready rows</button></> : null}
-    </section> : null}
+    <LetterboxdImportPanel active={view === "import"} />
   </div>;
 }
 

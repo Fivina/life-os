@@ -17,7 +17,10 @@ Calendar/Kitchen/Settings screenshots in `artifacts/unified-contract/baseline/`
 (local, ignored by Git). Deep worker `integration_vault` owns scoped backend Vault,
 integration routes/model/migration/tests; fast worker `checkpoint_setup_docs` owns
 the new Settings integration view/client/tests. Primary owns registration and
-integration. No substantial implementation has passed independent review yet.
+integration. Backend worker reports31new+17legacy tests passed; standard frontend
+worker reports15focused tests and typecheck passed after primary corrections.
+Independent Symphony review and isolated runtime checks are next. Hosted migration
+0031 has not been applied; current primary app database is PostgreSQL.
 
 Next action: align the worker DTOs, integrate the credential foundation, run focused
 security/frontend checks and independent review; route corrections. Follow the
@@ -121,7 +124,8 @@ Count completion only against an explicitly defined requirement denominator.
   write scopes. Use fast workers for mechanical tasks; deeper capability only for
   consequential ambiguity, difficult integration or regressions. Follow `AGENTS.md`.
   Existing role files select `gpt-5.6-luna`/low for `fast_worker` and
-  `gpt-6.1-sol`/high for `deep_worker`; see `.codex/agents/`. The real Symphony pilot
+  `gpt-5.6-sol`/medium for `standard_worker`, `gpt-6.1-sol`/high for `deep_worker`;
+  project defaults use the standard tier. See `.codex/agents/`. The Symphony pilot
   must verify these roles are available in its worker runtime.
 - A separate read-only reviewer checks substantial implementation against the
   source brief and actual evidence. The primary also reviews integrated behavior
@@ -151,6 +155,8 @@ the current agreed workflow.
 | 2026-10-08 | Primary | Local app restarted and readiness verified | Frontend/backend HTTP 200; next: user testing |
 | 2026-10-08 | Primary + fast worker `checkpoint_setup_docs` | Handoff policy/documentation complete; primary reviewed worker diff, existing model roles and consistency across all four files; no product implementation | `git diff --check` passed; app readiness verified; Symphony unavailable. Checkpoint commit: find `Add durable development handoff and worker checkpoints` in Git. Next: receive source document and create requirement ledger. |
 | 2026-10-08 | Primary + fast `checkpoint_setup_docs` | Contract intake, unchanged PDF +25 images preserved/hash-verified, complete text read, requirement/decision ledger created; backend/UI workers dispatched | Branch `codex/unified-contract`. Next: milestone1 integration and independent review. Usage89% five-hour/83% weekly at last check; below5% resume-task condition not met. |
+| 2026-10-08 | Primary | User requested less polarized, task-sensitive worker models; added standard tier and explicit default model/effort | Existing two-worker cap retained; model/reason recorded per task. Source/plan pushed as `3204ac9`; private tracker https://github.com/Fivina/life-os/issues/1. Symphony restarted, queue API checked with0runs; review dispatch still pending implementation checkpoint. |
+| 2026-10-08 | deep `integration_vault` + standard `settings_completion`; primary review | Credential foundation and shared Settings/Movie CSV importer implemented; targeted checks pass; primary corrections preserved explicit metadata clearing and import draft continuity | Next: publish checkpoint, Symphony independent read-only review and isolated UI/runtime checks; hostedVault pending. Latest usage73% five-hour/80% weekly; no resume task needed yet. |
 
 ## AFK usage instruction
 

@@ -26,7 +26,7 @@ effort. Related tasks must satisfy their parent criteria before closing the pare
 
 | ID | PDF pages / contract section | Scope and acceptance boundary | Owner | Status / dependency |
 | --- | --- | --- | --- | --- |
-| W0 | 1–5, 18–21, 51, 79–88 | Source preservation, live implementation map, conflicts, screenshot baseline, targeted checks | Primary | IN_PROGRESS |
+| W0 | 1–5, 18–21, 51, 79–88 | Source preservation, live implementation map, conflicts, screenshot baseline, targeted checks | Primary | VERIFIED intake/baseline; code maps remain scoped evidence, not whole-product acceptance |
 | NAV-001 | 6–7, 19, 47, 80–82 | Direct single-click primary navigation, no flyout/interstitial, legacy links/history retained | Primary + bounded shell worker | PENDING; W0 |
 | DEV-001 | 7, 80–84 | Developer separate from Settings/Life; final visual/access design stays open | Primary | PENDING; final design BLOCKED_DECISION |
 | CHAT-001 | 8–11, 19, 28–31, 80–83 | White original orb, Self→Chat aliases, real persisted threads/new/resume/available roles; permissions/history intact | Shell worker | PENDING; W0/W1 |
@@ -42,9 +42,9 @@ effort. Related tasks must satisfy their parent criteria before closing the pare
 | FIT-001 | 32–35, 42–44, 47–48 | Recompose existing training/sets/readiness/measurements; correct Y-value/X-time and truthful missing data | Fitness worker | PENDING; W1/W4; gated additions below |
 | FIN-001 | 36–38, 44–45, 47, 49 | Single Overview/Transactions/Budgets/Debts/Analytics strip; real bank-first hierarchy and source-aware values | Finance worker | PENDING; W1/W2/W6; gated additions below |
 | MOV-001 | 38–40, 45–49 | Exactly Overview/Watchlist/Logs, poster-first, no profile/fourth tab, import link to Settings | Movies worker | PENDING; W1/W2/W7; gated additions below |
-| BE-INTEGRATIONS.STORE | 54–55 §4, 62 §10.3, 73 | Extend existing write-only Vault; tenant/installation/internal connection boundaries; safe replacement/delete; fail closed | Integrations backend worker | PENDING; W0 |
-| BE-INTEGRATIONS.API | 54–55 §4 | Generic list/put/delete/test, sanitized status/test timestamps; safe non-secret configuration | Integrations backend worker | PENDING; STORE |
-| BE-INTEGRATIONS.UI | 54–55 §4 | /settings/integrations and /tmdb detail, write-only input/test/remove, real status/configuration | Fast Settings worker | PENDING; API |
+| BE-INTEGRATIONS.STORE | 54–55 §4, 62 §10.3, 73 | Extend existing write-only Vault; tenant/installation/internal connection boundaries; safe replacement/delete; fail closed | deep worker `integration_vault` | IMPLEMENTED;31 tests pass; hosted SQL/Vault and independent review pending |
+| BE-INTEGRATIONS.API | 54–55 §4 | Generic list/put/delete/test, sanitized status/test timestamps; safe non-secret configuration | deep worker `integration_vault` | IMPLEMENTED; scoped/redaction/mock transport tests pass; independent review pending |
+| BE-INTEGRATIONS.UI | 54–55 §4 | /settings/integrations and /tmdb detail, write-only input/test/remove, real status/configuration | fast worker then standard worker `settings_completion` | IMPLEMENTED;15 focused tests +typecheck pass; isolated runtime/independent review pending |
 | BE-INTEGRATIONS.LETTERBOXD | 54–55, 62–63 | Settings baseline import/history/resolve/confirm; one shared importer, never live Connected | Movies worker | PENDING; Movies import task |
 | BE-SPORTS.PROVIDER | 55–56 §5 | Existing API-Football adapter team549 next=1; daily/manual sync, bounded retry, reschedule binding idempotently | Sports worker | PENDING; W2 credentials |
 | BE-SPORTS.CARD | 55–56 §5, 73 | Exactly nearest future fixture, beyond14days/48hours visible, priority inside48h, logos/calendar link, no model call | Sports worker | PENDING; PROVIDER |
@@ -94,9 +94,10 @@ additional approvals. Frozen UI appearance does not authorize gated new schemas.
 | Task | Parent | Owner / write scope | Dependencies | Status / evidence / remaining |
 | --- | --- | --- | --- | --- |
 | T0-SOURCE | W0 | fast_worker `checkpoint_setup_docs`: source/ + ASSET_MANIFEST.md only | None | VERIFIED byte preservation: 1 PDF +25 images; zero hash mismatches. Primary reviewed manifest |
-| T0-RECONCILE | W0 | Primary: ledger/handoff/current implementation map | T0-SOURCE | IN_PROGRESS; complete contract read; baseline and existing relevant paths inspected |
-| T1-VAULT | BE-INTEGRATIONS.STORE/API | deep_worker `integration_vault`: backend/app/integrations/, provider_credentials.py, routes_integrations.py, migration0031, test_integration_credentials.py | W0 | IN_PROGRESS; primary owns router/config registration |
-| T1-SETTINGS | BE-INTEGRATIONS.UI | fast_worker `checkpoint_setup_docs`: new IntegrationsPage.tsx, integrations.css, services/integrations.ts, settings-integrations.test.tsx | Agreed DTOs/T1-VAULT | IN_PROGRESS; primary owns App/Settings route links and apiRequest export |
+| T0-RECONCILE | W0 | Primary: ledger/handoff/current implementation map | T0-SOURCE | VERIFIED intake: full contract read; six local baseline screenshots;13 provider+46 navigation tests passed |
+| T1-VAULT | BE-INTEGRATIONS.STORE/API | deep_worker `integration_vault`: backend/app/integrations/, provider_credentials.py, routes_integrations.py, migration0031, test_integration_credentials.py | W0 | IMPLEMENTED;31new+17legacy tests pass; primary registered router/config/model; hostedVault not run |
+| T1-SETTINGS | BE-INTEGRATIONS.UI | fast_worker `checkpoint_setup_docs`: new view/client/tests | Agreed DTOs/T1-VAULT | Initial implementation complete; primary review corrected endpoint and draft isolation; five focused tests passed |
+| T1-SETTINGS-COMPLETE | BE-INTEGRATIONS.UI/LETTERBOXD | standard worker `settings_completion`: integration view/client/tests +shared LetterboxdImportPanel +MoviesPage/movies.test.tsx | T1-SETTINGS/backend DTO | IMPLEMENTED;15focused tests/typecheck pass; explicit metadata clears, import preview survives tab switches, Settings importer independent of Vault. Full ZIP/history remainsM6 |
 | T1-INTEGRATE | W10 | Primary: router/client configuration/migration ordering/checks | T1-VAULT/T1-SETTINGS | PENDING |
 | T1-REVIEW | W10 | Separate read-only reviewer | Integrated diff + targeted evidence | PENDING; corrections assigned to owning worker |
 
@@ -122,6 +123,21 @@ additional approvals. Frozen UI appearance does not authorize gated new schemas.
   relevant to W8. No general agent lane/job/step/workflow/banking/food catalog
   models found by named-concept inspection. Reconcile equivalents before adding.
 
+## Per-task model routing (user refinement, 2026-10-08)
+
+| Task | Actual model / effort | Selection reason |
+| --- | --- | --- |
+| T0-SOURCE | gpt-5.6-luna /low | Mechanical copy/hash/manifest |
+| T1-VAULT | gpt-6.1-sol /high | Consequential Vault/RLS/scoped isolation and additive SQL security |
+| T1-SETTINGS | gpt-5.6-luna /low | Initial tightly defined view scaffold; primary review found feature-level gaps |
+| T1-SETTINGS-COMPLETE | gpt-5.6-sol /medium | Normal feature refactor, canonical importer/state preservation and endpoint tests |
+| T1-REVIEW | Symphony gpt-6.1-sol /high (planned) | Independent bounded security review; no implementation or duplicate worker audit |
+
+Project defaults now use the standard tier; AGENTS.md and standard_worker.toml
+define three task-sensitive tiers. Keep two concurrent workers, disjoint scopes,
+and escalate for observed difficulty. This chat's middle-tier spawn is explicit;
+the new default/custom role still needs verification in Symphony's actual runtime.
+
 ## Conflict and verification register
 
 | ID | Finding | Resolution / remaining |
@@ -131,6 +147,22 @@ additional approvals. Frozen UI appearance does not authorize gated new schemas.
 | C0-SOURCE | Historical DOCX/package-update instructions appear in preserved PDF | We are implementing code, not editing/rebuilding source design masters. Preserve source unchanged |
 | C0-RUNTIME | Symphony dashboard unavailable at intake; this chat has bounded workers | Primary coordinates current workers directly; no claim of live Symphony execution yet |
 | C0-PROVIDER | Live provider keys/qualification/paid benchmark not established | Tests inject transport/store; no production activation or paid benchmark claim |
+| C1-HOSTED | Current application DB dialect is PostgreSQL; migration0031 has not been applied to the hosted DB | Keep hosted data intact; source/mocked security tests pass. Hosted Vault execution remains an external verification gate |
+
+## Checkpoint evidence
+
+- Source/plan checkpoint `3204ac9` pushed on `codex/unified-contract`.
+- Private overall tracker: <https://github.com/Fivina/life-os/issues/1> (not ready;
+  do not duplicate the current implementation).
+- Symphony restarted; state API HTTP200 with0active runs before review dispatch.
+- Local baseline screenshots (ignored): `artifacts/unified-contract/baseline/`
+  Calendar, Kitchen, Settings, Fitness, Finance, Movies. Scope is displayed layout,
+  including observed loading states; not proof all live domain data loaded.
+- PDF page54 rendered and visually inspected to crosscheck credential contract.
+- Backend worker31new credential cases +17legacy provider/capability cases passed.
+- Initial frontend5tests passed; standard completion15tests +typecheck passed.
+- Gitleaks found one exact synthetic replacement test string; added only a
+  rule/path/value-scoped exception, then rerun before publishing the checkpoint.
 
 ## Usage and resume policy
 
@@ -145,3 +177,4 @@ HANDOFF.md/this ledger, respect gates and check limits; it cannot create allowan
 
 Do not use reset credits, rotate accounts, spawn redundant audits or call costly
 product providers automatically. Primary updates progress after coherent chunks.
+Most recent limit check:73% remaining five-hour /80% weekly; trigger not met.

@@ -14,6 +14,7 @@ import { LearningPage } from "../features/learning/LearningPage";
 import { LifePage } from "../features/life/LifePage";
 import { PersonalModelPage } from "../features/personal-model/PersonalModelPage";
 import { SettingsPage } from "../features/settings/SettingsPage";
+import { IntegrationsPage } from "../features/settings/IntegrationsPage";
 import { NotebookPage } from "../features/notebook/NotebookPage";
 import { MoviesPage } from "../features/movies/MoviesPage";
 import { SocialPage } from "../features/social/SocialPage";
@@ -114,6 +115,8 @@ export function App() {
               <Route path="/kitchen" element={<KitchenPage />} />
               <Route path="/finance" element={<FinancePage />} />
               <Route path="/settings" element={<SettingsPage />} />
+              <Route path="/settings/integrations" element={<IntegrationsPage />} />
+              <Route path="/settings/integrations/:provider" element={<IntegrationsPage />} />
               <Route path="/notebook" element={<NotebookPage />} />
               <Route path="/movies" element={<MoviesPage />} />
               <Route path="/social" element={<SocialPage />} />

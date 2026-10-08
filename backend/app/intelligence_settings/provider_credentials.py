@@ -67,7 +67,7 @@ class ProviderSecretStore:
         except SQLAlchemyError as exc:
             raise self._vault_error(exc) from None
         if not secret:
-            provider_name = {"openai": "OpenAI", "gemini": "Google Gemini", "jev": "Jev"}[provider]
+            provider_name = {"openai": "OpenAI", "gemini": "Google Gemini", "jev": "Jev"}.get(provider, provider)
             usage = "Jev decisions" if provider == "jev" else "this agent"
             raise HTTPException(status_code=409, detail=f"Add a {provider_name} API key in Settings before using {usage}.")
         return str(secret)

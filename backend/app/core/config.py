@@ -27,6 +27,7 @@ class Settings(BaseSettings):
     supabase_jwt_issuer: str | None = None
     supabase_jwt_audience: str = "authenticated"
     authorized_auth_subjects: str = ""
+    integration_installation_admin_subjects: str = Field(default="", description="Explicit auth-subject allowlist for shared installation credentials; empty denies access.")
     frontend_base_url: str | None = None
     cors_origins: str = "http://localhost:5173,http://127.0.0.1:5173,http://localhost:5174,http://127.0.0.1:5174"
     log_level: str = "INFO"
