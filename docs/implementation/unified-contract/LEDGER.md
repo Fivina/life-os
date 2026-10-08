@@ -309,3 +309,24 @@ Review source/report saved in REVIEW_SHARED_FIXTURES.md. Hosted0031–0034 and a
 PG concurrency/Vault remain unverified. T3-NAV and T3-CHAT workers now active with
 disjoint frontend scopes; primary /chat aliases preserve query/hash/state (3 tests
 passed). Preview restarted5174/8001 against disposable SQLite only.
+
+### W1 publication and review outcome (17:31 continuation)
+
+T3-NAV and T3-CHAT used standard gpt-5.6-sol/medium because both were bounded UI
+implementation under agreed architecture. Primary retained routes, shell integration,
+native dialog behavior and final verification. Separate read-only navigation_review,
+same standard tier for bounded frontend risk, found four material issues across two
+passes: noncanonical dark Chat orb; deferred proposal completion crossing threads;
+unsupported initial role sent behind a fallback picker; pending-create draft loss.
+Authors/primary corrected all findings. Final reviewer pass reports no remaining
+scoped findings and a clean diff. Report: `REVIEW_NAV_CHAT.md`.
+
+Primary browser verified full persisted Chat, per-thread draft restoration, direct
+navigation, Calendar/Kitchen desktop overlays, Calendar send without route mutation,
+close/minimize draft and focus continuity, Kitchen Chef normalization, and390px modal
+behavior. No paid/live provider calls; local AI was deliberately disabled. Full web
+boundary:43 files /377 tests and TypeScript pass. Expected jsdom canvas/Three.js
+warnings only. Published private commit `fce6b37` after staged Gitleaks scanned84.10KB
+with no leaks. NAV-001, CHAT-001 and current-API PHENGOS-002 are implementation-
+verified; user visual acceptance is the boundary. Typed date/entity assistant context
+remains unavailable in the current request schema and is not claimed.

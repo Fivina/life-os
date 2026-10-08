@@ -5,8 +5,9 @@ Checkpoint owner: primary Codex session, development orchestrator and final revi
 
 ## Current continuation checkpoint (2026-10-08, 16:50 Berlin)
 
-This section supersedes the historical checkpoint below. Resume verified clean
-`codex/unified-contract` head33fceb3; current W1 frontend work is UNCOMMITTED.
+This section supersedes the historical checkpoint below. W1 implementation is
+published on `codex/unified-contract` as fce6b37 (`Deliver direct navigation and
+contextual Chat`).
 Private draft PR: <https://github.com/Fivina/life-os/pull/3>.
 
 T2 shared fixture cache f5593a2 received independent read-only Symphony review
@@ -15,7 +16,7 @@ primary separately reran17 tests in the two requested suites, all passed. Report
 `docs/implementation/unified-contract/REVIEW_SHARED_FIXTURES.md`. Hosted migrations
 0031-0034, PostgreSQL concurrency and actual Vault/provider evidence remain open.
 
-W1 active ownership (PDF pp6-11):
+W1 completed checkpoint ownership (PDF pp6-11):
 - Standard direct_navigation finished direct Home/Calendar/Chat/Learning/Fitness/
   Life/Kitchen, Search all21 workflows, Settings; removed flyouts/interstitial.
   Intro/idle/replay/history preserved.73 scoped tests/typecheck passed. Separate
@@ -41,7 +42,7 @@ the actual request schema has no such context field.
 
 Runtime restarted: disposable SQLite backend8001 session57009, frontend5174
 session97534, Symphony8787 session43364. Original8000/5173 stopped. Hosted DB unchanged.
-IAB2 tab1 is the current hidden preview. Check ports on resume, not session assumptions.
+IAB4 tab1 is the current hidden preview. Check ports on resume, not session assumptions.
 Latest allowance16:48:32% five-hour window remains.16:35 continuation fired; no
 additional schedule needed, no reset credits/account rotation authorized.
 
@@ -59,15 +60,18 @@ runtime/redirect tests pass; typecheck passes. Separate reviewer final pass: no
 remaining scoped findings, diff clean. Kitchen browser shows registered Chef after
 registry load and disables sending during normalization.
 
-Exact next action: run milestone-wide frontend tests, scan and commit/push coherent
-chunk to private PR3, then stop at W1 user-feedback boundary. Gated backend tickets
-stay blocked.
+Publication: fce6b37 pushed to the private repository after staged Gitleaks scanned
+84.10KB with no leaks. Stop at the W1 user-feedback boundary. The user should test
+direct navigation, full Chat, and Calendar/Kitchen contextual Chat before domain UI
+migration continues. Gated backend tickets stay blocked.
 
 17:31 milestone verification: full web suite43 files /377 tests passes and typecheck
 passes. Initial full run found one legacy matchMedia-listener incompatibility in a
 shell transition test; launcher now supports modern/legacy APIs, targeted5 tests and
 full rerun pass. Only expected jsdom canvas/Three.js warnings. Next: secret scan,
-commit/push, update PR3 and record exact published head.
+commit/push, update PR3 and record exact published head. Completed as fce6b37;
+private remote push succeeded. Current account latest check was2% five-hour and31%
+weekly usage; no reset credit consumed.
 
 ## Historical checkpoint before this continuation
 
