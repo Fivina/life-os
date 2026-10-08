@@ -262,3 +262,15 @@ No hosted migrations/provider calls. Tests: two users share one scheduled fetch,
 manual refresh updates cache, tenant bypass, empty reuse, expiry, removal, rollback.
 Implementation/review pending; PostgreSQL concurrency and live Vault remain external
 verification gates. Do not mark parent sports VERIFIED until these gaps are closed.
+
+
+T2-SHARED-FETCH completed implementation checkpoint: standard worker returned96
+passing relevant backend tests including9 new snapshot cases and release-gate
+regressions. Primary reviewed cache/migration and required explicit missing-secret
+rejection before cache use plus fresh identity-map reload after lock; both corrected.
+Ruff unavailable. No internal commit/live calls/migration application. Status:
+IMPLEMENTED and targeted-tests passed; independent cache review PENDING. Hosted
+0031–0034/PG concurrency/Vault execution remain external verification gates.
+Frontend review corrections published331e917; source review retained in REVIEW_SPORTS.md.
+Next action: bounded independent cache review against331e917, then correct findings.
+No workers active. Account allowance last4%;16:35 Berlin heartbeat already verified.

@@ -9,7 +9,7 @@ The user authorized AFK development from the preserved 88-page unified contract,
 with task-sensitive workers, primary integration/final review, and durable checkpoints.
 Source and stable requirement tracking: `docs/implementation/unified-contract/LEDGER.md`.
 
-Branch `codex/unified-contract`, published head `0d1a12b` (verify Git on resume),
+Branch `codex/unified-contract`, frontend correction head `331e917` (verify Git on resume),
 private draft PR <https://github.com/Fivina/life-os/pull/3>. Foundation `f3ef64d`
 and import corrections/next-match groundwork `55ddfc3` are published. Foundation
 review issue2 completed; its two importer findings were corrected and browser-tested.
@@ -25,8 +25,7 @@ Independent Symphony review issue4 completed against0d1a12b, gpt-5.6-sol/medium,
 read-only separate checkout.26 focused backend tests passed; no scoped backend
 finding. Two P2 frontend findings: crowded card cap hides match/not compact;
 same-record refresh resets Calendar navigation. Primary has local corrections and
-regressions (21 frontend tests and typecheck pass; publication must be
-verified against Git). These corrections are not yet independently re-reviewed.
+regressions published as331e917 (21 frontend tests and typecheck pass). These corrections are not yet independently re-reviewed.
 
 Runtime evidence on disposable SQLite preview5174/8001: dashboard shows one match
 30days ahead; clicking opens that canonical Calendar record on its actual day;
@@ -35,20 +34,29 @@ Screenshots: ignored `artifacts/unified-contract/baseline/sports-calendar-*.jpg`
 One initial TBD browser request failed; explicit reload succeeded, authenticated
 HTTP GET returned200. No real credentials, user database or live provider calls used.
 
-Active next task T2-SHARED-FETCH: standard worker sports_shared_fetch,
-gpt-5.6-sol/medium, owns backend normalized installation fixture cache/model,
-migration0034, service reuse and focused tests. Architecture persisted in ledger:
-scheduled daily shared cache, manual forced refresh, tenant bypass, Vault reread,
-transactional rollback and backend-only table access. Primary owns review/integration.
-No new scheduler or sports framework. Shared-fetch implementation/review and hosted
-PostgreSQL/Vault/concurrency verification remain open; full sports is not accepted.
+T2-SHARED-FETCH IMPLEMENTED: standard worker sports_shared_fetch,
+gpt-5.6-sol/medium, added backend-only normalized snapshot model/migration0034,
+installation daily reuse, manual forced refresh, tenant bypass, Vault removal
+fail-closed before cache hits, PostgreSQL transaction advisory lock and reload,
+savepoint rollback. Primary inspected the diff and requested/final-reviewed the
+missing-secret and stale-identity-map corrections. Worker reports96 relevant backend
+tests passed (including9 new snapshot tests, runtime/sports/integration/release-gate);
+git diff check passed. Ruff unavailable. No live provider or hosted migration.
+This cache checkpoint is titled `Share daily installation fixture snapshots`;
+verify its exact commit/publication against Git. No worker remains running.
 
-Next action: collect worker result, inspect the diff and run appropriate focused
-checks; publish coherent corrections/cache checkpoint after privacy/secret checks.
-Require bounded independent review of substantial cache changes. Then continue
-unmet approved requirements in dependency order; retain visual feedback/decision
-gates and preserve existing workflows. Do not activate real banks/paid benchmarks
-or the seven explicitly blocked backend tickets.
+Next action: bounded independent read-only review of the cache checkpoint against
+331e917, focusing migration0034 grants/RLS, lock/cache race behavior, Vault removal,
+tenant bypass/manual refresh/rollback. Do not enqueue a full contract audit. Cache
+is implemented/tested but not independently reviewed or accepted. Hosted migrations
+0031–0034 remain unapplied; actual PostgreSQL concurrency/Vault execution is still
+unverified. Original8000/5173 are stopped; preview8001/5174 remains up but backend
+process predates cache code/schema and must be restarted/recreated before cache
+runtime checks. Preserve synthetic-only database isolation.
+
+Current account last reported4% remaining. Resume the next unmet approved requirement
+after this review and correction cycle; preserve feedback/decision gates. Do not
+activate real banks/paid benchmarks or the seven blocked backend tickets.
 
 User explicitly requested work until the usage limit and a one-time16:35 Berlin
 continuation today2026-10-08. Heartbeat `continue-life-os-development` is ACTIVE,

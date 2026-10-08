@@ -1,16 +1,18 @@
 from __future__ import annotations
 
 from datetime import UTC, datetime, timedelta
+import hashlib
 import logging
 
 from fastapi import HTTPException
-from sqlalchemy import select
+from sqlalchemy import select, text
 from sqlalchemy.orm import Session
 
 from app.core.config import Settings, get_settings
 from app.database.models import Commitment, FixtureBinding, StandingCalendarRule, UserProfile
 from app.events.service import append_event
 from app.integrations.credentials import IntegrationSecretStore
+from app.standing_calendar.models import FixtureSnapshotCache
 from app.standing_calendar.providers import FixtureProvider, FixtureProviderError, configured_provider
 from app.standing_calendar.schemas import FixtureOverrideRequest, FixtureSyncSummary, NormalizedFixture
 
@@ -28,6 +30,59 @@ def _same_instant(left: datetime | None, right: datetime | None) -> bool:
     normalized_left = left.replace(tzinfo=UTC) if left.tzinfo is None else left.astimezone(UTC)
     normalized_right = right.replace(tzinfo=UTC) if right.tzinfo is None else right.astimezone(UTC)
     return normalized_left == normalized_right
+
+
+def _fixture_cache_identity(settings: Settings, rule: StandingCalendarRule) -> tuple[str, str]:
+    base_url = settings.api_football_base_url.rstrip("/")
+    base_url_hash = hashlib.sha256(base_url.encode("utf-8")).hexdigest()
+    identity = f"{rule.source_provider}\n{rule.source_config_json['team_id']}\n{base_url_hash}"
+    return hashlib.sha256(identity.encode("utf-8")).hexdigest(), base_url_hash
+
+
+def _as_utc(value: datetime) -> datetime:
+    return value.replace(tzinfo=UTC) if value.tzinfo is None else value.astimezone(UTC)
+
+
+def _lock_fixture_cache(db: Session, cache_key: str) -> None:
+    if db.bind is not None and db.bind.dialect.name == "postgresql":
+        db.execute(text("SELECT pg_advisory_xact_lock(hashtextextended(:cache_key, 0))"), {"cache_key": cache_key})
+
+
+def _cached_fixtures(db: Session, cache_key: str, *, now: datetime) -> list[NormalizedFixture] | None:
+    snapshot = db.get(FixtureSnapshotCache, cache_key, populate_existing=True)
+    if snapshot is None or _as_utc(snapshot.expires_at) <= now:
+        return None
+    try:
+        return [NormalizedFixture.model_validate(item) for item in snapshot.fixtures_json]
+    except Exception:
+        # A malformed or obsolete normalized snapshot is simply refreshed.
+        return None
+
+
+def _store_fixture_snapshot(
+    db: Session,
+    cache_key: str,
+    base_url_hash: str,
+    rule: StandingCalendarRule,
+    fixtures: list[NormalizedFixture],
+    *,
+    now: datetime,
+) -> None:
+    snapshot = db.get(FixtureSnapshotCache, cache_key, populate_existing=True)
+    values = {
+        "provider": rule.source_provider,
+        "team_id": str(rule.source_config_json["team_id"]),
+        "base_url_hash": base_url_hash,
+        "fixtures_json": [fixture.model_dump(mode="json") for fixture in fixtures],
+        "fetched_at": now,
+        "expires_at": now + timedelta(days=SYNC_DAYS),
+    }
+    if snapshot is None:
+        db.add(FixtureSnapshotCache(cache_key=cache_key, **values))
+    else:
+        for key, value in values.items():
+            setattr(snapshot, key, value)
+    db.flush()
 
 
 def ensure_besiktas_rule(db: Session, user: UserProfile, *, settings: Settings | None = None, now: datetime | None = None) -> StandingCalendarRule:
@@ -170,7 +225,8 @@ def reconcile_fixture(db: Session, user: UserProfile, rule: StandingCalendarRule
 
 
 def sync_rule(db: Session, user: UserProfile, rule: StandingCalendarRule, *, provider: FixtureProvider | None = None,
-              settings: Settings | None = None, now: datetime | None = None) -> FixtureSyncSummary:
+              settings: Settings | None = None, now: datetime | None = None,
+              use_shared_cache: bool = False) -> FixtureSyncSummary:
     settings = settings or get_settings(); now = (now or utcnow()).astimezone(UTC)
     if not rule.enabled:
         return FixtureSyncSummary(rule_id=rule.id, status="SKIPPED")
@@ -182,7 +238,19 @@ def sync_rule(db: Session, user: UserProfile, rule: StandingCalendarRule, *, pro
                 secret = IntegrationSecretStore(settings).fixture_runtime_key(db, user, settings.fixture_credential_scope)
                 runtime_settings = settings.model_copy(update={"api_football_api_key": secret})
                 provider = configured_provider(runtime_settings)
-            fixtures = provider.fetch(team_id=str(rule.source_config_json["team_id"]))
+                if not secret:
+                    raise FixtureProviderError("API_FOOTBALL_API_KEY is not configured.")
+            installation_cache = settings.fixture_credential_scope == "installation"
+            if installation_cache:
+                cache_key, base_url_hash = _fixture_cache_identity(settings, rule)
+                _lock_fixture_cache(db, cache_key)
+                fixtures = _cached_fixtures(db, cache_key, now=now) if use_shared_cache else None
+            else:
+                fixtures = None
+            if fixtures is None:
+                fixtures = provider.fetch(team_id=str(rule.source_config_json["team_id"]))
+                if installation_cache:
+                    _store_fixture_snapshot(db, cache_key, base_url_hash, rule, fixtures, now=now)
             counts = {"created": 0, "updated": 0, "cancelled": 0, "noop": 0, "suppressed": 0}
             for fixture in fixtures: counts[reconcile_fixture(db, user, rule, fixture, now=now)] += 1
             summary = FixtureSyncSummary(rule_id=rule.id, status="SUCCESS", fetched=len(fixtures), **counts)
@@ -239,5 +307,5 @@ class FixtureSyncWorker:
         ).order_by(StandingCalendarRule.next_sync_at).limit(limit).with_for_update(skip_locked=True)).all())
         for rule in due:
             user = db.get(UserProfile, rule.user_id)
-            if user: sync_rule(db, user, rule, provider=provider, now=now)
+            if user: sync_rule(db, user, rule, provider=provider, now=now, use_shared_cache=True)
         return len(due)
