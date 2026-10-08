@@ -46,6 +46,7 @@ function renderWorkspace(entry: string | { pathname: string; search?: string; ha
     <RouterControls />
     <Routes>
       <Route element={<AppShell />}>{paths.map(path => <Route key={path} path={path} element={<FixturePage />} />)}</Route>
+      <Route element={<AppShell />}><Route path="/settings/integrations/*" element={<FixturePage />} /></Route>
       <Route path="/" element={<h1>Phengos home</h1>} />
       <Route path="/login" element={<h1>Login</h1>} />
       <Route path="/outside" element={<h1>Unobserved prior page</h1>} />
@@ -103,6 +104,8 @@ describe("navigation directory identity", () => {
     ["/kitchen#nutrition", "Home", "Nutrition"],
     ["/life#household", "Home", "Household"],
     ["/settings/personal-model", "System", "Personal model"],
+    ["/settings/integrations", "System", "Settings"],
+    ["/settings/integrations/tmdb", "System", "Settings"],
   ])("marks only the correct group and breadcrumb for %s", (path, group, label) => {
     renderWorkspace(path);
     const link = featureLink(label);
@@ -122,6 +125,7 @@ describe("navigation directory identity", () => {
     expect(activeFeature("/kitchen", "#unknown")?.label).toBe("Kitchen");
     expect(activeFeature("/kitchen", "#%ZZ")?.label).toBe("Kitchen");
     expect(activeFeature("/unknown", "")).toBeUndefined();
+    expect(activeFeature("/settings/integrations-other", "")).toBeUndefined();
     expect(backFallback(undefined)).toBe("/");
   });
 });

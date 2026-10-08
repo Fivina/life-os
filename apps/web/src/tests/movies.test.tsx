@@ -1,5 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { MoviesPage } from "../features/movies/MoviesPage";
@@ -16,7 +17,7 @@ const mockedApi = vi.mocked(api);
 
 function renderPage() {
   const client = new QueryClient({ defaultOptions: { queries: { retry: false }, mutations: { retry: false } } });
-  return render(<QueryClientProvider client={client}><MoviesPage /></QueryClientProvider>);
+  return render(<QueryClientProvider client={client}><MemoryRouter><MoviesPage /></MemoryRouter></QueryClientProvider>);
 }
 
 describe("v1.8B cinema workspace", () => {
@@ -61,5 +62,11 @@ describe("v1.8B cinema workspace", () => {
     fireEvent.click(screen.getByRole("button", { name: /Import/i }));
     expect(screen.getByText("Arrival")).toBeVisible();
     expect(mockedApi.previewLetterboxdImport).toHaveBeenCalledTimes(1);
+  });
+
+  it("links the movie importer to the canonical Settings route", () => {
+    renderPage();
+    fireEvent.click(screen.getByRole("button", { name: /Import/i }));
+    expect(screen.getByRole("link", { name: "Open Letterboxd settings" })).toHaveAttribute("href", "/settings/integrations/letterboxd");
   });
 });

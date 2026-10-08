@@ -3,6 +3,7 @@ from __future__ import annotations
 from datetime import UTC, datetime
 import hashlib
 import json
+import time
 from typing import Protocol
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
@@ -13,12 +14,14 @@ from app.standing_calendar.schemas import NormalizedFixture
 
 
 class FixtureProviderError(RuntimeError):
-    pass
+    def __init__(self, message: str, *, transient: bool = False):
+        super().__init__(message)
+        self.transient = transient
 
 
 class FixtureProvider(Protocol):
     provider_id: str
-    def fetch(self, *, team_id: str, from_date: str, to_date: str) -> list[NormalizedFixture]: ...
+    def fetch(self, *, team_id: str) -> list[NormalizedFixture]: ...
 
 
 STATUS_MAP = {
@@ -63,22 +66,47 @@ def normalize_api_football(raw: dict) -> NormalizedFixture:
 
 class ApiFootballFixtureProvider:
     provider_id = "api_football"
+    max_attempts = 3
+    retry_backoff_seconds = 0.25
 
     def __init__(self, settings: Settings): self.settings = settings
 
-    def fetch(self, *, team_id: str, from_date: str, to_date: str) -> list[NormalizedFixture]:
+    def fetch(
+        self,
+        *,
+        team_id: str,
+        # Retained as ignored keyword arguments for callers upgrading from the
+        # former date-window adapter. The provider request is always next=1.
+        from_date: str | None = None,
+        to_date: str | None = None,
+    ) -> list[NormalizedFixture]:
         if not self.settings.api_football_api_key:
             raise FixtureProviderError("API_FOOTBALL_API_KEY is not configured.")
-        query = urlencode({"team": team_id, "from": from_date, "to": to_date, "timezone": "UTC"})
+        query = urlencode({"team": team_id, "next": 1, "timezone": "UTC"})
         request = Request(f"{self.settings.api_football_base_url.rstrip('/')}/fixtures?{query}", headers={"x-apisports-key": self.settings.api_football_api_key})
-        try:
-            with urlopen(request, timeout=self.settings.fixture_sync_timeout_seconds) as response:
-                payload = json.loads(response.read().decode("utf-8"))
-        except (HTTPError, URLError, TimeoutError, json.JSONDecodeError) as exc:
-            raise FixtureProviderError(f"Fixture provider request failed: {exc}") from exc
+        payload = None
+        for attempt in range(self.max_attempts):
+            try:
+                with urlopen(request, timeout=self.settings.fixture_sync_timeout_seconds) as response:
+                    payload = json.loads(response.read().decode("utf-8"))
+                break
+            except HTTPError as exc:
+                transient = exc.code in {408, 429} or 500 <= exc.code < 600
+                if not transient or attempt + 1 == self.max_attempts:
+                    raise FixtureProviderError(
+                        f"Fixture provider request failed with HTTP {exc.code}.", transient=transient
+                    ) from exc
+            except (URLError, TimeoutError) as exc:
+                if attempt + 1 == self.max_attempts:
+                    raise FixtureProviderError("Fixture provider request failed.", transient=True) from exc
+            except json.JSONDecodeError as exc:
+                raise FixtureProviderError("Fixture provider returned an invalid response.") from exc
+            time.sleep(self.retry_backoff_seconds * (2 ** attempt))
+        if payload is None:  # Defensive: the bounded loop either succeeds or raises.
+            raise FixtureProviderError("Fixture provider request failed.", transient=True)
         if payload.get("errors"):
-            raise FixtureProviderError(f"Fixture provider returned errors: {payload['errors']}")
-        fixtures = [normalize_api_football(item) for item in payload.get("response", [])]
+            raise FixtureProviderError("Fixture provider returned an error response.")
+        fixtures = [normalize_api_football(item) for item in payload.get("response", [])[:1]]
         for fixture in fixtures:
             names = {fixture.home_team.casefold(), fixture.away_team.casefold()}
             if not any("beşiktaş" in name or "besiktas" in name for name in names):

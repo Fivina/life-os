@@ -1,14 +1,22 @@
 import { Check, Upload } from "lucide-react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 import { api } from "../../services/api";
 import type { MovieImportBatch } from "../../types/api";
 
-export function LetterboxdImportPanel({ active = true }: { active?: boolean }) {
+const sourceKindLabels: Record<string, string> = {
+  DIARY: "Diary",
+  WATCHLIST: "Watchlist",
+  WATCHED: "Watched",
+  RATINGS: "Ratings"
+};
+
+export function LetterboxdImportPanel({ active = true, showSettingsLink = false }: { active?: boolean; showSettingsLink?: boolean }) {
   const queryClient = useQueryClient();
   const [importBatch, setImportBatch] = useState<MovieImportBatch | null>(null);
-  const [importKind, setImportKind] = useState("DIARY");
+  const [importKind, setImportKind] = useState("AUTO");
   const [resolutionMovie, setResolutionMovie] = useState<Record<string, string>>({});
   const movies = useQuery({ queryKey: ["movies", ""], queryFn: () => api.movies(""), enabled: active });
 
@@ -41,18 +49,32 @@ export function LetterboxdImportPanel({ active = true }: { active?: boolean }) {
 
   async function readImport(file?: File) {
     if (!file) return;
-    previewImport.mutate({ file_name: file.name, content: await file.text(), source_kind: importKind });
+    previewImport.mutate({
+      file_name: file.name,
+      content: await file.text(),
+      ...(importKind === "AUTO" ? {} : { source_kind: importKind })
+    });
   }
+
+  const previewDestinations = importBatch
+    ? [...new Set(importBatch.rows.map((row) => sourceKindLabels[row.source_kind] ?? row.source_kind))]
+    : [];
+  const destinationLabel = importBatch
+    ? `Preview destination${previewDestinations.length === 1 ? "" : "s"}: ${previewDestinations.join(", ") || "No importable rows"}`
+    : importKind === "AUTO"
+      ? "Destination: detect from filename"
+      : `Selected destination: ${sourceKindLabels[importKind] ?? importKind}`;
 
   return <section className="content-band import-panel letterboxd-import-panel" aria-labelledby="letterboxd-import-heading" hidden={!active}>
     <div className="section-header">
-      <div><h2 id="letterboxd-import-heading">Import from Letterboxd</h2><p>Choose an official CSV export, review every match, then confirm the ready rows.</p></div>
+      <div><h2 id="letterboxd-import-heading">Import from Letterboxd</h2><p>Choose an official CSV export, review every match, then confirm the ready rows.</p>{showSettingsLink ? <Link className="secondary-button" to="/settings/integrations/letterboxd">Open Letterboxd settings</Link> : null}</div>
       <span>Preview before saving</span>
     </div>
     <div className="import-controls">
-      <label>File type<select aria-label="Letterboxd file type" value={importKind} onChange={(event) => setImportKind(event.target.value)}><option value="DIARY">Diary</option><option value="WATCHLIST">Watchlist</option><option value="WATCHED">Watched</option><option value="RATINGS">Ratings</option></select></label>
+      <label>File type<select aria-label="Letterboxd file type" value={importKind} onChange={(event) => setImportKind(event.target.value)}><option value="AUTO">Detect automatically</option><option value="DIARY">Diary</option><option value="WATCHLIST">Watchlist</option><option value="WATCHED">Watched</option><option value="RATINGS">Ratings</option></select></label>
       <label className="file-button"><Upload size={16} /> Choose CSV<input aria-label="Choose Letterboxd CSV" type="file" accept=".csv,text/csv" onChange={(event) => void readImport(event.target.files?.[0])} /></label>
     </div>
+    <p className="status-text" role="status">{destinationLabel}</p>
     {previewImport.isPending ? <p className="status-text">Reading export…</p> : null}
     {previewImport.isError ? <p className="status-text error" role="alert">The Letterboxd CSV could not be previewed.</p> : null}
     {importBatch ? <>

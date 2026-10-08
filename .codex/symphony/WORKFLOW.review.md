@@ -21,11 +21,7 @@ agent:
   max_turns: 5
 codex:
   command: '"$SYMPHONY_CODEX_BIN" --config model=gpt-6.1-sol --config model_reasoning_effort=high --config shell_environment_policy.inherit=all app-server'
-  approval_policy:
-    reject:
-      sandbox_approval: true
-      rules: true
-      mcp_elicitations: true
+  approval_policy: never
   thread_sandbox: read-only
   turn_sandbox_policy:
     type: readOnly

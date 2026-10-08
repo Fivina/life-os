@@ -20,11 +20,7 @@ agent:
   max_turns: 20
 codex:
   command: '"$SYMPHONY_CODEX_BIN" --config shell_environment_policy.inherit=all app-server'
-  approval_policy:
-    reject:
-      sandbox_approval: true
-      rules: true
-      mcp_elicitations: true
+  approval_policy: never
   thread_sandbox: workspace-write
   turn_sandbox_policy:
     type: workspaceWrite

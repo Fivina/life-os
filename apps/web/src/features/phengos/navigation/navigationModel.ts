@@ -11,7 +11,10 @@ export function activeFeature(pathname: string, hash: string): PhengosFeature | 
   let section = hash;
   try { section = decodeURIComponent(hash); } catch { /* Unknown hashes use the route overview. */ }
   return phengosFeatures.find(feature => feature.href === pathname + section)
-    ?? phengosFeatures.find(feature => feature.href === pathname);
+    ?? phengosFeatures.find(feature => feature.href === pathname)
+    ?? (pathname === "/settings/integrations" || pathname.startsWith("/settings/integrations/")
+      ? phengosFeatures.find(feature => feature.href === "/settings")
+      : undefined);
 }
 
 export function groupOverview(group: PhengosGroup): PhengosFeature {

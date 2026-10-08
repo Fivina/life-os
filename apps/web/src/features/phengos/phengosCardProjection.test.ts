@@ -1,6 +1,6 @@
 import { expect, it } from "vitest";
-import type { AssistantActionProposal, CalendarProjection, FitnessStatus, FixtureBinding, MealPlan, ShoppingAggregate } from "../../types/api";
-import { projectPhengosCards } from "./phengosCardProjection";
+import type { AssistantActionProposal, CalendarProjection, FitnessStatus, FixtureBinding, MealPlan, ShoppingAggregate, StandingCalendarRule } from "../../types/api";
+import { fixtureSourcesForRules, projectPhengosCards } from "./phengosCardProjection";
 
 it("prioritizes today's saved work and does not duplicate a planned commitment", () => {
   const now = new Date(2026, 9, 3, 9, 0);
@@ -29,17 +29,43 @@ it("prioritizes today's saved work and does not duplicate a planned commitment",
   expect(cards.find(card => card.title === "Project sync")).toBeDefined();
 });
 
-it("shows only upcoming 48-hour fixtures and keeps safe club logo URLs", () => {
+it("shows one nearest future fixture regardless of provider order and keeps safe club logo URLs", () => {
   const now = new Date(2026, 9, 3, 9, 0);
   const fixture = (id: string, hours: number, homeLogo: string): FixtureBinding => ({
     id, fixture_status: "SCHEDULED", suppressed: false,
     kickoff_at: new Date(now.getTime() + hours * 60 * 60_000).toISOString(),
     normalized_json: { home_team: "Beşiktaş", away_team: "Fenerbahçe", home_team_logo_url: homeLogo },
   } as unknown as FixtureBinding);
-  const cards = projectPhengosCards({ fixtures: [fixture("soon", 47, "https://example.org/besiktas.png"), fixture("late", 49, "javascript:alert(1)")] }, now);
+  const cards = projectPhengosCards({ fixtures: [fixture("late", 49, "javascript:alert(1)"), fixture("soon", 47, "https://example.org/besiktas.png")] }, now);
   expect(cards).toHaveLength(1);
   expect(cards[0].title).toBe("Beşiktaş vs Fenerbahçe");
   expect(cards[0].fixture?.homeLogo).toBe("https://example.org/besiktas.png");
+  const distant = projectPhengosCards({ fixtures: [fixture("distant", 24 * 30, "javascript:alert(1)")] }, now);
+  expect(distant).toHaveLength(1);
+  expect(distant[0].fixture?.homeLogo).toBeUndefined();
+  expect(distant[0].priority).toBeLessThan(cards[0].priority);
+});
+
+it("uses an authoritative empty next selection without deleting cached Calendar data", () => {
+  const cached = [{ id: "cached", source_fixture_id: "9001" }] as FixtureBinding[];
+  const rule = { next_fixture_selection_known: true, current_next_fixture_id: null } as StandingCalendarRule;
+  expect(fixtureSourcesForRules([rule], [cached]).fixtures).toEqual([]);
+  expect(cached).toHaveLength(1);
+  expect(fixtureSourcesForRules([{ ...rule, current_next_fixture_id: "9001" }], [cached]).fixtures).toEqual(cached);
+  expect(fixtureSourcesForRules([{ ...rule, next_fixture_selection_known: false }], [cached]).fixtures).toEqual(cached);
+});
+
+it("shows unconfirmed kickoff only for the provider-selected next match", () => {
+  const unknown = { id: "tbd", source_fixture_id: "9002", fixture_status: "SCHEDULED", suppressed: false,
+    source_provider: "api_football", protection_overridden: false, version: 1,
+    kickoff_at: null, normalized_json: { home_team: "Beşiktaş", away_team: "Opponent", raw_status: "TBD", competition: "Cup" } } as FixtureBinding;
+  const now = new Date(2026, 9, 3, 9);
+  expect(projectPhengosCards({ fixtures: [unknown] }, now)).toEqual([]);
+  const sources = fixtureSourcesForRules([{ next_fixture_selection_known: true, current_next_fixture_id: "9002" } as StandingCalendarRule], [[unknown]]);
+  const card = projectPhengosCards(sources, now)[0];
+  expect(card.detail).toBe("Time not confirmed · Cup");
+  expect(card.startsAt).toBeUndefined();
+  expect(projectPhengosCards({ ...sources, fixtures: [{ ...unknown, suppressed: true }] }, now)).toEqual([]);
 });
 
 it("sends complex proposals to their saved thread for full review", () => {

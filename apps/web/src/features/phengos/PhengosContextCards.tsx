@@ -5,7 +5,7 @@ import { useState, type CSSProperties } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { api } from "../../services/api";
 import type { CalendarProjection, FitnessStatus, MealPlan, ShoppingAggregate } from "../../types/api";
-import { projectPhengosCards, type PhengosCard } from "./phengosCardProjection";
+import { fixtureSourcesForRules, projectPhengosCards, type PhengosCard } from "./phengosCardProjection";
 
 const icons = { agenda: ListChecks, commitment: CalendarDays, shopping: ShoppingCart, workout: Dumbbell, meal: Utensils, fixture: CircleDot, proposal: Sparkles };
 const PIN_KEY = "life-os:phengos-pinned-cards";
@@ -28,7 +28,8 @@ export function PhengosContextCards() {
   const meals = useQuery({ queryKey: ["meal-plans"], queryFn: api.mealPlans, retry: false, staleTime: 30_000, refetchInterval: 60_000 });
   const rules = useQuery({ queryKey: ["standing-calendar-rules"], queryFn: api.standingCalendarRules, retry: false, staleTime: 60_000, refetchInterval: 300_000 });
   const proposals = useQuery({ queryKey: ["assistant-pending-proposals"], queryFn: api.pendingAssistantProposals, retry: false, staleTime: 15_000, refetchInterval: 15_000 });
-  const fixtureQueries = useQueries({ queries: (rules.data ?? []).filter(rule => rule.enabled && rule.rule_type === "SPORTS_FIXTURE")
+  const fixtureRules = (rules.data ?? []).filter(rule => rule.enabled && rule.rule_type === "SPORTS_FIXTURE");
+  const fixtureQueries = useQueries({ queries: fixtureRules
     .map(rule => ({ queryKey: ["standing-rule-fixtures", rule.id], queryFn: () => api.standingRuleFixtures(rule.id), retry: false, staleTime: 60_000, refetchInterval: 60_000 })) });
   const purchase = useMutation({
     mutationFn: (id: string) => api.markShoppingPurchased(id, { add_to_inventory: true }),
@@ -56,7 +57,7 @@ export function PhengosContextCards() {
     onSuccess: response => { if (response.response_type === "NO_ACTION") { setActionNotice(response.message); void queryClient.invalidateQueries({ queryKey: ["assistant-pending-proposals"] }); } },
   });
   const cards = projectPhengosCards({ calendar: calendar.data, fitness: fitness.data, shopping: shopping.data, meals: meals.data,
-    fixtures: fixtureQueries.flatMap(query => query.data ?? []), proposals: proposals.data });
+    ...fixtureSourcesForRules(fixtureRules, fixtureQueries.map(query => query.data)), proposals: proposals.data });
   const visibleCards = cards.filter(card => card.kind !== "agenda" && !dismissed.has(card.id))
     .sort((a, b) => Number(pinned.has(b.id)) - Number(pinned.has(a.id)));
   // A dismissed real card must not reappear immediately as its utility fallback.

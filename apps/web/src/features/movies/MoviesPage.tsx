@@ -120,7 +120,7 @@ export function MoviesPage() {
 
     {view === "history" ? <section className="content-band"><div className="section-header"><h2>Watch history</h2><span>{history.data?.length ?? 0} viewings</span></div><div className="movie-history-list">{(history.data ?? []).map((item) => <article className="history-row" key={item.id}><span className="history-date">{formatDate(item.watched_at)}</span><div><strong>{item.movie.title}</strong><small>{item.rewatch ? "Rewatch" : "First watch"}{item.rating != null ? ` · ${item.rating}/${item.rating_scale}` : ""}</small></div></article>)}</div></section> : null}
 
-    <LetterboxdImportPanel active={view === "import"} />
+    <LetterboxdImportPanel active={view === "import"} showSettingsLink />
   </div>;
 }
 

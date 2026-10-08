@@ -15,7 +15,7 @@ from app.standing_calendar.schemas import FixtureOverrideRequest, FixtureSyncSum
 
 
 logger = logging.getLogger("life_os.standing_calendar")
-SYNC_DAYS = 14
+SYNC_DAYS = 1
 RETRY_HOURS = 6
 
 
@@ -35,14 +35,41 @@ def ensure_besiktas_rule(db: Session, user: UserProfile, *, settings: Settings |
         StandingCalendarRule.user_id == user.id, StandingCalendarRule.rule_type == "SPORTS_FIXTURE",
         StandingCalendarRule.source_provider == settings.fixture_provider, StandingCalendarRule.source_identity == identity,
     ))
-    if existing is not None: return existing
+    if existing is not None:
+        changed = False
+        source_config = dict(existing.source_config_json or {})
+        if source_config.pop("lookahead_days", None) is not None:
+            changed = True
+        expected_source_config = {
+            "team_id": settings.api_football_besiktas_team_id,
+            "team_name": "Beşiktaş",
+            "next": 1,
+        }
+        for key, value in expected_source_config.items():
+            if source_config.get(key) != value:
+                source_config[key] = value
+                changed = True
+        metadata = dict(existing.metadata_json or {})
+        if metadata.get("fixture_sync_mode") != "NEXT_FIXTURE":
+            metadata["fixture_sync_mode"] = "NEXT_FIXTURE"
+            existing.metadata_json = metadata
+            existing.next_sync_at = now
+            changed = True
+        if existing.sync_interval_days != SYNC_DAYS:
+            existing.sync_interval_days = SYNC_DAYS
+            existing.next_sync_at = now
+            changed = True
+        if changed:
+            existing.source_config_json = source_config
+            existing.version += 1
+        return existing
     row = StandingCalendarRule(
         user_id=user.id, name="Beşiktaş fixtures", rule_type="SPORTS_FIXTURE", enabled=True,
         protected=True, auto_create=True, source_provider=settings.fixture_provider, source_identity=identity,
-        source_config_json={"team_id": settings.api_football_besiktas_team_id, "team_name": "Beşiktaş", "lookahead_days": 14},
+        source_config_json={"team_id": settings.api_football_besiktas_team_id, "team_name": "Beşiktaş", "next": 1},
         reconciliation_policy_json={"source_time_authoritative": True, "default_duration_minutes": 120},
         sync_interval_days=SYNC_DAYS, next_sync_at=now, last_sync_status="NEVER",
-        last_sync_summary_json={}, metadata_json={"team_identity_verified_at": "2026-09-26"},
+        last_sync_summary_json={}, metadata_json={"team_identity_verified_at": "2026-09-26", "fixture_sync_mode": "NEXT_FIXTURE"},
     )
     db.add(row); db.flush()
     append_event(db, user, event_type="standing_rule.created", aggregate_type="standing_calendar_rule", aggregate_id=row.id,
@@ -148,11 +175,14 @@ def sync_rule(db: Session, user: UserProfile, rule: StandingCalendarRule, *, pro
         return FixtureSyncSummary(rule_id=rule.id, status="SKIPPED")
     provider = provider or configured_provider(settings)
     try:
-        fixtures = provider.fetch(team_id=str(rule.source_config_json["team_id"]), from_date=now.date().isoformat(),
-                                  to_date=(now + timedelta(days=14)).date().isoformat())
+        fixtures = provider.fetch(team_id=str(rule.source_config_json["team_id"]))
         counts = {"created": 0, "updated": 0, "cancelled": 0, "noop": 0, "suppressed": 0}
         for fixture in fixtures: counts[reconcile_fixture(db, user, rule, fixture, now=now)] += 1
         summary = FixtureSyncSummary(rule_id=rule.id, status="SUCCESS", fetched=len(fixtures), **counts)
+        metadata = dict(rule.metadata_json or {})
+        metadata["fixture_sync_mode"] = "NEXT_FIXTURE"
+        metadata["current_next_fixture_id"] = fixtures[0].source_fixture_id if fixtures else None
+        rule.metadata_json = metadata
         rule.last_sync_at = now; rule.next_sync_at = now + timedelta(days=SYNC_DAYS); rule.last_sync_status = "SUCCESS"
         rule.last_sync_summary_json = summary.model_dump(mode="json"); rule.last_error = None; rule.version += 1
         append_event(db, user, event_type="standing_rule.sync_completed", aggregate_type="standing_calendar_rule", aggregate_id=rule.id,
@@ -161,7 +191,9 @@ def sync_rule(db: Session, user: UserProfile, rule: StandingCalendarRule, *, pro
         return summary
     except Exception as exc:
         summary = FixtureSyncSummary(rule_id=rule.id, status="FAILED", error=str(exc))
-        rule.last_sync_at = now; rule.next_sync_at = now + timedelta(hours=RETRY_HOURS); rule.last_sync_status = "FAILED"
+        transient = isinstance(exc, FixtureProviderError) and exc.transient
+        retry_after = timedelta(hours=RETRY_HOURS) if transient else timedelta(days=SYNC_DAYS)
+        rule.last_sync_at = now; rule.next_sync_at = now + retry_after; rule.last_sync_status = "FAILED"
         rule.last_sync_summary_json = summary.model_dump(mode="json"); rule.last_error = str(exc)[:2000]; rule.version += 1
         append_event(db, user, event_type="standing_rule.sync_failed", aggregate_type="standing_calendar_rule", aggregate_id=rule.id,
                      payload={"rule_id": rule.id, "reason_code": "PROVIDER_UNAVAILABLE"}, outbox=True)

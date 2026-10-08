@@ -11,7 +11,8 @@ usage. No Figma or other external design tool is required. Source files are pres
 under `docs/implementation/unified-contract/source/`, with byte hashes verified.
 The requirement ledger is `docs/implementation/unified-contract/LEDGER.md`.
 
-Current chunk: integration credential foundation (backend milestone 1). Primary
+Current chunk: integration credential foundation (backend milestone 1), published
+as `f3ef64d` on `codex/unified-contract`. Primary
 read the full text, inspected the relevant implementation and captured baseline
 Calendar/Kitchen/Settings screenshots in `artifacts/unified-contract/baseline/`
 (local, ignored by Git). Deep worker `integration_vault` owns scoped backend Vault,
@@ -19,13 +20,36 @@ integration routes/model/migration/tests; fast worker `checkpoint_setup_docs` ow
 the new Settings integration view/client/tests. Primary owns registration and
 integration. Backend worker reports31new+17legacy tests passed; standard frontend
 worker reports15focused tests and typecheck passed after primary corrections.
-Independent Symphony review and isolated runtime checks are next. Hosted migration
+Independent Symphony review finished on issue2 against `f3ef64d` in a separate
+read-only checkout with verified gpt-6.1-sol/high. It reran48 backend tests and found
+two P2 importer defects. Standard worker corrected automatic CSV type detection and
+added the Movies→Settings importer link;18 frontend tests passed. Isolated runtime checks use5174/8001
+with a disposable SQLite database; provider status responds200, Vault persistence
+fails closed, installation access is denied, and Letterboxd opens without Vault.
+Primary fixed Settings navigation identity for the new nested routes;48 navigation
+tests passed. Corrections, workflow compatibility and the next-match groundwork
+are included in the checkpoint titled `Correct imports and add next-match groundwork`.
+Use Git to verify its exact commit and publication state when resuming.
+Hosted migration
 0031 has not been applied; current primary app database is PostgreSQL.
 
-Next action: align the worker DTOs, integrate the credential foundation, run focused
-security/frontend checks and independent review; route corrections. Follow the
+Isolated correction verification: automatic watchlist.csv preview displays Watchlist;
+confirmation adds one watchlist item while viewing history stays at its previous
+one synthetic diary entry. No user database or real export was used.
+
+Next action: independently review the next-match diff, connect its new Vault credential
+source safely, and implement the specific Calendar entry link. Hosted migrations
+0031/0032 remain unapplied. Follow the
 ledger for remaining work and explicit decision gates. No new bank production,
 paid media benchmark, unapproved backend ticket or open visual design is activated.
+
+Related next-match task implemented: standard `sports_provider` updated only existing
+provider/service and test_next_fixture_sync.py;35 targeted tests pass. Primary added
+daily-cadence migration0032 (isolated SQLite roundtrip passed), safe typed next-pointer
+fields and missing-timeTBD validation, plus nearest future card/priority/competition/
+known-empty handling. Combined frontend71 tests across4 files and typecheck pass.
+No workers remain running. Vault hookup, Calendar entry deep link, independent review
+and live runtime verification remain open. No new scheduler or live provider calls.
 
 ## Resume checklist
 
@@ -45,11 +69,12 @@ paid media benchmark, unapproved backend ticket or open visual design is activat
 | Primary workspace | `D:/Life OS` |
 | Repository | Private: <https://github.com/Fivina/life-os> |
 | Branch at checkpoint | `codex/unified-contract`; source intake and implementation work branch |
-| Last published baseline before this handoff | `875d5da` — Record private repository and tracker verification |
+| Independently reviewed foundation | `f3ef64d` — integration credential foundation and tiered worker routing; later correction/next-match checkpoint is identified above |
 | Last completed handoff rules chunk | `f857f15`, pushed to master; new source intake/progress is on `codex/unified-contract` |
 | Frontend | <http://localhost:5173>; HTTP 200 verified on 2026-10-08 |
 | Backend | <http://localhost:8000/readiness>; HTTP 200, ready, database reachable, auth configured on 2026-10-08 |
-| Symphony | Installed and GitHub queue previously verified; <http://localhost:8787/api/v1/state> unreachable at this checkpoint. Startup cause not investigated. No new implementation issue dispatched. |
+| Symphony | Reviewer daemon idle; <http://localhost:8787/api/v1/state>. Issue2 report saved and ready label removed; actual model/effort/read-only verified. No implementation issue ready, so no duplicate work queued. |
+| Isolated verification app | <http://localhost:5174/settings/integrations> → SQLite backend8001; current source, no hosted migration or real credentials |
 | Source of setup details | `docs/SYMPHONY_SETUP.md` and `scripts/start-symphony.ps1` |
 
 Restart application from two PowerShell terminals if required:
@@ -72,7 +97,8 @@ needed, from `D:/Life OS`:
 
 Keep the service terminal open. Attaching a document to a chat does not automatically
 enqueue it; its accessible contents must be represented in a private issue/source.
-The real implementation, independent review and correction cycle remains untested.
+The independent review/correction cycle is in progress; implementation workers
+ran in this chat and the separate reviewer runs through Symphony.
 
 ## What is done, who did it, and what remains
 
@@ -86,7 +112,7 @@ subagent attribution is inferred.
 | Local application restart | Current primary Codex session | Frontend/backend checks above; no product code changed | User testing and document-driven changes |
 | Durable handoff and checkpoint rules | Current primary Codex session | Root handoff, repository resume policy and workflow checkpoint instructions | Keep requirement ledger current at meaningful checkpoints |
 | Setup documentation continuity | Fast worker `checkpoint_setup_docs`; primary reviewed/integrated | Updated setup guide with checkpoint/ledger rules and corrected historical runtime wording; diff reviewed | No open findings for this documentation chunk |
-| Unified contract implementation | Primary orchestrator; `integration_vault` backend; fast `checkpoint_setup_docs` Settings UI | Complete text read and source hash preservation; requirement/dependency/decision ledger; baseline source/UI inspection | Credential foundation in progress; see ledger for all later work and review gates |
+| Unified contract implementation | Primary orchestrator; deep `integration_vault` backend; fast `checkpoint_setup_docs` UI scaffold; standard `settings_completion` UI completion | Source/ledger, Vault/routes/migration, Settings and shared importer committed;31+17 backend and15 frontend checks pass | Independent review and hostedVault verification pending; see ledger for later work |
 | Existing Phengos product work | Prior contributors; see domain docs | Existing implementation retained; `docs/PHENGOS_ROADMAP.md` records status and feedback gates | Visual acceptance remains open in recorded roadmap; new document may require explicit scope reconciliation |
 
 For UI work read `docs/PHENGOS_ROADMAP.md` and
@@ -148,6 +174,13 @@ Local runtimes/assets outside Git are documented in the setup and domain docs;
 a clone alone does not reproduce them. No external design plugin is required by
 the current agreed workflow.
 
+Repository privacy/access checkpoint: an initial Symphony clone received GitHub403;
+API verification subsequently reported PUBLIC, contrary to the requested private
+repository. Visibility was restored to PRIVATE and verified by REST/GraphQL before
+a fresh clone succeeded. The user confirmed handling the account/repository setting.
+No cause is inferred. Recheck privacy before future pushes. GitHub CLI access works
+as Fivina independently of the current Codex account; no account switch is required.
+
 ## Checkpoint log
 
 | Date | Contributor | Result | Evidence / next action |
@@ -157,6 +190,8 @@ the current agreed workflow.
 | 2026-10-08 | Primary + fast `checkpoint_setup_docs` | Contract intake, unchanged PDF +25 images preserved/hash-verified, complete text read, requirement/decision ledger created; backend/UI workers dispatched | Branch `codex/unified-contract`. Next: milestone1 integration and independent review. Usage89% five-hour/83% weekly at last check; below5% resume-task condition not met. |
 | 2026-10-08 | Primary | User requested less polarized, task-sensitive worker models; added standard tier and explicit default model/effort | Existing two-worker cap retained; model/reason recorded per task. Source/plan pushed as `3204ac9`; private tracker https://github.com/Fivina/life-os/issues/1. Symphony restarted, queue API checked with0runs; review dispatch still pending implementation checkpoint. |
 | 2026-10-08 | deep `integration_vault` + standard `settings_completion`; primary review | Credential foundation and shared Settings/Movie CSV importer implemented; targeted checks pass; primary corrections preserved explicit metadata clearing and import draft continuity | Next: publish checkpoint, Symphony independent read-only review and isolated UI/runtime checks; hostedVault pending. Latest usage73% five-hour/80% weekly; no resume task needed yet. |
+| 2026-10-08 | Primary + Symphony reviewer | Published `f3ef64d`; issue2 now has a real read-only model session. Fixed native CLI approval policy from unsupported reject object to never; added exact Git safe.directory for GH-2 on E: | Local status/scopes/mobile/detail checks pass;48 navigation tests passed. Review pending. Latest usage40% five-hour/75% weekly remaining; threshold not met. |
+| 2026-10-08 | Symphony reviewer; standard `settings_completion`; standard `sports_provider`; primary | Review report saved; two P2 importer findings corrected; next-match provider/cadence/card groundwork implemented with targeted checks |71 frontend +typecheck;35 sports backend +1 migration test. Remaining tasks above and ledger. Latest usage10% five-hour/70% weekly; no threshold-triggered automation yet. User will click Continue; no automatic account rotation. |
 
 ## AFK usage instruction
 

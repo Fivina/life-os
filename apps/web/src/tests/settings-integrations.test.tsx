@@ -155,6 +155,29 @@ describe("settings integrations", () => {
     await waitFor(() => expect(mockedApi.confirmMovieImport).toHaveBeenCalledWith("batch-1"));
   });
 
+  it("lets the backend detect a default watchlist CSV destination from its filename", async () => {
+    mockedApi.previewLetterboxdImport.mockResolvedValue({ id: "batch-watchlist", provider: "letterboxd_export", file_name: "watchlist.csv", status: "PREVIEW", summary: { total: 1, ready: 1, review_required: 0 }, confirmed_at: null, rows: [{ id: "row-watchlist", source_kind: "WATCHLIST", source_row_key: "1", status: "READY", error: null, normalized: { title: "Moonlight", year: 2016 }, movie_id: "movie-2" }] });
+    renderPage("/settings/integrations/letterboxd");
+    expect(await screen.findByLabelText("Letterboxd file type")).toHaveValue("AUTO");
+    const file = new File(["Name,Year\nMoonlight,2016"], "watchlist.csv", { type: "text/csv" });
+    Object.defineProperty(file, "text", { value: vi.fn().mockResolvedValue("Name,Year\nMoonlight,2016") });
+    fireEvent.change(screen.getByLabelText("Choose Letterboxd CSV"), { target: { files: [file] } });
+    await waitFor(() => expect(mockedApi.previewLetterboxdImport).toHaveBeenCalledWith({ file_name: "watchlist.csv", content: "Name,Year\nMoonlight,2016" }));
+    expect(await screen.findByText("Preview destination: Watchlist")).toBeInTheDocument();
+  });
+
+  it("sends an explicit source destination only when the user overrides detection", async () => {
+    mockedApi.previewLetterboxdImport.mockResolvedValue({ id: "batch-diary", provider: "letterboxd_export", file_name: "watchlist.csv", status: "PREVIEW", summary: { total: 1, ready: 1, review_required: 0 }, confirmed_at: null, rows: [{ id: "row-diary", source_kind: "DIARY", source_row_key: "1", status: "READY", error: null, normalized: { title: "Moonlight", year: 2016 }, movie_id: "movie-2" }] });
+    renderPage("/settings/integrations/letterboxd");
+    fireEvent.change(await screen.findByLabelText("Letterboxd file type"), { target: { value: "DIARY" } });
+    expect(screen.getByText("Selected destination: Diary")).toBeInTheDocument();
+    const file = new File(["Name,Year\nMoonlight,2016"], "watchlist.csv", { type: "text/csv" });
+    Object.defineProperty(file, "text", { value: vi.fn().mockResolvedValue("Name,Year\nMoonlight,2016") });
+    fireEvent.change(screen.getByLabelText("Choose Letterboxd CSV"), { target: { files: [file] } });
+    await waitFor(() => expect(mockedApi.previewLetterboxdImport).toHaveBeenCalledWith({ file_name: "watchlist.csv", content: "Name,Year\nMoonlight,2016", source_kind: "DIARY" }));
+    expect(await screen.findByText("Preview destination: Diary")).toBeInTheDocument();
+  });
+
   it("keeps the Letterboxd importer available when integration status fails", async () => {
     mockedApiRequest.mockRejectedValue(new Error("status unavailable"));
     mockedApi.previewLetterboxdImport.mockResolvedValue({ id: "batch-2", provider: "letterboxd_export", file_name: "watchlist.csv", status: "PREVIEW", summary: { total: 1, ready: 1, review_required: 0 }, confirmed_at: null, rows: [{ id: "row-2", source_kind: "WATCHLIST", source_row_key: "1", status: "READY", error: null, normalized: { title: "Moonlight", year: 2016 }, movie_id: "movie-2" }] });

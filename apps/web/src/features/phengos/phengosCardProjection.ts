@@ -1,4 +1,4 @@
-import type { AssistantActionProposal, CalendarProjection, FitnessStatus, FixtureBinding, MealPlan, ShoppingAggregate } from "../../types/api";
+import type { AssistantActionProposal, CalendarProjection, FitnessStatus, FixtureBinding, MealPlan, ShoppingAggregate, StandingCalendarRule } from "../../types/api";
 
 export type PhengosCard = {
   id: string;
@@ -21,8 +21,21 @@ type Sources = {
   shopping?: ShoppingAggregate[];
   meals?: MealPlan[];
   fixtures?: FixtureBinding[];
+  selectedNextFixtureIds?: ReadonlySet<string>;
   proposals?: AssistantActionProposal[];
 };
+
+export function fixtureSourcesForRules(rules: StandingCalendarRule[], lists: Array<FixtureBinding[] | undefined>) {
+  const selectedNextFixtureIds = new Set<string>();
+  const fixtures = rules.flatMap((rule, index) => {
+    const cached = lists[index] ?? [];
+    if (!rule.next_fixture_selection_known) return cached;
+    const selected = cached.filter(fixture => fixture.source_fixture_id === rule.current_next_fixture_id);
+    for (const fixture of selected) selectedNextFixtureIds.add(fixture.id);
+    return selected;
+  });
+  return { fixtures, selectedNextFixtureIds };
+}
 
 function localDayBounds(now: Date) {
   return {
@@ -129,16 +142,25 @@ export function projectPhengosCards(sources: Sources, now = new Date()): Phengos
     href: "/kitchen#nutrition", startsAt: meal.planned_for, size: "standard", action: { kind: "start-cooking", id: meal.id },
   });
 
-  for (const fixture of sources.fixtures ?? []) {
+  const futureFixtures = (sources.fixtures ?? []).filter(fixture => {
     const kickoff = fixture.kickoff_at ? new Date(fixture.kickoff_at).getTime() : NaN;
-    if (fixture.suppressed || !["SCHEDULED", "CONFIRMED"].includes(fixture.fixture_status.toUpperCase())
-      || !Number.isFinite(kickoff) || kickoff < currentTime || kickoff > currentTime + 48 * 60 * 60_000) continue;
+    return !fixture.suppressed && ["SCHEDULED", "CONFIRMED"].includes(fixture.fixture_status.toUpperCase())
+      && (Number.isFinite(kickoff) ? kickoff >= currentTime
+        : fixture.normalized_json.raw_status === "TBD" && sources.selectedNextFixtureIds?.has(fixture.id));
+  }).sort((a, b) => (a.kickoff_at ? new Date(a.kickoff_at).getTime() : Infinity)
+    - (b.kickoff_at ? new Date(b.kickoff_at).getTime() : Infinity) || a.id.localeCompare(b.id));
+  const fixture = futureFixtures[0];
+  if (fixture) {
+    const kickoff = fixture.kickoff_at ? new Date(fixture.kickoff_at).getTime() : NaN;
     const details = fixture.normalized_json;
     const home = typeof details.home_team === "string" ? details.home_team : "Home";
     const away = typeof details.away_team === "string" ? details.away_team : "Away";
-    cards.push({ id: `fixture:${fixture.id}`, kind: "fixture", priority: kickoff < day.end ? 75 : 52,
-      title: `${home} vs ${away}`, eyebrow: "MATCH COMING UP", detail: new Intl.DateTimeFormat(undefined, { weekday: "short", hour: "numeric", minute: "2-digit" }).format(kickoff),
-      href: "/calendar", startsAt: fixture.kickoff_at!, size: "wide",
+    const confirmedTime = Number.isFinite(kickoff) && details.raw_status !== "TBD";
+    const competition = typeof details.competition === "string" ? details.competition : "";
+    const when = confirmedTime ? new Intl.DateTimeFormat(undefined, { weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }).format(kickoff) : "Time not confirmed";
+    cards.push({ id: `fixture:${fixture.id}`, kind: "fixture", priority: kickoff <= currentTime + 48 * 60 * 60_000 ? 75 : 52,
+      title: `${home} vs ${away}`, eyebrow: "MATCH COMING UP", detail: [when, competition].filter(Boolean).join(" · "),
+      href: "/calendar", startsAt: fixture.kickoff_at ?? undefined, size: "wide",
       fixture: { home, away, homeLogo: validLogo(details.home_team_logo_url), awayLogo: validLogo(details.away_team_logo_url) },
     });
   }

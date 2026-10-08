@@ -46,8 +46,8 @@ effort. Related tasks must satisfy their parent criteria before closing the pare
 | BE-INTEGRATIONS.API | 54–55 §4 | Generic list/put/delete/test, sanitized status/test timestamps; safe non-secret configuration | deep worker `integration_vault` | IMPLEMENTED; scoped/redaction/mock transport tests pass; independent review pending |
 | BE-INTEGRATIONS.UI | 54–55 §4 | /settings/integrations and /tmdb detail, write-only input/test/remove, real status/configuration | fast worker then standard worker `settings_completion` | IMPLEMENTED;15 focused tests +typecheck pass; isolated runtime/independent review pending |
 | BE-INTEGRATIONS.LETTERBOXD | 54–55, 62–63 | Settings baseline import/history/resolve/confirm; one shared importer, never live Connected | Movies worker | PENDING; Movies import task |
-| BE-SPORTS.PROVIDER | 55–56 §5 | Existing API-Football adapter team549 next=1; daily/manual sync, bounded retry, reschedule binding idempotently | Sports worker | PENDING; W2 credentials |
-| BE-SPORTS.CARD | 55–56 §5, 73 | Exactly nearest future fixture, beyond14days/48hours visible, priority inside48h, logos/calendar link, no model call | Sports worker | PENDING; PROVIDER |
+| BE-SPORTS.PROVIDER | 55–56 §5 | Existing API-Football adapter team549 next=1; daily/manual sync, bounded retry, reschedule binding idempotently | standard sports worker +primary schema | IMPLEMENTED;35 targeted tests; Vault hookup/live verification and independent review pending |
+| BE-SPORTS.CARD | 55–56 §5, 73 | Exactly nearest future fixture, beyond14days/48hours visible, priority inside48h, logos/calendar link, no model call | Primary | PARTIAL: nearest future/priority/logos/competition/TBD/pointer implemented; specific Calendar entry deep link remains open |
 | BE-BANKING.QUALIFY | 56 §6.1, 76 | Record every Plaid/TARGOBANK Production gate; do not silently switch provider | Primary | PENDING; production credentials/business access external |
 | BE-BANKING.STORE | 57–58 §6.3–4 | Additive connection/account/balance/sync concepts, Vault references, retain existing FinanceTransaction | Banking worker | PENDING; W2/qualification report |
 | BE-BANKING.SYNC | 57–58 §6.3–4, 73–74 | Cursor pagination atomic commit/restart, modified/removed/pending transitions, verified idempotent webhook jobs | Banking worker | PENDING; STORE |
@@ -98,14 +98,19 @@ additional approvals. Frozen UI appearance does not authorize gated new schemas.
 | T1-VAULT | BE-INTEGRATIONS.STORE/API | deep_worker `integration_vault`: backend/app/integrations/, provider_credentials.py, routes_integrations.py, migration0031, test_integration_credentials.py | W0 | IMPLEMENTED;31new+17legacy tests pass; primary registered router/config/model; hostedVault not run |
 | T1-SETTINGS | BE-INTEGRATIONS.UI | fast_worker `checkpoint_setup_docs`: new view/client/tests | Agreed DTOs/T1-VAULT | Initial implementation complete; primary review corrected endpoint and draft isolation; five focused tests passed |
 | T1-SETTINGS-COMPLETE | BE-INTEGRATIONS.UI/LETTERBOXD | standard worker `settings_completion`: integration view/client/tests +shared LetterboxdImportPanel +MoviesPage/movies.test.tsx | T1-SETTINGS/backend DTO | IMPLEMENTED;15focused tests/typecheck pass; explicit metadata clears, import preview survives tab switches, Settings importer independent of Vault. Full ZIP/history remainsM6 |
-| T1-INTEGRATE | W10 | Primary: router/client configuration/migration ordering/checks | T1-VAULT/T1-SETTINGS | PENDING |
-| T1-REVIEW | W10 | Separate read-only reviewer | Integrated diff + targeted evidence | PENDING; corrections assigned to owning worker |
+| T1-INTEGRATE | W10 | Primary: router/client configuration/migration ordering/checks | T1-VAULT/T1-SETTINGS | IMPLEMENTED `f3ef64d`; isolated200 list/deny installation/Vault fail-closed/UI checks;48 navigation tests after nested-route correction; hostedVault not applied |
+| T1-REVIEW | W10 | Separate Symphony gpt-6.1-sol/high reviewer, read-only | Integrated diff + targeted evidence | Report saved on issue2:48 backend tests rerun; no extra credential defect found; two P2 importer findings. HostedVault gate remains open |
+| T1-CORRECT | BE-INTEGRATIONS.LETTERBOXD | standard `settings_completion`: shared panel/Movies +two focused tests; primary reviewed | T1-REVIEW | IMPLEMENTED: default AUTO omits override, displays actual preview destination; Movies links Settings importer;18 frontend tests/typecheck passed |
+| T2-SPORTS-PROVIDER | BE-SPORTS.PROVIDER | standard worker `sports_provider`: standing_calendar/providers.py, service.py, test_next_fixture_sync.py | Existing canonical worker; credential hookup primary-owned | IMPLEMENTED:35 tests pass; next=1/daily/transient max3 attempts; known-empty/failure-preserved pointer; no live calls. Generic Vault hookup pending |
+| T2-SPORTS-SCHEMA | BE-SPORTS.PROVIDER | Primary: models.py, schemas.py, migration0032 +migration test | Existing0031 ordering | IMPLEMENTED: allow1/14 cadence, safe typed pointer fields, permit missing time only scheduledTBD; isolated SQLite migration roundtrip passed. Not applied to hosted DB |
+| T2-SPORTS-CARD | BE-SPORTS.CARD | Primary: existing card projection/query/type +targeted tests | Existing fixture bindings/pointer | PARTIAL: one nearest future match beyond48h, near-term priority, authoritative-empty hide, selectedTBD/competition;71 focused frontend tests/typecheck passed. Specific Calendar entry deep link and independent review pending |
 
 ## Current implementation map (inspection evidence, not full acceptance)
 
 - App.tsx routes existing /self/assistant, Calendar, Kitchen, Finance, Movies,
-  Settings, Personal Model and feature previews. No /chat, /settings/integrations
-  or /developer routes yet. Existing aliases must remain.
+  Settings, Personal Model and feature previews. New /settings/integrations and
+  /settings/integrations/:provider added in f3ef64d. No /chat or /developer yet.
+  Existing aliases remain.
 - navigationModel.ts still uses Self; AppShell mounts the global assistant bottom
   bar; Calendar baseline shows flyout controls, slogan and seeded lower forms.
 - Existing provider store supports openai/gemini/jev via private Vault functions.
@@ -131,7 +136,8 @@ additional approvals. Frozen UI appearance does not authorize gated new schemas.
 | T1-VAULT | gpt-6.1-sol /high | Consequential Vault/RLS/scoped isolation and additive SQL security |
 | T1-SETTINGS | gpt-5.6-luna /low | Initial tightly defined view scaffold; primary review found feature-level gaps |
 | T1-SETTINGS-COMPLETE | gpt-5.6-sol /medium | Normal feature refactor, canonical importer/state preservation and endpoint tests |
-| T1-REVIEW | Symphony gpt-6.1-sol /high (planned) | Independent bounded security review; no implementation or duplicate worker audit |
+| T1-REVIEW | Symphony gpt-6.1-sol /high (actual model/effort/read-only verified) | Independent bounded security review; no implementation or duplicate worker audit |
+| T2-SPORTS-PROVIDER | gpt-5.6-sol /medium | Bounded existing provider/service change; shared credential privilege architecture retained by primary |
 
 Project defaults now use the standard tier; AGENTS.md and standard_worker.toml
 define three task-sensitive tiers. Keep two concurrent workers, disjoint scopes,
@@ -145,13 +151,16 @@ the new default/custom role still needs verification in Symphony's actual runtim
 | C0-UI | Prior Phengos roadmap gates remain; contract explicitly preserves them | Approved frozen targets may be implemented; stop at visual feedback boundary. No advance into unapproved UI areas |
 | C0-WATCHLIST | Contract route DELETE names movie_id, current route names item_id | Preserve existing caller behavior; add adaptation only after scoped Movies audit |
 | C0-SOURCE | Historical DOCX/package-update instructions appear in preserved PDF | We are implementing code, not editing/rebuilding source design masters. Preserve source unchanged |
-| C0-RUNTIME | Symphony dashboard unavailable at intake; this chat has bounded workers | Primary coordinates current workers directly; no claim of live Symphony execution yet |
+| C0-RUNTIME | Symphony unavailable at intake | Restarted native reviewer workflow; actual read-only model session now confirmed. Unsupported reject approval schema corrected to never; exact E:/.../GH-2 Git safe.directory added. No nested review workers |
 | C0-PROVIDER | Live provider keys/qualification/paid benchmark not established | Tests inject transport/store; no production activation or paid benchmark claim |
 | C1-HOSTED | Current application DB dialect is PostgreSQL; migration0031 has not been applied to the hosted DB | Keep hosted data intact; source/mocked security tests pass. Hosted Vault execution remains an external verification gate |
+| C1-PRIVACY | GitHub403 at clone; subsequent API reported PUBLIC despite requested private repository | Restored PRIVATE, verified REST/GraphQL and fresh clone. User confirmed handling account/repository setting; cause not inferred. Recheck before pushes; Codex sign-in is independent of local gh sign-in |
 
 ## Checkpoint evidence
 
 - Source/plan checkpoint `3204ac9` pushed on `codex/unified-contract`.
+- Implementation checkpoint `f3ef64d` pushed; bounded independent review:
+  <https://github.com/Fivina/life-os/issues/2>, exact commit fixed in brief.
 - Private overall tracker: <https://github.com/Fivina/life-os/issues/1> (not ready;
   do not duplicate the current implementation).
 - Symphony restarted; state API HTTP200 with0active runs before review dispatch.
@@ -161,6 +170,22 @@ the new default/custom role still needs verification in Symphony's actual runtim
 - PDF page54 rendered and visually inspected to crosscheck credential contract.
 - Backend worker31new credential cases +17legacy provider/capability cases passed.
 - Initial frontend5tests passed; standard completion15tests +typecheck passed.
+- Primary isolated preview5174/8001: statusHTTP200 with8providers, Vault saving
+  disabled, installation access denied, TMDB detail/notice and Settings navigation
+  displayed, Letterboxd importer opens independently. Mobile390x844 has no horizontal
+  overflow; all five secret inputs empty/disabled. Screenshots saved locally under
+  `artifacts/unified-contract/baseline/integrations-*.jpg`.
+- Independent review report saved on issue2; two P2 findings corrected by standard
+  worker and primary reviewed the diff. CSV synthetic preview did not create viewing
+  history; explicit confirmation created one isolated fixture viewing.
+- Sports targeted backend35 tests +daily cadence SQLite migration roundtrip1 test
+  passed. Combined frontend milestone check71 tests across4 files; typecheck passed
+  after correcting a missing test-fixture type field. No full repository suite run.
+- Current original backend8000 and isolated8001 processes predate later sports
+  changes. New sports runtime/0032 and hosted Vault0031 are not live-verified.
+- Corrected default-watchlist path verified through the browser against isolated
+  backend8001: preview destination Watchlist, confirmation one watchlist item,
+  viewing history remains one previous synthetic diary entry. No real export used.
 - Gitleaks found one exact synthetic replacement test string; added only a
   rule/path/value-scoped exception, then rerun before publishing the checkpoint.
 
@@ -177,4 +202,4 @@ HANDOFF.md/this ledger, respect gates and check limits; it cannot create allowan
 
 Do not use reset credits, rotate accounts, spawn redundant audits or call costly
 product providers automatically. Primary updates progress after coherent chunks.
-Most recent limit check:73% remaining five-hour /80% weekly; trigger not met.
+Most recent limit check:7% remaining five-hour /70% weekly; trigger not met.

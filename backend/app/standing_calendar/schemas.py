@@ -51,7 +51,8 @@ class NormalizedFixture(BaseModel):
 
     @model_validator(mode="after")
     def scheduled_requires_time(self):
-        if self.status in {"SCHEDULED", "CONFIRMED", "COMPLETED"} and self.kickoff_at is None:
+        unconfirmed_time = self.status == "SCHEDULED" and self.raw_status == "TBD"
+        if self.status in {"SCHEDULED", "CONFIRMED", "COMPLETED"} and self.kickoff_at is None and not unconfirmed_time:
             raise ValueError(f"{self.status} fixture requires kickoff_at.")
         return self
 
@@ -72,6 +73,8 @@ class StandingRuleRead(BaseModel):
     last_sync_status: str
     last_sync_summary_json: dict[str, Any]
     last_error: str | None
+    next_fixture_selection_known: bool = False
+    current_next_fixture_id: str | None = None
     version: int
     model_config = {"from_attributes": True}
 
