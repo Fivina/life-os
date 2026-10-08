@@ -3,7 +3,73 @@
 Last checkpoint: 2026-10-08 (Europe/Berlin).
 Checkpoint owner: primary Codex session, development orchestrator and final reviewer.
 
-## Where we stopped
+## Current continuation checkpoint (2026-10-08, 16:50 Berlin)
+
+This section supersedes the historical checkpoint below. Resume verified clean
+`codex/unified-contract` head33fceb3; current W1 frontend work is UNCOMMITTED.
+Private draft PR: <https://github.com/Fivina/life-os/pull/3>.
+
+T2 shared fixture cache f5593a2 received independent read-only Symphony review
+(gpt-5.6-sol/medium), no scoped defects. Reviewer could not launch Windows tests;
+primary separately reran17 tests in the two requested suites, all passed. Report:
+`docs/implementation/unified-contract/REVIEW_SHARED_FIXTURES.md`. Hosted migrations
+0031-0034, PostgreSQL concurrency and actual Vault/provider evidence remain open.
+
+W1 active ownership (PDF pp6-11):
+- Standard direct_navigation finished direct Home/Calendar/Chat/Learning/Fitness/
+  Life/Kitchen, Search all21 workflows, Settings; removed flyouts/interstitial.
+  Intro/idle/replay/history preserved.73 scoped tests/typecheck passed. Separate
+  standard read-only navigation_review found one P2 dark Chat orb; author corrected
+  canonical white fill/glow and reviewer confirmed it. Visual acceptance open.
+- Standard chat_workspace finished real persisted threads/search/registered roles,
+  drafts/error isolation/pending locks/late-response guards.25 assistant/stream
+  tests passed; existing proposal/review/feedback controls retained. Worker completed
+  embedded mode in same AssistantPage runtime, session thread/draft per workspace,
+  no route query mutation. Reviewer found and implementation corrected deferred
+  approval cross-thread contamination, unsupported-role send and create-time draft
+  loss; final reviewer pass reports no remaining scoped findings.
+- Primary owns /chat and legacy query/hash/state aliases (3 tests passed), AppShell,
+  new ContextualAssistantLauncher.tsx/.css and launcher tests (3 passed). Native
+  dialog desktop floating/mobile modal; close/minimize retains mounted child/focus.
+  Calendar/Kitchen bottom composer removed; real Calendar actions restored.
+
+Primary browser full Chat persisted a synthetic thread and restored unsent draft
+after switching conversations. AI_ENABLED=false returns truthful disabled response;
+no paid/live provider calls. Calendar/Kitchen desktop overlays and390px Calendar
+modal verified. User visual acceptance and typed date/entity context remain open;
+the actual request schema has no such context field.
+
+Runtime restarted: disposable SQLite backend8001 session57009, frontend5174
+session97534, Symphony8787 session43364. Original8000/5173 stopped. Hosted DB unchanged.
+IAB2 tab1 is the current hidden preview. Check ports on resume, not session assumptions.
+Latest allowance16:48:32% five-hour window remains.16:35 continuation fired; no
+additional schedule needed, no reset credits/account rotation authorized.
+
+16:55 update: compact worker finished35 related tests/typecheck. Independent Chat
+review found P1 deferred approval contaminates switched conversation, P2 unsupported
+role fallback sends wrong raw role, P2 creation completion erases pending draft.
+Author corrected these with regressions. Primary explicit grid rows/portal
+corrections passed. Calendar embedded send stays on /calendar;
+minimize/reopen retains draft;390px modal/breakpoint/focus checked. Full Kitchen and
+full Chat narrow QA remain. Report REVIEW_NAV_CHAT.md.16:35 automation deleted after
+its one-time trigger; no further wake-up active. Allowance last9% remaining.
+
+17:25 continuation:37 Chat/stream/redirect/launcher tests and67 navigation/Home/
+runtime/redirect tests pass; typecheck passes. Separate reviewer final pass: no
+remaining scoped findings, diff clean. Kitchen browser shows registered Chef after
+registry load and disables sending during normalization.
+
+Exact next action: run milestone-wide frontend tests, scan and commit/push coherent
+chunk to private PR3, then stop at W1 user-feedback boundary. Gated backend tickets
+stay blocked.
+
+17:31 milestone verification: full web suite43 files /377 tests passes and typecheck
+passes. Initial full run found one legacy matchMedia-listener incompatibility in a
+shell transition test; launcher now supports modern/legacy APIs, targeted5 tests and
+full rerun pass. Only expected jsdom canvas/Three.js warnings. Next: secret scan,
+commit/push, update PR3 and record exact published head.
+
+## Historical checkpoint before this continuation
 
 The user authorized AFK development from the preserved 88-page unified contract,
 with task-sensitive workers, primary integration/final review, and durable checkpoints.

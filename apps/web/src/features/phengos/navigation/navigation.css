@@ -183,6 +183,8 @@
   transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease, transform 240ms var(--ph-ease-spring);
 }
 .pn-domain-button svg, .pn-search-button svg { color: #95adc4; }
+.pn-domain-button .pn-chat-orb { width: 21px; height: 21px; flex-basis: 21px; box-shadow: inset 0 0 6px #ffffffb8, 0 0 8px #fff, 0 0 16px #ffffff73; }
+.pn-domain-button[data-active="true"] .pn-chat-orb, .pn-domain-button:hover .pn-chat-orb { box-shadow: inset 0 0 7px #fff, 0 0 11px #fff, 0 0 22px #ffffffa6; }
 .pn-domain-button:hover, .pn-domain-button[data-expanded="true"], .pn-search-button:hover, .pn-search-button[data-expanded="true"] {
   background: color-mix(in srgb, var(--pn-accent) 7%, var(--life-surface-1));
   border-color: color-mix(in srgb, var(--pn-accent) 26%, var(--life-line-dark)); color: var(--life-text-main);

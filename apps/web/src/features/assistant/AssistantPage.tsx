@@ -1,11 +1,12 @@
-import { AlertTriangle, CalendarDays, Check, Clock3, Inbox, Info, Play, Plus, RefreshCw, Send, ShieldCheck, X } from "lucide-react";
+import { AlertTriangle, CalendarDays, Check, Clock3, Inbox, Info, MessageSquare, Play, Plus, RefreshCw, Search, Send, ShieldCheck, X } from "lucide-react";
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, useSearchParams } from "react-router-dom";
 
 import { api } from "../../services/api";
 import { parseAgentActivity } from "../../services/assistantStream";
-import type { AgentWorkActivity, AssistantResponse, AssistantRole, FeedbackSessionState } from "../../types/api";
+import type { AgentSettings, AgentWorkActivity, AssistantResponse, AssistantRole, ConversationThreadDetail, FeedbackSessionState } from "../../types/api";
+import "./AssistantPage.css";
 
 type Entry = {
   id: string;
@@ -16,14 +17,33 @@ type Entry = {
   workLog?: AgentWorkActivity[];
 };
 
-const ROLE_OPTIONS: Array<{ label: string; value: AssistantRole }> = [
-  { label: "General", value: "GENERAL_ASSISTANT" },
-  { label: "Fitness", value: "FITNESS_COACH" },
-  { label: "Learning", value: "LEARNING_COACH" },
-  { label: "Home", value: "HOME_MANAGER" },
-  { label: "Chef", value: "CHEF" },
-  { label: "Finance", value: "FINANCE_ADVISOR" }
-];
+const ASSISTANT_ROLES = new Set<AssistantRole>([
+  "GENERAL_ASSISTANT", "FITNESS_COACH", "LEARNING_COACH", "HOME_MANAGER", "CHEF", "FINANCE_ADVISOR"
+]);
+
+type RoleOption = { label: string; value: AssistantRole; skillName: string | null; configured: boolean };
+
+const FALLBACK_ROLE: RoleOption = { label: "General", value: "GENERAL_ASSISTANT", skillName: "self-core", configured: false };
+
+function roleOptions(agents: AgentSettings[] | undefined): RoleOption[] {
+  if (!agents) return [FALLBACK_ROLE];
+  const seen = new Set<AssistantRole>();
+  const options: RoleOption[] = [];
+  for (const agent of agents) {
+    for (const rawRole of agent.roles) {
+      const value = rawRole as AssistantRole;
+      if (!ASSISTANT_ROLES.has(value) || seen.has(value)) continue;
+      seen.add(value);
+      options.push({
+        label: agent.profile?.display_name || agent.name || value.replaceAll("_", " ").toLowerCase(),
+        value,
+        skillName: agent.skill_name,
+        configured: agent.credential_configured
+      });
+    }
+  }
+  return options;
+}
 
 function statusLabel(response: AssistantResponse) {
   return response.response_type.replaceAll("_", " ").toLowerCase();
@@ -43,10 +63,38 @@ const SKILL_ROLES: Record<string, AssistantRole> = {
   "self-core": "GENERAL_ASSISTANT", chef: "CHEF", "learning-coach": "LEARNING_COACH",
   "fitness-coach": "FITNESS_COACH", "home-manager": "HOME_MANAGER", finance: "FINANCE_ADVISOR",
 };
+const ROLE_LABELS: Record<AssistantRole, string> = {
+  GENERAL_ASSISTANT: "General", FITNESS_COACH: "Fitness", LEARNING_COACH: "Learning",
+  HOME_MANAGER: "Home", CHEF: "Chef", FINANCE_ADVISOR: "Finance"
+};
 
 function roleLabel(role: AssistantRole, agents?: Array<{ skill_name?: string; roles: string[]; profile?: { display_name: string } }>, skillName?: string | null) {
   const agent = skillName ? agents?.find((item) => item.skill_name === skillName) : agents?.find((item) => item.roles.includes(role));
-  return agent?.profile?.display_name ?? ROLE_OPTIONS.find((item) => item.value === (skillName ? SKILL_ROLES[skillName] ?? role : role))?.label ?? "General";
+  return agent?.profile?.display_name ?? ROLE_LABELS[skillName ? SKILL_ROLES[skillName] ?? role : role] ?? "General";
+}
+
+function latestSupportedRole(thread: ConversationThreadDetail, options: RoleOption[]): AssistantRole {
+  const supported = new Map(options.map((option) => [option.skillName, option.value]));
+  for (let index = thread.messages.length - 1; index >= 0; index -= 1) {
+    const saved = supported.get(thread.messages[index].skill_name ?? null);
+    if (saved) return saved;
+  }
+  return supported.get(thread.default_skill) ?? options[0]?.value ?? "GENERAL_ASSISTANT";
+}
+
+function draftKey(threadId: string | null, workspaceKey?: "calendar" | "kitchen") {
+  return workspaceKey
+    ? `life-os:chat-draft:embedded:${workspaceKey}:${threadId ?? "new"}`
+    : `life-os:chat-draft:${threadId ?? "new"}`;
+}
+
+function embeddedThreadKey(workspaceKey: "calendar" | "kitchen") {
+  return `life-os:chat-thread:${workspaceKey}`;
+}
+
+function threadDate(value: string) {
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? "Recently" : date.toLocaleDateString(undefined, { month: "short", day: "numeric" });
 }
 
 function activityLabel(activity: AgentWorkActivity) {
@@ -55,28 +103,57 @@ function activityLabel(activity: AgentWorkActivity) {
   return { owner: activity.skill_name.replaceAll("-", " "), action: `${kind} · ${detail}`, status: activity.status.replaceAll("_", " ") };
 }
 
-export function AssistantPage() {
-  const [searchParams] = useSearchParams();
+type AssistantPageProps = {
+  mode?: "full";
+  workspaceKey?: never;
+  initialRole?: AssistantRole;
+  onOpenFullChat?: (threadId: string | null) => void;
+} | {
+  mode: "embedded";
+  workspaceKey: "calendar" | "kitchen";
+  initialRole?: AssistantRole;
+  onOpenFullChat?: (threadId: string | null) => void;
+};
+
+export function AssistantPage({ mode = "full", workspaceKey, initialRole, onOpenFullChat }: AssistantPageProps = {}) {
+  const [searchParams, setSearchParams] = useSearchParams();
   const queryClient = useQueryClient();
-  const [role, setRole] = useState<AssistantRole>("GENERAL_ASSISTANT");
-  const [message, setMessage] = useState(searchParams.get("q") ?? "");
+  const embedded = mode === "embedded";
+  const embeddedWorkspace = workspaceKey ?? "calendar";
+  const [role, setRole] = useState<AssistantRole>(() => initialRole ?? (embeddedWorkspace === "kitchen" ? "CHEF" : "GENERAL_ASSISTANT"));
+  const initialThreadId = embedded ? sessionStorage.getItem(embeddedThreadKey(embeddedWorkspace)) : searchParams.get("thread");
+  const [message, setMessage] = useState(() => embedded
+    ? sessionStorage.getItem(draftKey(initialThreadId, embeddedWorkspace)) ?? ""
+    : searchParams.get("q") ?? sessionStorage.getItem(draftKey(initialThreadId)) ?? "");
   const [entries, setEntries] = useState<Entry[]>([]);
-  const [threadId, setThreadId] = useState<string | null>(searchParams.get("thread"));
+  const [threadId, setThreadId] = useState<string | null>(initialThreadId);
+  const [threadSearch, setThreadSearch] = useState("");
   const [feedbackSession, setFeedbackSession] = useState<FeedbackSessionState | null>(null);
   const [feedbackExplanation, setFeedbackExplanation] = useState("");
   const [feedbackConfidence, setFeedbackConfidence] = useState("MEDIUM");
   const [clarificationAnswer, setClarificationAnswer] = useState("");
   const [reviewEdits, setReviewEdits] = useState<Record<string, string>>({});
   const [pendingWorkLog, setPendingWorkLog] = useState<AgentWorkActivity[]>([]);
+  const liveDraftRef = useRef(message);
   const loadedThreadRef = useRef<string | null>(null);
   const requestGenerationRef = useRef(0);
+  const activeThreadRef = useRef<string | null>(initialThreadId);
+  const requestedThreadRef = useRef(Boolean(initialThreadId) || embedded);
+  const routeSignatureRef = useRef(embedded ? "" : searchParams.toString());
 
-  const morningQuery = useQuery({ queryKey: ["self-core-morning"], queryFn: api.morningBriefing, staleTime: 60_000 });
-  const workspaceQuery = useQuery({ queryKey: ["foreground-workspace"], queryFn: api.foregroundWorkspace });
-  const proposalsQuery = useQuery({ queryKey: ["plan-proposals"], queryFn: api.planProposals });
+  const morningQuery = useQuery({ queryKey: ["self-core-morning"], queryFn: api.morningBriefing, staleTime: 60_000, enabled: !embedded });
+  const workspaceQuery = useQuery({ queryKey: ["foreground-workspace"], queryFn: api.foregroundWorkspace, enabled: !embedded });
+  const proposalsQuery = useQuery({ queryKey: ["plan-proposals"], queryFn: api.planProposals, enabled: !embedded });
   const intelligenceQuery = useQuery({ queryKey: ["intelligence-settings"], queryFn: api.intelligenceSettings, staleTime: 30_000, retry: false });
+  const availableRoles = useMemo(() => roleOptions(intelligenceQuery.data?.agents), [intelligenceQuery.data?.agents]);
+  const selectedRole = availableRoles.find((option) => option.value === role) ?? availableRoles[0] ?? FALLBACK_ROLE;
+  const roleReady = intelligenceQuery.isLoading
+    ? role === "GENERAL_ASSISTANT"
+    : intelligenceQuery.isError
+      ? role === "GENERAL_ASSISTANT"
+      : availableRoles.some((option) => option.value === role);
   const activeProposal = proposalsQuery.data?.[0];
-  const reviewQuery = useQuery({ queryKey: ["review-items"], queryFn: typeof api.reviewItems === "function" ? api.reviewItems : async () => [] });
+  const reviewQuery = useQuery({ queryKey: ["review-items"], queryFn: typeof api.reviewItems === "function" ? api.reviewItems : async () => [], enabled: !embedded });
 
   const applyCapture = useMutation({
     mutationFn: ({ id, version }: { id: string; version: number }) => api.applyQuickCapture(id, version),
@@ -113,7 +190,8 @@ export function AssistantPage() {
 
   const threadsQuery = useQuery({
     queryKey: ["assistant-threads"],
-    queryFn: api.listAssistantThreads
+    queryFn: api.listAssistantThreads,
+    enabled: !embedded
   });
 
   const threadQuery = useQuery({
@@ -121,6 +199,11 @@ export function AssistantPage() {
     queryFn: () => api.getAssistantThread(threadId ?? ""),
     enabled: Boolean(threadId)
   });
+
+  const filteredThreads = useMemo(() => {
+    const needle = threadSearch.trim().toLocaleLowerCase();
+    return (threadsQuery.data ?? []).filter((thread) => !needle || thread.title.toLocaleLowerCase().includes(needle));
+  }, [threadSearch, threadsQuery.data]);
 
   const recentMessages = useMemo(
     () =>
@@ -132,13 +215,15 @@ export function AssistantPage() {
   );
 
   const sendMessage = useMutation({
-    mutationFn: async (text: string) => {
-      const payload = { message: text, role, thread_id: threadId, recent_messages: recentMessages };
-      const generation = requestGenerationRef.current;
-      if (typeof api.assistantMessageStream === "function") return api.assistantMessageStream(payload, (activity) => { if (requestGenerationRef.current === generation) setPendingWorkLog((current) => [...current, activity]); });
-      return api.assistantMessage(payload);
+    mutationFn: async ({ text, requestRole, targetThread, generation, context }: { text: string; requestRole: AssistantRole; targetThread: string | null; generation: number; context: typeof recentMessages }) => {
+      const payload = { message: text, role: requestRole, thread_id: targetThread, recent_messages: context };
+      const response = typeof api.assistantMessageStream === "function"
+        ? await api.assistantMessageStream(payload, (activity) => { if (requestGenerationRef.current === generation) setPendingWorkLog((current) => [...current, activity]); })
+        : await api.assistantMessage(payload);
+      return { response, requestRole, targetThread, generation };
     },
-    onSuccess: (response) => {
+    onSuccess: ({ response, targetThread, generation }) => {
+      if (requestGenerationRef.current !== generation || activeThreadRef.current !== targetThread) return;
       setEntries((current) => [
         ...current,
         {
@@ -152,7 +237,15 @@ export function AssistantPage() {
       setPendingWorkLog([]);
       if (response.thread_id) {
         loadedThreadRef.current = response.thread_id;
+        activeThreadRef.current = response.thread_id;
         setThreadId(response.thread_id);
+        if (embedded) {
+          sessionStorage.setItem(embeddedThreadKey(embeddedWorkspace), response.thread_id);
+        } else {
+          const next = new URLSearchParams(searchParams);
+          next.set("thread", response.thread_id);
+          setSearchParams(next, { replace: true });
+        }
       }
       queryClient.invalidateQueries({ queryKey: ["assistant-threads"] });
       if (response.proposed_action) queryClient.invalidateQueries({ queryKey: ["assistant-pending-proposals"] });
@@ -167,7 +260,8 @@ export function AssistantPage() {
         api.getFeedbackSession(response.feedback_session_id).then(setFeedbackSession).catch(() => undefined);
       }
     },
-    onError: (error) => {
+    onError: (error, variables) => {
+      if (requestGenerationRef.current !== variables.generation || activeThreadRef.current !== variables.targetThread) return;
       setPendingWorkLog([]);
       setEntries((current) => [
         ...current,
@@ -177,7 +271,7 @@ export function AssistantPage() {
           text: error instanceof Error ? error.message : "Assistant is unavailable.",
           response: {
             message: error instanceof Error ? error.message : "Assistant is unavailable.",
-            role_used: role,
+            role_used: variables.requestRole,
             response_type: "ERROR",
             entity_references: [],
             request_id: crypto.randomUUID(),
@@ -190,18 +284,34 @@ export function AssistantPage() {
   });
 
   const createThread = useMutation({
-    mutationFn: () => api.createAssistantThread(),
+    mutationFn: () => api.createAssistantThread({ default_skill: selectedRole.skillName ?? "self-core" }),
     onSuccess: (thread) => {
+      const currentDraft = liveDraftRef.current;
       loadedThreadRef.current = thread.id;
+      activeThreadRef.current = thread.id;
+      requestedThreadRef.current = true;
       setThreadId(thread.id);
       setEntries([]);
+      const nextDraft = currentDraft || sessionStorage.getItem(draftKey(thread.id, embedded ? embeddedWorkspace : undefined)) || "";
+      setMessage(nextDraft);
+      liveDraftRef.current = nextDraft;
+      sessionStorage.setItem(draftKey(thread.id, embedded ? embeddedWorkspace : undefined), nextDraft);
+      if (embedded) {
+        sessionStorage.setItem(embeddedThreadKey(embeddedWorkspace), thread.id);
+      } else {
+        const next = new URLSearchParams(searchParams);
+        next.set("thread", thread.id);
+        next.delete("q");
+        setSearchParams(next);
+      }
       queryClient.invalidateQueries({ queryKey: ["assistant-threads"] });
     }
   });
 
   const confirmProposal = useMutation({
-    mutationFn: api.confirmAssistantProposal,
-    onSuccess: (response, proposalId) => {
+    mutationFn: ({ proposalId }: { proposalId: string; targetThread: string | null; generation: number }) => api.confirmAssistantProposal(proposalId),
+    onSuccess: (response, { proposalId, targetThread, generation }) => {
+      if (requestGenerationRef.current !== generation || activeThreadRef.current !== targetThread) return;
       setEntries((current) => [...current.map((entry) => entry.response?.proposed_action?.id === proposalId && response.response_type === "MUTATION_RESULT"
         ? { ...entry, response: { ...entry.response, proposed_action: { ...entry.response.proposed_action, status: "confirmed" } } }
         : entry), { id: response.request_id, kind: "assistant", text: response.message, response }]);
@@ -213,8 +323,9 @@ export function AssistantPage() {
   });
 
   const cancelProposal = useMutation({
-    mutationFn: api.cancelAssistantProposal,
-    onSuccess: (response, proposalId) => {
+    mutationFn: ({ proposalId }: { proposalId: string; targetThread: string | null; generation: number }) => api.cancelAssistantProposal(proposalId),
+    onSuccess: (response, { proposalId, targetThread, generation }) => {
+      if (requestGenerationRef.current !== generation || activeThreadRef.current !== targetThread) return;
       setEntries((current) => [...current.map((entry) => entry.response?.proposed_action?.id === proposalId && response.response_type === "NO_ACTION" && response.message.startsWith("Cancelled.")
         ? { ...entry, response: { ...entry.response, proposed_action: { ...entry.response.proposed_action, status: "cancelled" } } }
         : entry), { id: response.request_id, kind: "assistant", text: response.message, response }]);
@@ -280,17 +391,42 @@ export function AssistantPage() {
   });
 
   useEffect(() => {
-    const initial = searchParams.get("q");
-    if (initial) {
-      setMessage(initial);
-    }
-  }, [searchParams]);
+    liveDraftRef.current = message;
+    sessionStorage.setItem(draftKey(threadId, embedded ? embeddedWorkspace : undefined), message);
+  }, [embedded, embeddedWorkspace, message, threadId]);
 
   useEffect(() => {
-    if (!threadId && threadsQuery.data?.length) {
-      setThreadId(threadsQuery.data[0].id);
+    if (embedded) return;
+    const signature = searchParams.toString();
+    if (signature === routeSignatureRef.current) return;
+    routeSignatureRef.current = signature;
+    const routeThread = searchParams.get("thread");
+    if (routeThread === activeThreadRef.current) {
+      const routeQuery = searchParams.get("q");
+      if (routeQuery !== null) setMessage(routeQuery);
+      return;
     }
-  }, [threadId, threadsQuery.data]);
+    sessionStorage.setItem(draftKey(activeThreadRef.current), message);
+    requestGenerationRef.current += 1;
+    activeThreadRef.current = routeThread;
+    requestedThreadRef.current = Boolean(routeThread);
+    loadedThreadRef.current = null;
+    setThreadId(routeThread);
+    setEntries([]);
+    setMessage(searchParams.get("q") ?? sessionStorage.getItem(draftKey(routeThread)) ?? "");
+  }, [embedded, searchParams]);
+
+  useEffect(() => {
+    if (embedded || requestedThreadRef.current || threadId || !threadsQuery.data?.length) return;
+    const latest = threadsQuery.data[0].id;
+    activeThreadRef.current = latest;
+    loadedThreadRef.current = null;
+    setThreadId(latest);
+    setMessage(sessionStorage.getItem(draftKey(latest)) ?? message);
+    const next = new URLSearchParams(searchParams);
+    next.set("thread", latest);
+    setSearchParams(next, { replace: true });
+  }, [embedded, message, searchParams, setSearchParams, threadId, threadsQuery.data]);
 
   useEffect(() => {
     const thread = threadQuery.data;
@@ -333,7 +469,21 @@ export function AssistantPage() {
     });
     setEntries(restored);
     loadedThreadRef.current = thread.id;
-  }, [role, threadQuery.data]);
+  }, [threadQuery.data]);
+
+  useEffect(() => {
+    if (!threadQuery.data || !intelligenceQuery.data?.agents) return;
+    setRole(latestSupportedRole(threadQuery.data, availableRoles));
+  }, [availableRoles, intelligenceQuery.data?.agents, threadQuery.data]);
+
+  useEffect(() => {
+    if (intelligenceQuery.isError) {
+      setRole("GENERAL_ASSISTANT");
+      return;
+    }
+    if (!intelligenceQuery.data?.agents || availableRoles.some((option) => option.value === role)) return;
+    if (availableRoles[0]) setRole(availableRoles[0].value);
+  }, [availableRoles, intelligenceQuery.data?.agents, intelligenceQuery.isError, role]);
 
   function invalidateLifeOsQueries() {
     queryClient.invalidateQueries({ queryKey: ["latest-state"] });
@@ -351,22 +501,53 @@ export function AssistantPage() {
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const trimmed = message.trim();
-    if (!trimmed || sendMessage.isPending || createThread.isPending) {
+    if (!trimmed || !roleReady || sendMessage.isPending || createThread.isPending) {
       return;
     }
     const feedbackCommand = /^\s*log\s+feedback(?:\s*[.!?:]\s*.*?)?\s*$/is.test(trimmed);
-    requestGenerationRef.current += 1;
+    const generation = requestGenerationRef.current + 1;
+    requestGenerationRef.current = generation;
+    const targetThread = threadId;
+    const requestRole = role;
+    const context = recentMessages;
     setEntries((current) => [
       ...current,
       { id: crypto.randomUUID(), kind: "user", text: trimmed, excludeFromContext: feedbackCommand }
     ]);
     setMessage("");
+    sessionStorage.removeItem(draftKey(threadId, embedded ? embeddedWorkspace : undefined));
+    if (!embedded && searchParams.has("q")) {
+      const next = new URLSearchParams(searchParams);
+      next.delete("q");
+      routeSignatureRef.current = next.toString();
+      setSearchParams(next, { replace: true });
+    }
     setPendingWorkLog([]);
-    sendMessage.mutate(trimmed);
+    sendMessage.mutate({ text: trimmed, requestRole, targetThread, generation, context });
+  }
+
+  function selectThread(nextThreadId: string) {
+    if (sendMessage.isPending || createThread.isPending || confirmProposal.isPending || cancelProposal.isPending || nextThreadId === threadId) return;
+    sessionStorage.setItem(draftKey(threadId), message);
+    requestGenerationRef.current += 1;
+    activeThreadRef.current = nextThreadId;
+    requestedThreadRef.current = true;
+    loadedThreadRef.current = null;
+    setThreadId(nextThreadId);
+    setEntries([]);
+    setMessage(sessionStorage.getItem(draftKey(nextThreadId)) ?? "");
+    const next = new URLSearchParams(searchParams);
+    next.set("thread", nextThreadId);
+    next.delete("q");
+    setSearchParams(next);
   }
 
   return (
-    <div className="stack assistant-shell">
+    <div className={embedded ? "assistant-shell embedded" : "assistant-shell"}>
+      {!embedded ? (
+      <details className="assistant-secondary-controls">
+        <summary>Today and Life OS controls</summary>
+        <div className="assistant-secondary-controls__body">
       <section className="self-core-morning" aria-labelledby="self-core-morning-title">
         <div className="self-core-morning-copy">
           <span className="eyebrow">Today</span>
@@ -435,61 +616,97 @@ export function AssistantPage() {
           </article>
         ))}
       </section>
+        </div>
+      </details>
+      ) : null}
       {intelligenceQuery.data && !intelligenceQuery.data.live_agents_enabled ? <div className="assistant-runtime-banner" role="status">
         <Info size={16} aria-hidden="true" />
         <span>Deterministic test responses are active. Save a specialist's model settings to route new chat turns to a configured provider.</span>
         <Link to="/settings#agent-settings">Agent settings</Link>
       </div> : null}
-      <section className="content-band assistant-header">
+      <section className={embedded ? "assistant-hub embedded" : "assistant-hub"} aria-label={embedded ? `${embeddedWorkspace} assistant` : "Chat workspace"}>
+        {!embedded ? (
+        <aside className="assistant-conversations" aria-label="Conversations">
+          <div className="assistant-conversations__heading">
+            <div><span className="eyebrow">Chat</span><h2>Conversations</h2></div>
+            <button
+              className="assistant-icon-action"
+              type="button"
+              aria-label="New conversation"
+              title="New conversation"
+              onClick={() => createThread.mutate()}
+              disabled={sendMessage.isPending || createThread.isPending || confirmProposal.isPending || cancelProposal.isPending}
+            >
+              <Plus size={17} aria-hidden="true" />
+            </button>
+          </div>
+          <label className="assistant-thread-search">
+            <Search size={15} aria-hidden="true" />
+            <input aria-label="Search conversations" value={threadSearch} onChange={(event) => setThreadSearch(event.target.value)} placeholder="Search conversations" />
+          </label>
+          <div className="assistant-thread-list">
+            {threadsQuery.isLoading ? <p className="assistant-sidebar-state">Loading conversations…</p> : null}
+            {threadsQuery.isError ? <p className="assistant-sidebar-state error">Conversations are unavailable.</p> : null}
+            {!threadsQuery.isLoading && !threadsQuery.isError && filteredThreads.length === 0 ? (
+              <div className="assistant-sidebar-state"><MessageSquare size={18} /><p>{threadSearch ? "No matching conversations." : "No saved conversations yet."}</p></div>
+            ) : null}
+            {filteredThreads.map((thread) => (
+              <button
+                key={thread.id}
+                type="button"
+                className={thread.id === threadId ? "assistant-thread-item active" : "assistant-thread-item"}
+                aria-current={thread.id === threadId ? "page" : undefined}
+                onClick={() => selectThread(thread.id)}
+                disabled={sendMessage.isPending || createThread.isPending || confirmProposal.isPending || cancelProposal.isPending}
+              >
+                <span>{thread.title}</span>
+                <time dateTime={thread.last_message_at}>{threadDate(thread.last_message_at)}</time>
+                <small>{roleLabel(SKILL_ROLES[thread.default_skill] ?? "GENERAL_ASSISTANT", intelligenceQuery.data?.agents, thread.default_skill)}</small>
+              </button>
+            ))}
+          </div>
+        </aside>
+        ) : null}
+        <div className="assistant-hub__main">
+      <header className="assistant-header">
         <div className="assistant-title-row">
           <div className="section-header">
-            <h2>Self Core</h2>
-          <span>{threadQuery.data ? "Saved conversation" : "New conversation"}</span>
+            <span className="eyebrow">PHÉNGOS</span>
+            <h1>{threadQuery.data?.title ?? (threadId ? "Loading conversation" : "New conversation")}</h1>
+            <span>{threadQuery.data ? "Saved conversation" : "Pick up a conversation or start something new."}</span>
           </div>
-          <div className="assistant-thread-controls">
+          <div className="assistant-role-picker">
+            <label htmlFor="assistant-role">Agent</label>
             <select
-              aria-label="Conversation"
-              value={threadId ?? ""}
-              disabled={sendMessage.isPending || createThread.isPending}
+              id="assistant-role"
+              aria-label="Assistant role"
+              value={role}
+              disabled={sendMessage.isPending || createThread.isPending || confirmProposal.isPending || cancelProposal.isPending || !roleReady}
               onChange={(event) => {
-                requestGenerationRef.current += 1;
-                loadedThreadRef.current = null;
-                setEntries([]);
-                setThreadId(event.target.value || null);
+                setRole(event.target.value as AssistantRole);
               }}
             >
-              {!threadsQuery.data?.length ? <option value="">Current conversation</option> : null}
-              {threadsQuery.data?.map((thread) => (
-                <option key={thread.id} value={thread.id}>
-                  {thread.title}
+              {availableRoles.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}{intelligenceQuery.data && !option.configured ? " · not configured" : ""}
                 </option>
               ))}
             </select>
-            <button
-              className="secondary-button assistant-new-thread"
-              type="button"
-              aria-label="New conversation"
-              onClick={() => createThread.mutate()}
-              disabled={sendMessage.isPending || createThread.isPending}
-            >
-              <Plus size={16} aria-hidden="true" />{createThread.isPending ? "Creating" : "New conversation"}
-            </button>
+            {intelligenceQuery.isLoading ? <small>Loading registered agents…</small> : null}
+            {intelligenceQuery.isError ? <small>Agent registry unavailable. General is the safe fallback.</small> : null}
+            {embedded ? <div className="assistant-embedded-actions">
+              <button className="secondary-button" type="button" onClick={() => createThread.mutate()} disabled={sendMessage.isPending || createThread.isPending || confirmProposal.isPending || cancelProposal.isPending || !roleReady}>
+                <Plus size={15} aria-hidden="true" /> New chat
+              </button>
+              <button className="secondary-button" type="button" onClick={() => onOpenFullChat?.(threadId)}>
+                Open in Chat
+              </button>
+            </div> : null}
           </div>
         </div>
-        <div className="assistant-role-row" role="group" aria-label="Assistant role">
-          {ROLE_OPTIONS.map((option) => (
-            <button
-              key={option.value}
-              className={role === option.value ? "role-chip active" : "role-chip"}
-              type="button"
-              onClick={() => setRole(option.value)}
-              disabled={sendMessage.isPending || createThread.isPending}
-            >
-              {option.label}
-            </button>
-          ))}
-        </div>
-      </section>
+      </header>
+
+      {threadQuery.isError ? <div className="assistant-thread-error" role="alert"><AlertTriangle size={18} /><div><strong>Conversation unavailable</strong><span>This link may be invalid or you may no longer have access. Choose another conversation or start a new one.</span></div></div> : null}
 
       <section className="content-band assistant-thread" aria-live="polite">
         {entries.length === 0 ? (
@@ -567,7 +784,7 @@ export function AssistantPage() {
                   <button
                     className="primary-button"
                     type="button"
-                    onClick={() => confirmProposal.mutate(entry.response?.proposed_action?.id ?? "")}
+                    onClick={() => confirmProposal.mutate({ proposalId: entry.response?.proposed_action?.id ?? "", targetThread: threadId, generation: requestGenerationRef.current })}
                     disabled={confirmProposal.isPending || entry.response.proposed_action.status !== "pending"}
                   >
                     <span>{confirmProposal.isPending ? "Confirming" : "Confirm"}</span>
@@ -576,7 +793,7 @@ export function AssistantPage() {
                   <button
                     className="secondary-button"
                     type="button"
-                    onClick={() => cancelProposal.mutate(entry.response?.proposed_action?.id ?? "")}
+                    onClick={() => cancelProposal.mutate({ proposalId: entry.response?.proposed_action?.id ?? "", targetThread: threadId, generation: requestGenerationRef.current })}
                     disabled={cancelProposal.isPending || entry.response.proposed_action.status !== "pending"}
                   >
                     <span>{cancelProposal.isPending ? "Cancelling" : "Cancel"}</span>
@@ -599,17 +816,21 @@ export function AssistantPage() {
       </section>
 
       <form className="assistant-composer" onSubmit={handleSubmit}>
-        <input
+        <textarea
           aria-label="Message assistant"
           value={message}
-          onChange={(event) => setMessage(event.target.value)}
-          placeholder="Add appointment, log study, ask about today..."
+          onChange={(event) => { liveDraftRef.current = event.target.value; setMessage(event.target.value); }}
+          placeholder={`Message ${selectedRole.label}…`}
+          rows={3}
         />
-        <button className="primary-button" type="submit" disabled={sendMessage.isPending || createThread.isPending || !message.trim()}>
+        <button className="primary-button" type="submit" disabled={sendMessage.isPending || createThread.isPending || !roleReady || !message.trim()}>
           <span>{sendMessage.isPending ? "Sending" : "Send"}</span>
           <Send size={17} aria-hidden="true" />
         </button>
       </form>
+        </div>
+      </section>
+      {createThread.isError ? <p className="status-text error" role="alert">Could not create a conversation. Your draft is still here.</p> : null}
       {confirmProposal.isError || cancelProposal.isError ? (
         <p className="status-text error">Could not update that proposal. Refresh and try again.</p>
       ) : null}

@@ -1,7 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import type { PropsWithChildren } from "react";
-import { MemoryRouter } from "react-router-dom";
+import type { ComponentProps, PropsWithChildren } from "react";
+import { MemoryRouter, useLocation, useNavigate } from "react-router-dom";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { AssistantPage } from "../features/assistant/AssistantPage";
@@ -32,6 +32,7 @@ vi.mock("../services/api", () => ({
 }));
 
 const mockedApi = vi.mocked(api);
+let navigateFromTest: ReturnType<typeof useNavigate>;
 
 function responseFixture(overrides: Partial<AssistantResponse> = {}): AssistantResponse {
   return {
@@ -47,7 +48,7 @@ function responseFixture(overrides: Partial<AssistantResponse> = {}): AssistantR
   };
 }
 
-function renderAssistant(initialPath = "/assistant") {
+function renderAssistant(initialPath = "/assistant", props: ComponentProps<typeof AssistantPage> = {}) {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: { retry: false },
@@ -56,21 +57,34 @@ function renderAssistant(initialPath = "/assistant") {
   });
 
   function Wrapper({ children }: PropsWithChildren) {
+    function RouterProbe() {
+      const location = useLocation();
+      navigateFromTest = useNavigate();
+      return <div data-testid="router-location">{location.pathname}{location.search}{location.hash}</div>;
+    }
     return (
       <MemoryRouter initialEntries={[initialPath]}>
-        <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+        <QueryClientProvider client={queryClient}><RouterProbe />{children}</QueryClientProvider>
       </MemoryRouter>
     );
   }
 
-  return render(<AssistantPage />, { wrapper: Wrapper });
+  return render(<AssistantPage {...props} />, { wrapper: Wrapper });
 }
 
 describe("Assistant page", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    sessionStorage.clear();
     mockedApi.listAssistantThreads.mockResolvedValue([]);
-    mockedApi.intelligenceSettings.mockResolvedValue({ live_agents_enabled: false } as never);
+    mockedApi.intelligenceSettings.mockResolvedValue({
+      live_agents_enabled: false,
+      agents: [
+        { skill_name: "self-core", name: "General", roles: ["GENERAL_ASSISTANT"], credential_configured: true, profile: { display_name: "General" } },
+        { skill_name: "learning-coach", name: "Learning", roles: ["LEARNING_COACH"], credential_configured: true, profile: { display_name: "Learning" } },
+        { skill_name: "chef", name: "Chef", roles: ["CHEF"], credential_configured: false, profile: { display_name: "Chef" } }
+      ]
+    } as never);
     mockedApi.foregroundWorkspace.mockResolvedValue(null);
     mockedApi.planProposals.mockResolvedValue([]);
     mockedApi.morningBriefing.mockResolvedValue({
@@ -90,7 +104,7 @@ describe("Assistant page", () => {
     mockedApi.assistantMessage.mockResolvedValue(responseFixture({ provider: "fake", model: "life-os-fake-standard" }));
     renderAssistant();
 
-    expect(screen.getByRole("heading", { name: "Self Core" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "New conversation" })).toBeInTheDocument();
     expect(await screen.findByText("Good morning. Algorithms at 09:00.")).toBeInTheDocument();
     expect(screen.getByText("General Assistant")).toBeInTheDocument();
 
@@ -100,7 +114,7 @@ describe("Assistant page", () => {
     await waitFor(() => expect(mockedApi.assistantMessage).toHaveBeenCalledWith(expect.objectContaining({ message: "What workout is next?" })));
     expect(await screen.findByText("Here is the current summary.")).toBeInTheDocument();
     expect(screen.getByText("fake · life-os-fake-standard")).toBeInTheDocument();
-    expect(await screen.findByRole("status")).toHaveTextContent("Deterministic test responses are active");
+    expect(await screen.findByText(/Deterministic test responses are active/)).toBeInTheDocument();
   });
 
   it("starts a clean conversation and fills a sample prompt without sending it", async () => {
@@ -109,9 +123,12 @@ describe("Assistant page", () => {
       last_message_at: "2026-09-28T09:00:00Z", created_at: "2026-09-28T09:00:00Z", updated_at: "2026-09-28T09:00:00Z", version: 1,
     };
     mockedApi.createAssistantThread.mockResolvedValue(thread);
+    mockedApi.getAssistantThread.mockResolvedValue({ ...thread, messages: [] });
     renderAssistant();
 
     fireEvent.click(await screen.findByRole("button", { name: "New conversation" }));
+    await waitFor(() => expect(mockedApi.createAssistantThread).toHaveBeenCalledWith({ default_skill: "self-core" }));
+    await waitFor(() => expect(screen.getByTestId("router-location")).toHaveTextContent("thread=new-thread"));
     expect(await screen.findByText("What would you like to work through today?")).toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: "Which agents can I use?" }));
     expect(screen.getByLabelText(/message assistant/i)).toHaveValue("Which agents can I use?");
@@ -228,7 +245,8 @@ describe("Assistant page", () => {
     mockedApi.cancelAssistantProposal.mockResolvedValue(responseFixture({ message: "Cancelled. No Life OS data was changed.", response_type: "NO_ACTION" }));
     renderAssistant();
 
-    fireEvent.click(screen.getByRole("button", { name: "Learning" }));
+    await screen.findByRole("option", { name: "Learning" });
+    fireEvent.change(screen.getByLabelText("Assistant role"), { target: { value: "LEARNING_COACH" } });
     fireEvent.change(screen.getByLabelText(/message assistant/i), { target: { value: "I studied macro for 50 minutes, quality 4." } });
     fireEvent.click(screen.getByRole("button", { name: /^send/i }));
 
@@ -263,7 +281,10 @@ describe("Assistant page", () => {
     expect(mockedApi.assistantMessage).not.toHaveBeenCalled();
     expect(input).toHaveValue(draft);
     expect(screen.getByRole("button", { name: "New conversation" })).toBeDisabled();
-    resolveThread?.({ id: "new-thread", title: "New conversation", status: "active", default_skill: "self-core", last_message_at: "", created_at: "", updated_at: "", version: 1 });
+    const created = { id: "new-thread", title: "New conversation", status: "active", default_skill: "self-core", last_message_at: "", created_at: "", updated_at: "", version: 1 } as ConversationThread;
+    mockedApi.getAssistantThread.mockResolvedValue({ ...created, messages: [] });
+    resolveThread?.(created);
+    await waitFor(() => expect(screen.getByLabelText(/message assistant/i)).toHaveValue(draft));
   });
 
   it("opens nested feedback and accepts score zero", async () => {
@@ -332,9 +353,7 @@ describe("Assistant page", () => {
     fireEvent.change(screen.getByLabelText(/message assistant/i), { target: { value: "Continue" } });
     fireEvent.click(screen.getByRole("button", { name: /^send/i }));
     await waitFor(() => expect(mockedApi.assistantMessage).toHaveBeenCalledTimes(2));
-    expect(mockedApi.assistantMessage.mock.calls[1][0].recent_messages).toEqual([
-      { role: "user", content: "Continue" }
-    ]);
+    expect(mockedApi.assistantMessage.mock.calls[1][0].recent_messages).toEqual([]);
   });
   it("locks thread and role controls until the current response finishes", async () => {
     let finish: ((response: AssistantResponse) => void) | undefined;
@@ -343,13 +362,12 @@ describe("Assistant page", () => {
     fireEvent.change(screen.getByLabelText(/message assistant/i), { target: { value: "Hello" } });
     fireEvent.click(screen.getByRole("button", { name: /^send/i }));
     await waitFor(() => expect(mockedApi.assistantMessage).toHaveBeenCalledOnce());
-    expect(screen.getByLabelText("Conversation")).toBeDisabled();
     expect(screen.getByRole("button", { name: "New conversation" })).toBeDisabled();
-    expect(screen.getByRole("button", { name: "Chef" })).toBeDisabled();
+    expect(screen.getByLabelText("Assistant role")).toBeDisabled();
     finish?.(responseFixture({ message: "Hello back" }));
     await screen.findByText("Hello back");
     expect(screen.getByRole("button", { name: "New conversation" })).toBeEnabled();
-    expect(screen.getByRole("button", { name: "Chef" })).toBeEnabled();
+    expect(screen.getByLabelText("Assistant role")).toBeEnabled();
   });
   it("restores specialist identity and validated work logs from saved messages", async () => {
     const thread: ConversationThread = { id: "saved-thread", title: "Saved quiz", status: "active", default_skill: "self-core", last_message_at: "", created_at: "", updated_at: "", version: 1 };
@@ -365,7 +383,7 @@ describe("Assistant page", () => {
     const message = await screen.findByText("One saved quiz question");
     expect(message.closest("article")).toHaveTextContent("Learning");
     expect(message.closest("article")).toHaveTextContent("Work log (1)");
-    fireEvent.click(screen.getByRole("button", { name: "Chef" }));
+    fireEvent.change(screen.getByLabelText("Assistant role"), { target: { value: "CHEF" } });
     expect(message.closest("article")).toHaveTextContent("Learning");
   });
 
@@ -396,6 +414,154 @@ describe("Assistant page", () => {
     renderAssistant("/self/assistant?thread=proposal-thread");
     await waitFor(() => expect(mockedApi.getAssistantThread).toHaveBeenCalledWith("proposal-thread"));
     expect(await screen.findByText("Review the meeting")).toBeInTheDocument();
-    expect(screen.getByLabelText("Conversation")).toHaveValue("proposal-thread");
+    expect(screen.getByRole("button", { name: /proposal-thread/i })).toHaveAttribute("aria-current", "page");
+  });
+
+  it("shows only registered roles and reports their configuration truthfully", async () => {
+    renderAssistant();
+    expect(await screen.findByRole("option", { name: "Chef · not configured" })).toBeInTheDocument();
+    expect(screen.getByRole("option", { name: "General" })).toBeInTheDocument();
+    expect(screen.queryByRole("option", { name: /calendar/i })).not.toBeInTheDocument();
+  });
+
+  it("filters persisted threads and preserves a separate draft for each thread", async () => {
+    const threads = ["alpha-thread", "beta-thread"].map((id) => ({
+      id, title: id === "alpha-thread" ? "Alpha plan" : "Beta review", status: "active", default_skill: "self-core",
+      last_message_at: "2026-10-08T10:00:00Z", created_at: "2026-10-08T09:00:00Z", updated_at: "2026-10-08T10:00:00Z", version: 1
+    } as ConversationThread));
+    mockedApi.listAssistantThreads.mockResolvedValue(threads);
+    mockedApi.getAssistantThread.mockImplementation(async (id) => ({ ...threads.find((thread) => thread.id === id)!, messages: [] }));
+    renderAssistant("/chat?thread=alpha-thread");
+    await screen.findByRole("heading", { name: "Alpha plan" });
+    fireEvent.change(screen.getByLabelText("Message assistant"), { target: { value: "alpha draft" } });
+    fireEvent.change(screen.getByLabelText("Search conversations"), { target: { value: "Beta" } });
+    expect(screen.queryByRole("button", { name: /Alpha plan/i })).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: /Beta review/i }));
+    expect(screen.getByTestId("router-location")).toHaveTextContent("thread=beta-thread");
+    fireEvent.change(screen.getByLabelText("Message assistant"), { target: { value: "beta draft" } });
+    fireEvent.change(screen.getByLabelText("Search conversations"), { target: { value: "" } });
+    fireEvent.click(screen.getByRole("button", { name: /Alpha plan/i }));
+    expect(screen.getByLabelText("Message assistant")).toHaveValue("alpha draft");
+  });
+
+  it("keeps an invalid deep link selected instead of opening an unrelated latest thread", async () => {
+    const latest: ConversationThread = { id: "latest", title: "Latest", status: "active", default_skill: "self-core", last_message_at: "2026-10-08T10:00:00Z", created_at: "", updated_at: "", version: 1 };
+    mockedApi.listAssistantThreads.mockResolvedValue([latest]);
+    mockedApi.getAssistantThread.mockRejectedValue(new Error("not found"));
+    renderAssistant("/chat?thread=missing");
+    expect(await screen.findByRole("alert")).toHaveTextContent("Conversation unavailable");
+    expect(mockedApi.getAssistantThread).toHaveBeenCalledWith("missing");
+    expect(mockedApi.getAssistantThread).not.toHaveBeenCalledWith("latest");
+    expect(screen.getByTestId("router-location")).toHaveTextContent("thread=missing");
+  });
+
+  it("does not place a late response into a thread opened through browser history", async () => {
+    const threads = ["thread-a", "thread-b"].map((id) => ({
+      id, title: id, status: "active", default_skill: "self-core", last_message_at: "2026-10-08T10:00:00Z", created_at: "", updated_at: "", version: 1
+    } as ConversationThread));
+    mockedApi.listAssistantThreads.mockResolvedValue(threads);
+    mockedApi.getAssistantThread.mockImplementation(async (id) => ({ ...threads.find((thread) => thread.id === id)!, messages: id === "thread-b" ? [{
+      id: "b-message", thread_id: id, role: "assistant", content: "Thread B history", skill_name: "self-core", request_id: "b-request",
+      sequence_number: 1, metadata_json: { response_type: "INFORMATION" }, created_at: "2026-10-08T10:00:00Z"
+    }] : [] }));
+    let finish: ((response: AssistantResponse) => void) | undefined;
+    mockedApi.assistantMessage.mockImplementation(() => new Promise((resolve) => { finish = resolve; }));
+    renderAssistant("/chat?thread=thread-a");
+    await screen.findByRole("heading", { name: "thread-a" });
+    fireEvent.change(screen.getByLabelText("Message assistant"), { target: { value: "slow request" } });
+    fireEvent.click(screen.getByRole("button", { name: "Send" }));
+    await waitFor(() => expect(mockedApi.assistantMessage).toHaveBeenCalledOnce());
+    navigateFromTest("/chat?thread=thread-b");
+    expect(await screen.findByText("Thread B history")).toBeInTheDocument();
+    finish?.(responseFixture({ message: "Late response for A", thread_id: "thread-a" }));
+    await waitFor(() => expect(screen.queryByText("Late response for A")).not.toBeInTheDocument());
+    expect(screen.getByText("Thread B history")).toBeInTheDocument();
+  });
+
+  it("sends in embedded mode without reading or changing the host route", async () => {
+    mockedApi.assistantMessage.mockResolvedValue(responseFixture({ message: "Calendar answer", thread_id: "calendar-thread" }));
+    const openFull = vi.fn();
+    renderAssistant("/calendar?day=2026-10-08#agenda", { mode: "embedded", workspaceKey: "calendar", onOpenFullChat: openFull });
+    fireEvent.change(screen.getByLabelText("Message assistant"), { target: { value: "What is next?" } });
+    fireEvent.click(screen.getByRole("button", { name: "Send" }));
+    expect(await screen.findByText("Calendar answer")).toBeInTheDocument();
+    expect(mockedApi.assistantMessage).toHaveBeenCalledWith(expect.objectContaining({ role: "GENERAL_ASSISTANT", thread_id: null }));
+    expect(screen.getByTestId("router-location")).toHaveTextContent("/calendar?day=2026-10-08#agenda");
+    expect(sessionStorage.getItem("life-os:chat-thread:calendar")).toBe("calendar-thread");
+    expect(mockedApi.listAssistantThreads).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole("button", { name: "Open in Chat" }));
+    expect(openFull).toHaveBeenCalledWith("calendar-thread");
+  });
+
+  it("restores the embedded workspace thread and unsent draft after remount", async () => {
+    const thread: ConversationThread = { id: "kitchen-thread", title: "Meal prep", status: "active", default_skill: "chef", last_message_at: "2026-10-08T10:00:00Z", created_at: "", updated_at: "", version: 1 };
+    sessionStorage.setItem("life-os:chat-thread:kitchen", thread.id);
+    sessionStorage.setItem("life-os:chat-draft:embedded:kitchen:kitchen-thread", "Use the spinach");
+    mockedApi.getAssistantThread.mockResolvedValue({ ...thread, messages: [] });
+    const first = renderAssistant("/kitchen?tab=fridge#item", { mode: "embedded", workspaceKey: "kitchen" });
+    expect(await screen.findByRole("heading", { name: "Meal prep" })).toBeInTheDocument();
+    expect(screen.getByLabelText("Message assistant")).toHaveValue("Use the spinach");
+    first.unmount();
+    renderAssistant("/kitchen?tab=fridge#item", { mode: "embedded", workspaceKey: "kitchen" });
+    expect(await screen.findByRole("heading", { name: "Meal prep" })).toBeInTheDocument();
+    expect(screen.getByLabelText("Message assistant")).toHaveValue("Use the spinach");
+    expect(screen.getByTestId("router-location")).toHaveTextContent("/kitchen?tab=fridge#item");
+  });
+
+  it("isolates an invalid embedded saved thread and can start a replacement", async () => {
+    sessionStorage.setItem("life-os:chat-thread:calendar", "missing-calendar-thread");
+    mockedApi.getAssistantThread.mockRejectedValue(new Error("not found"));
+    mockedApi.createAssistantThread.mockResolvedValue({ id: "replacement", title: "New conversation", status: "active", default_skill: "self-core", last_message_at: "2026-10-08T10:00:00Z", created_at: "", updated_at: "", version: 1 });
+    renderAssistant("/calendar?view=week", { mode: "embedded", workspaceKey: "calendar" });
+    expect(await screen.findByRole("alert")).toHaveTextContent("Conversation unavailable");
+    expect(mockedApi.getAssistantThread).toHaveBeenCalledWith("missing-calendar-thread");
+    expect(mockedApi.listAssistantThreads).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole("button", { name: "New chat" }));
+    await waitFor(() => expect(sessionStorage.getItem("life-os:chat-thread:calendar")).toBe("replacement"));
+    expect(screen.getByTestId("router-location")).toHaveTextContent("/calendar?view=week");
+  });
+
+  it("starts Kitchen with its registered role and permits an explicit role switch", async () => {
+    mockedApi.assistantMessage.mockResolvedValue(responseFixture({ message: "Learning answer", role_used: "LEARNING_COACH", thread_id: "kitchen-learning" }));
+    renderAssistant("/kitchen", { mode: "embedded", workspaceKey: "kitchen" });
+    await screen.findByRole("option", { name: "Learning" });
+    expect(screen.getByLabelText("Assistant role")).toHaveValue("CHEF");
+    fireEvent.change(screen.getByLabelText("Assistant role"), { target: { value: "LEARNING_COACH" } });
+    fireEvent.change(screen.getByLabelText("Message assistant"), { target: { value: "Explain this technique" } });
+    fireEvent.click(screen.getByRole("button", { name: "Send" }));
+    await waitFor(() => expect(mockedApi.assistantMessage).toHaveBeenCalledWith(expect.objectContaining({ role: "LEARNING_COACH" })));
+    expect(await screen.findByText("Learning answer")).toBeInTheDocument();
+    expect(screen.getByTestId("router-location")).toHaveTextContent("/kitchen");
+  });
+
+  it("does not append a deferred approval result after history opens another thread", async () => {
+    const threads = ["approval-a", "thread-b"].map((id) => ({ id, title: id, status: "active", default_skill: "self-core", last_message_at: "2026-10-08T10:00:00Z", created_at: "", updated_at: "", version: 1 } as ConversationThread));
+    mockedApi.listAssistantThreads.mockResolvedValue(threads);
+    mockedApi.getAssistantThread.mockImplementation(async (id) => ({ ...threads.find((item) => item.id === id)!, messages: id === "approval-a" ? [{
+      id: "proposal-message", thread_id: id, role: "assistant", content: "Approve this", skill_name: "self-core", sequence_number: 1, created_at: "",
+      metadata_json: { response_type: "PROPOSAL", proposed_action: { id: "deferred-proposal", tool_name: "create_commitment", arguments: {}, summary: "Create it", consequence_category: "consequential", status: "pending", expires_at: "2026-10-09T10:00:00Z", confirmation_required: true, version: 1 } }
+    }] : [{ id: "b", thread_id: id, role: "assistant", content: "Thread B stays clean", skill_name: "self-core", sequence_number: 1, created_at: "", metadata_json: { response_type: "INFORMATION" } }] }));
+    let finish: ((response: AssistantResponse) => void) | undefined;
+    mockedApi.confirmAssistantProposal.mockImplementation(() => new Promise((resolve) => { finish = resolve; }));
+    renderAssistant("/chat?thread=approval-a");
+    fireEvent.click(await screen.findByRole("button", { name: "Confirm" }));
+    await waitFor(() => expect(screen.getByRole("button", { name: /thread-b/i })).toBeDisabled());
+    expect(screen.getByLabelText("Assistant role")).toBeDisabled();
+    navigateFromTest("/chat?thread=thread-b");
+    expect(await screen.findByText("Thread B stays clean")).toBeInTheDocument();
+    finish?.(responseFixture({ message: "Approval finished for A", response_type: "MUTATION_RESULT" }));
+    await waitFor(() => expect(screen.queryByText("Approval finished for A")).not.toBeInTheDocument());
+  });
+
+  it("normalizes an unavailable Kitchen default to a registered role before sending", async () => {
+    mockedApi.intelligenceSettings.mockResolvedValue({ live_agents_enabled: true, agents: [
+      { skill_name: "self-core", name: "General", roles: ["GENERAL_ASSISTANT"], credential_configured: true, profile: { display_name: "General" } }
+    ] } as never);
+    mockedApi.assistantMessage.mockResolvedValue(responseFixture({ message: "General response", thread_id: "general-thread" }));
+    renderAssistant("/kitchen", { mode: "embedded", workspaceKey: "kitchen" });
+    await waitFor(() => expect(screen.getByLabelText("Assistant role")).toHaveValue("GENERAL_ASSISTANT"));
+    fireEvent.change(screen.getByLabelText("Message assistant"), { target: { value: "Help me" } });
+    fireEvent.click(screen.getByRole("button", { name: "Send" }));
+    await waitFor(() => expect(mockedApi.assistantMessage).toHaveBeenCalledWith(expect.objectContaining({ role: "GENERAL_ASSISTANT" })));
   });
 });

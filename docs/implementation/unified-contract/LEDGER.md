@@ -27,10 +27,10 @@ effort. Related tasks must satisfy their parent criteria before closing the pare
 | ID | PDF pages / contract section | Scope and acceptance boundary | Owner | Status / dependency |
 | --- | --- | --- | --- | --- |
 | W0 | 1–5, 18–21, 51, 79–88 | Source preservation, live implementation map, conflicts, screenshot baseline, targeted checks | Primary | VERIFIED intake/baseline; code maps remain scoped evidence, not whole-product acceptance |
-| NAV-001 | 6–7, 19, 47, 80–82 | Direct single-click primary navigation, no flyout/interstitial, legacy links/history retained | Primary + bounded shell worker | PENDING; W0 |
+| NAV-001 | 6–7, 19, 47, 80–82 | Direct single-click primary navigation, no flyout/interstitial, legacy links/history retained | Primary + standard direct_navigation | VERIFIED implementation/review/runtime; full web377 tests +typecheck; user visual acceptance open |
 | DEV-001 | 7, 80–84 | Developer separate from Settings/Life; final visual/access design stays open | Primary | PENDING; final design BLOCKED_DECISION |
-| CHAT-001 | 8–11, 19, 28–31, 80–83 | White original orb, Self→Chat aliases, real persisted threads/new/resume/available roles; permissions/history intact | Shell worker | PENDING; W0/W1 |
-| PHENGOS-002 | 8–11, 16, 19, 47 | Shared top-right domain orb/floating overlay, same canonical thread, draft/focus/context/route/grid preserved, no bottom dock | Shell worker | PENDING; W1 |
+| CHAT-001 | 8–11, 19, 28–31, 80–83 | White original orb, Self→Chat aliases, real persisted threads/new/resume/available roles; permissions/history intact | Standard chat_workspace +primary | VERIFIED implementation/review/runtime; full web377 tests + browser persistence; user visual acceptance open |
+| PHENGOS-002 | 8–11, 16, 19, 47 | Shared top-right domain orb/floating overlay, same canonical thread, draft/focus/context/route/grid preserved, no bottom dock | Primary +standard chat_workspace | VERIFIED current API scope/review/runtime; Calendar/Kitchen desktop +390px modal checked; typed date/entity context BLOCKED by absent request field; user visual acceptance open |
 | COPY-001 | 6, 12, 19–20, 38–41 | Remove slogans/decorative date chips; retain functional dates/status/instructions | Domain owners | PENDING; W1/domain migrations |
 | MOTION-001 | 16, 19–20, 47–48 | Shared finite neon strip/transitions, stable geometry, reduced motion and focus | Shell worker | PENDING; W1 |
 | CAL-001 | 11–12, 19, 23, 81–84 | Preserve grid/rail; Overview/Daily List/Planning; real edit/error/version flows; no seeded forms | Calendar worker | PENDING; W1 |
@@ -278,3 +278,34 @@ No workers active. Account allowance last4%;16:35 Berlin heartbeat already verif
 Publication: f5593a2 pushed, repository PRIVATE reverified, staged Gitleaks20.69KB
 no leaks. Independent cache review queued as issue5 without ready label; dispatch
 on resume after usage check. PR3 description updated to published scope/limits.
+
+## W1 navigation and Chat execution plan (16:35 continuation)
+
+Primary: canonical /chat route, preserve /self,/self/assistant,/assistant query/hash/
+state aliases, shell integration and final review/runtime checks. Existing React
+Router and assistant/conversation APIs remain canonical; no new navigation/chat
+framework. Source pp6–11; reviewed N01 and CH02 full-resolution originals.
+T3-NAV standard gpt-5.6-sol/medium: PhengosNavigation/navigationModel,
+phengosFeatures, PhengosHome, their scoped CSS/tests. Direct primary links in exact
+Home/Calendar/Chat/Learning/Fitness/Life/Kitchen order plus Search/Settings; Home
+returns existing dashboard; no domain flyouts/interstitial. Keep all existing
+features via Search and routes, all intro/idle/history/keyboard behavior. Internal
+Self group may remain for compatibility but visible Chat and white existing orb.
+T3-CHAT standard gpt-5.6-sol/medium: AssistantPage, assistant-specific CSS/tests only.
+Real persisted thread list + conversation canvas, new/resume/error/search, registered
+backend roles only, immutable per-message attribution, draft and thread continuity.
+Preserve every existing proposal/review/feedback/workspace control. No voice claims,
+no invented tools/context, no new backend/runtime. Primary hides duplicate global
+composer on full Chat. Contextual Calendar/Kitchen overlay PHENGOS-002 is a following
+bounded task, not silently considered complete. Developer final UI stays gated.
+Both workers disjoint, no handoff edits/commits; primary owns integration/checkpoint.
+Require independent review and browser screenshots at completed W1 feedback boundary.
+
+16:35 resume: verified clean head33fceb3, allowance reset. Symphony issue5 completed
+bounded standard-tier read-only source review of f5593a2 vs331e917 with no defects.
+Reviewer could not execute tests (Windows process setup failure); primary separately
+reran the exact2requested files,17 tests passed, two existing deprecation warnings.
+Review source/report saved in REVIEW_SHARED_FIXTURES.md. Hosted0031–0034 and actual
+PG concurrency/Vault remain unverified. T3-NAV and T3-CHAT workers now active with
+disjoint frontend scopes; primary /chat aliases preserve query/hash/state (3 tests
+passed). Preview restarted5174/8001 against disposable SQLite only.

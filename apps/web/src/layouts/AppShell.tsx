@@ -4,6 +4,7 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 import { NavigationLinks, PhengosNavigation } from "../features/phengos/navigation/PhengosNavigation";
 import { PhengosAssistantBar } from "../features/phengos/navigation/PhengosAssistantBar";
+import { ContextualAssistantLauncher } from "../features/phengos/navigation/ContextualAssistantLauncher";
 import { activeFeature } from "../features/phengos/navigation/navigationModel";
 import "../features/phengos/phengosTheme.css";
 import "../features/phengos/navigation/navigation.css";
@@ -48,6 +49,7 @@ export function AppShell() {
 
   return (
     <div className="os-shell workspace-mode phengos-workspace" data-domain={active?.group ?? "Overview"}
+      data-context-chat={location.pathname === "/calendar" || location.pathname === "/kitchen"}
       style={{ "--life-context-accent": active?.color ?? "#60a5fa" } as CSSProperties}>
       <RouteSectionFocus />
       <a className="pn-skip" href="#phengos-workspace-content" onClick={event => {
@@ -59,6 +61,8 @@ export function AppShell() {
       <header className="os-header pn-header">
         <PhengosNavigation open={navigationOpen} onToggle={() => setNavigationOpen(open => !open)} launcher={navigationLauncher} />
         <div className="pn-actions">
+          {(location.pathname === "/calendar" || location.pathname === "/kitchen") &&
+            <ContextualAssistantLauncher key={location.pathname} workspace={location.pathname === "/calendar" ? "calendar" : "kitchen"} />}
           <button className="pn-icon" type="button" aria-label="Enable reminders" title="Enable reminders" onClick={handleEnablePush} disabled={pushState === "working"}>
             <Bell size={18} />
           </button>
@@ -81,7 +85,7 @@ export function AppShell() {
           <Outlet />
         </main>
       </div>
-      <PhengosAssistantBar />
+      {!["/chat", "/calendar", "/kitchen"].includes(location.pathname) && <PhengosAssistantBar />}
     </div>
   );
 }

@@ -2,6 +2,7 @@ import { lazy, Suspense } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import { AssistantPage } from "../features/assistant/AssistantPage";
+import { LegacyChatRedirect } from "../features/assistant/LegacyChatRedirect";
 import { CalendarPage } from "../features/calendar/CalendarPage";
 import { LoginPage } from "../features/auth/LoginPage";
 import { FitnessPage } from "../features/fitness/FitnessPage";
@@ -106,8 +107,9 @@ export function App() {
             <Route path="/" element={<Suspense fallback={<main>Life OS</main>}><PhengosHome /></Suspense>} />
             <Route path="/space" element={<SpatialHomeRedirect />} />
             <Route element={<AppShell />}>
-              <Route path="/self" element={<Navigate to="/self/assistant" replace />} />
-              <Route path="/self/assistant" element={<AssistantPage />} />
+              <Route path="/self" element={<LegacyChatRedirect />} />
+              <Route path="/self/assistant" element={<LegacyChatRedirect />} />
+              <Route path="/chat" element={<AssistantPage />} />
               <Route path="/calendar" element={<CalendarPage />} />
               <Route path="/life" element={<LifePage />} />
               <Route path="/fitness" element={<FitnessPage />} />
@@ -121,7 +123,7 @@ export function App() {
               <Route path="/movies" element={<MoviesPage />} />
               <Route path="/social" element={<SocialPage />} />
               <Route path="/settings/personal-model" element={<PersonalModelPage />} />
-              <Route path="/assistant" element={<Navigate to="/self/assistant" replace />} />
+              <Route path="/assistant" element={<LegacyChatRedirect />} />
               <Route path="/personal-model" element={<Navigate to="/settings/personal-model" replace />} />
             </Route>
           </Route>

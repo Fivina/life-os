@@ -1,6 +1,6 @@
 import { useLayoutEffect, useRef } from "react";
 import { useLocation, useNavigate, useNavigationType } from "react-router-dom";
-import { activeFeature, backFallback, navigationGroups, phengosHomeState } from "./navigationModel";
+import { activeFeature, backFallback, phengosHomeState } from "./navigationModel";
 
 export function useWorkspaceBack() {
   const location = useLocation();
@@ -27,8 +27,7 @@ export function useWorkspaceBack() {
   return () => {
     if (history.current.index > 0) { navigate(-1); return; }
     if (location.state?.phengosOriginLayer === "overview" || location.state?.phengosOriginLayer === "domain") {
-      const group = navigationGroups.find(candidate => candidate === location.state?.phengosOriginGroup);
-      navigate("/", { replace: true, state: { ...phengosHomeState, phengosOpen: true, phengosGroup: location.state.phengosOriginLayer === "domain" ? group : undefined } });
+      navigate("/", { replace: true, state: phengosHomeState });
       return;
     }
     const fallback = backFallback(activeFeature(location.pathname, location.hash));

@@ -14,6 +14,7 @@
   --life-text-secondary: #b8c9db;
   --life-text-muted: #98adc4;
   --life-domain-overview: #60a5fa;
+  --life-domain-chat: #ffffff;
   --life-domain-self: #60a5fa;
   --life-domain-home: #3b82f6;
   --life-domain-fitness: #06b6d4;
@@ -51,7 +52,7 @@
   --ph-text-muted: var(--life-text-secondary);
   --ph-accent: var(--life-domain-overview);
   --ph-focus: #f6c87d;
-  --ph-self: var(--life-domain-self);
+  --ph-self: var(--life-domain-chat);
   --ph-home: var(--life-domain-home);
   --ph-fitness: var(--life-domain-fitness);
   --ph-life: var(--life-domain-life);
